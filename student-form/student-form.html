@@ -73,23 +73,9 @@
         			<div class="row">
         				<div class="col-md-3">
         					<ul class="nav nav-stacked nav-pills">
-        						<li class="active">
-        							<a href="#studentinfo">Student Information</a>
-        						</li>
-        						<li>
-        							<a href="#contactinfo">Contact Information</a>
-        						</li>
-        						<li>
-        							<a href="#demographics">Demographics</a>
-        						</li>
-                                <li>
-        							<a href="#goals">Goals</a>
-        						</li>
-        						<li>
-        							<a href="#dependents">Dependents</a>
-        						</li>
-        						<li>
-        							<a href="#branchinfo">Branch Information</a>
+        						<!-- <li class="active"> -->
+        						<li ng-repeat="section in form.formDefinition">
+        							<a ng-href="{{'#' + section.id}}">{{section.name}}</a>
         						</li>
         					</ul>
         				</div>
@@ -99,16 +85,27 @@
         					<form role="form">
         					    
         					    <div class="form-group" ng-repeat="section in form.formDefinition" id="{{section.id}}">
-                                    <div ng-repeat="field in section.fields">
-                                        <label for="{{field.name}}">
-            								{{field.placeholder}}
-            							</label>
-        							    <div ng-switch="field.type">
-        							        <p ng-switch-when="boolean">
-        							            <input type="checkbox" name="boolean-checkbox">
-        							        </p>
-        							        <input ng-switch-default type="{{field.type}}" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" />
-        							    </div>
+                                    <hr/>
+                                    <div class="row" ng-repeat="row in section.fields">
+                                        <div class="{{field.class || 'col-md-12'}}" ng-repeat="field in row">
+                                            <label for="{{field.name}}">
+                								{{field.placeholder}}
+                							</label>
+                							
+            							    <div ng-switch="field.type">
+        							            <!-- Boolean (Yes/No) -->
+        							            <input ng-switch-when="boolean" type="checkbox" name="boolean-checkbox">
+            							        
+            							        <!-- Dropdown with customizable options -->
+            							        <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle">
+                                                  <option value="" disabled>{{field.placeholder}}</option>
+                                                  <option ng-repeat="option in field.options" ng-value="{{option}}">{{option}}</option>
+                                                </select>
+            							        
+            							        <!-- Other inputs -->
+            							        <input ng-switch-default type="{{field.type}}" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" maxlength="{{field.maxlength}}" />
+            							    </div>
+                                        </div>
                                     </div>
                                 </div>
         						<button type="submit" class="btn btn-default">
