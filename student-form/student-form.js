@@ -8,10 +8,10 @@ angular.module('formApp', [])
     	  name: 'Student Information',
     	  fields: [
     	      [
-    	        {name: 'firstName', class: 'col-md-4', value: '', type: 'text', trim: true, placeholder: 'First Name'},
-	            {name: 'lastName', class: 'col-md-4', value: '', type: 'text', trim: true, placeholder: 'Last Name'},
-	            {name: 'dateOfBirth', class: 'col-md-2', value: '', type: 'date', trim: true, placeholder: 'Date of Birth'},
-              {name: 'gender', class: 'col-md-2', value: '', type: 'dropdown', options: ['Male', 'Female'], placeholder: 'Gender'}
+    	        {name: 'firstName', class: 'col-md-3', value: '', type: 'text', trim: true, placeholder: 'First Name'},
+	            {name: 'lastName', class: 'col-md-3', value: '', type: 'text', trim: true, placeholder: 'Last Name'},
+	            {name: 'dateOfBirth', class: 'col-md-3', value: '', type: 'date', trim: true, placeholder: 'Date of Birth'},
+              {name: 'gender', class: 'col-md-3', value: '', type: 'dropdown', options: ['Male', 'Female'], placeholder: 'Gender'}
     	      ],
     	      
     	    ]
@@ -35,21 +35,31 @@ angular.module('formApp', [])
               {name: 'okayToEmail', class: 'col-md-2', type: 'boolean', placeholder: 'OK To Email?'}
             ],
             [
-              {name: 'cellPhone', class: 'col-md-2', type: 'phone', trim: true, maxlength: 10, placeholder: 'Cell Phone Number'},
-              {name: 'okayToCallCell', class: 'col-md-2', type: 'boolean', trim: false, placeholder: 'Message OK?'},
-              {name: 'okayToCallCellLVM', class: 'col-md-2', type: 'boolean', trim: false, placeholder: 'LVM OK?'},
-              {name: 'homePhone', class: 'col-md-2', type: 'phone', trim: true, maxlength: 10, placeholder: 'Home Phone Number'},
-              {name: 'okayToCallHome', class: 'col-md-2', type: 'boolean', trim: false, placeholder: 'Message OK?'},
-              {name: 'okayToCallHomeLVM', class: 'col-md-2', type: 'boolean', trim: false, placeholder: 'LVM OK?'}
+              {name: 'cellPhone', class: 'col-md-2', type: 'phone', trim: true, maxlength: 10, placeholder: 'Cell Number'},
+              {name: 'okayToCallCell', class: 'col-md-2', type: 'boolean', placeholder: 'Message OK?'},
+              {name: 'okayToCallCellLVM', class: 'col-md-2', type: 'boolean', placeholder: 'LVM OK?'},
+              {name: 'homePhone', class: 'col-md-2', type: 'phone', trim: true, maxlength: 10, placeholder: 'Home Number'},
+              {name: 'okayToCallHome', class: 'col-md-2', type: 'boolean', placeholder: 'Message OK?'},
+              {name: 'okayToCallHomeLVM', class: 'col-md-2', type: 'boolean', placeholder: 'LVM OK?'}
             ],
             [
-              {name: 'workPhone', class: 'col-md-2', type: 'phone', trim: true, maxlength: 10, placeholder: 'Work Phone Number'},
-              {name: 'okayToCallWork', class: 'col-md-2', type: 'boolean', trim: false, placeholder: 'Message OK?'},
-              {name: 'okayToCallWorkLVM', class: 'col-md-2', type: 'boolean', trim: false, placeholder: 'LVM OK?'},
+              {name: 'workPhone', class: 'col-md-2', type: 'phone', trim: true, maxlength: 10, placeholder: 'Work Number'},
+              {name: 'okayToCallWork', class: 'col-md-2', type: 'boolean', placeholder: 'Message OK?'},
+              {name: 'okayToCallWorkLVM', class: 'col-md-2', type: 'boolean', placeholder: 'LVM OK?'},
               {name: 'alternatePhone', class: 'col-md-2', type: 'phone', trim: true, maxlength: 10, placeholder: 'Alternate Number'},
-              {name: 'okayToCallAlternate', class: 'col-md-2', type: 'boolean', trim: false, placeholder: 'Message OK?'},
-              {name: 'okayToCallAlternateLVM', class: 'col-md-2', type: 'boolean', trim: false, placeholder: 'LVM OK?'},
-            ]
+              {name: 'okayToCallAlternate', class: 'col-md-2', type: 'boolean', placeholder: 'Message OK?'},
+              {name: 'okayToCallAlternateLVM', class: 'col-md-2', type: 'boolean', placeholder: 'LVM OK?'},
+            ],
+            [
+              {name: 'emergencyContactName', class: 'col-md-8', type: 'text', trim: true, maxlength: 255, placeholder: 'Emergency Contact (Name)'},
+              {name: 'emergencyContactNumber', class: 'col-md-4', type: 'phone', trim: true, placeholder: 'Emergency Contact (Phone)'},
+            ],
+            [
+              {name: 'howDidYouHear', type: 'text', trim: true, maxlength: 255, placeholder: 'How did you hear about LVM?'},
+            ],
+            [
+              {name: 'whyDidYouChoose', type: 'text', trim: true, maxlength: 255, placeholder: 'Why did you choose LVM?'},
+            ],
           ]
       },
       {

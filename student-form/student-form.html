@@ -64,24 +64,23 @@
 
                     <div class="row">
                         <div class="col-md-3"></div>
-                        <div class="col-md-1"></div>
-        				<div class="col-md-8">
+        				<div class="col-md-9">
         					<h2>New Student Form</h2>
         				</div>
         			</div>        			
         			
         			<div class="row">
-        				<div class="col-md-3">
-        					<ul class="nav nav-stacked nav-pills">
-        						<!-- <li class="active"> -->
-        						<li ng-repeat="section in form.formDefinition">
-        							<a ng-href="{{'#' + section.id}}">{{section.name}}</a>
-        						</li>
-        					</ul>
+        				<div class="col-md-3 sidebar-outer">
+        					<div class="sidebar">
+        					    <ul class="nav nav-stacked nav-pills">
+                                    <!-- Section Names -->
+            						<li ng-repeat="section in form.formDefinition">
+            							<a ng-href="{{'#' + section.id}}">{{section.name}}</a>
+            						</li>
+            					</ul>
+        					</div>
         				</div>
-        				<div class="col-md-1">
-        				</div>
-        				<div class="col-md-8">
+        				<div class="col-md-9">
         					<form role="form">
         					    
         					    <div class="form-group" ng-repeat="section in form.formDefinition" id="{{section.id}}">
