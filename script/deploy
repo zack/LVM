@@ -1,9 +1,0 @@
-#!/bin/sh
-
-ssh -i /var/lib/jenkins/.ssh/id_rsa dbeard@cs4500.duncanbeard.com <<EOF
-    cd ~/server
-    git pull
-    npm install --production
-    pm2 restart app
-    exit
-EOF
