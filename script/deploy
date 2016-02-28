@@ -1,0 +1,9 @@
+#!/bin/sh
+
+ssh dbeard@cs4500.duncanbeard.com <<EOF
+    cd ~/server
+    git pull
+    npm install --production
+    pm2 restart app
+    exit
+EOF
