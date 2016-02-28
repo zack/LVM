@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ssh dbeard@cs4500.duncanbeard.com <<EOF
+ssh -i /var/lib/jenkins/.ssh/id_rsa dbeard@cs4500.duncanbeard.com <<EOF
     cd ~/server
     git pull
     npm install --production
