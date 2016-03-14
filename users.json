@@ -1,0 +1,19 @@
+{
+    "nextId": 2,
+    "users": [
+        {
+            "id": 0,
+            "username": "roberta",
+            "password": "sha1$356c26b3$1$243e7f5bf2e12d51759615aefd9bfb1de0460b04",
+            "role": "Administrator",
+            "branch": 1
+        },
+        {
+            "id": 1,
+            "username": "grace",
+            "password": "sha1$1e293bd6$1$df9999949ba01ec6f2f546aebb13f4a5c43e5097",
+            "role": "Administrator",
+            "branch": 1
+        }
+    ]
+}
