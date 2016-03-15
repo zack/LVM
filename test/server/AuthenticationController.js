@@ -18,7 +18,7 @@ var res,
     next;
 
 var resetSpies = function () {
-    res = jasmine.createSpyObj('res', ['status', 'send', 'json']);
+    res = jasmine.createSpyObj('res', ['status', 'send', 'json', 'redirect']);
     next = jasmine.createSpy('next');
      
     res.status.and.returnValue(res);

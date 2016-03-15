@@ -93,22 +93,23 @@ module.exports = function (auth, statusCodes) {
             }
             var resp = auth.authenticate(req.body.username, req.body.password);
             if (!resp) { return res.status(statusCodes.AUTH_FAILED).json({response : false}); }
-            req.session.regenerate(function(err) {
-                if (err) {
-                    // TODO: log error?
-                }
-                return res.redirect('/dashboard');
-            });
+            // req.session.regenerate(function(err) {
+            //     if (err) {
+            //         // TODO: log error?
+            //     }
+            //    return res.redirect('/dashboard');
+            // });
+            return res.json({response: true});
         },
         
         logout : function (req, res, next) {
             // destroy user session
-            req.session.destroy(function(err) {
-              if (err) {
-                  // TODO: log error?
-              }
-              res.redirect('/login');
-            });
+            // req.session.destroy(function(err) {
+            //   if (err) {
+            //       // TODO: log error?
+            //   }
+            //   res.redirect('/login');
+            // });
         }
     };
 };
