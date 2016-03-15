@@ -6,7 +6,7 @@
 * Web Path: http://127.0.0.1:4000/lvm/
 
 ## Environment Setup
-* Checkout the repository
+* Checkout the repository and change directories to it.
 * Be sure to update config/default.json if you are running locally or on development.
     * The `database_url`, `database_user`, and `database_password` fields should all have values.
     * For local and development work, these will be the same as what is currently on the Confluence page (AWS Setup Information).
