@@ -31,19 +31,17 @@ module.exports = function (app, envConfig, statusCodes, HomeController, Authenti
     router.route('/login')
         .post(AuthenticationController.login)
         .all(methodNotAllowed);
-    router.use('/logout', AuthenticationController.logout);
+    router.route('/logout')
+        .get(AuthenticationController.logout)
+        .all(methodNotAllowed);
 
     /** ADMIN Routes **/
 
     /** FRONT-END Route **/
     
     router.route('/dashboard')
-        .get(function (req, res, next) {
-            res.send('It works!');
-        });
-
-    router.route('/')
-        .all(HomeController.index);
+        .get(function (req, res, next) { res.send('It works!'); })
+        .all(methodNotAllowed());
 
     return router;
 };

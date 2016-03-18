@@ -93,9 +93,10 @@ module.exports = function (auth, statusCodes) {
             }
             var resp = auth.authenticate(req.body.username, req.body.password);
             if (!resp) { return res.status(statusCodes.AUTH_FAILED).json({response : false}); }
+            // TODO: set user object on session here
             req.session.regenerate(function(err) {
                 if (err) {
-                    // TODO: log error?
+                    return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred.');
                 }
                 return res.redirect('/lvm/dashboard');
             });
@@ -103,12 +104,12 @@ module.exports = function (auth, statusCodes) {
         
         logout : function (req, res, next) {
             // destroy user session
-            // req.session.destroy(function(err) {
-            //   if (err) {
-            //       // TODO: log error?
-            //   }
-            //   res.redirect('/login');
-            // });
+            req.session.destroy(function(err) {
+              if (err) {
+                  return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred.');
+              }
+              res.redirect('/lvm/login');
+            });
         }
     };
 };
