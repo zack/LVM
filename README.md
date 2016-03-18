@@ -1,7 +1,7 @@
 # Literacy Volunteers of Massachusetts Application
 
 ## Information
-* Configured Port: `4000`
+* Configured Port: `8080`
 	* Note: Will probably want to change to 80, or something different depending on specific implementation (ie. Nginx to host static files & Node app for API only).
 * Web Path: http://127.0.0.1:4000/lvm/
 
