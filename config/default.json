@@ -3,7 +3,7 @@
     "port": 8080,
     "character_encoding": "utf-8",
     "user_database_path": "./users.json",
-    "database_url": "@@redacted@@",
-    "database_user": "@@redacted@@",
-    "database_password": "@@redacted@@"
+    "database_url": "cs4500.duncanbeard.com:3306",
+    "database_user": "test",
+    "database_password": "testing"
 }
