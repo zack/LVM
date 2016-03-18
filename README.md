@@ -17,6 +17,8 @@
 	* Production: `export NODE_ENV=production`
 * Start the application: `node app/index.js`
 
+When running locally, you can just run: `./start.sh development` in the app directory.
+
 ## Framework Overview
 This application uses an `express-train` framework on top of `express` for organization of application files.
 

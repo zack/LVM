@@ -1,6 +1,6 @@
 <html ng-app="lvmApp">
 <head>
-    <title>LVM App - Student Form</title>
+    <title>LVM App - Dashboard</title>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 
@@ -22,9 +22,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <script src="js/student-form.js"></script>
+    <script src="js/dashboard.js"></script>
 </head>
-<body ng-controller="FormController as form">
+<body ng-controller="DashboardController as form">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -49,7 +49,7 @@
                             </form>
                         </li>
                         <li>
-                            <a href="dashboard.html">Home</a>
+                            <a href="#">Dashboard</a>
                         </li>
                         <li>
                             <a href="#">Account</a>
@@ -66,9 +66,10 @@
 
             <div class="row">
                 <div class="col-md-3"></div>
-                <div class="col-md-9">
-                    <h2>New Student Form</h2>
+                <div class="col-md-7">
+                    <h2>LVM Dashboard</h2>
                 </div>
+                <div style="text-align:right" class="col-md-2">User: litvolma@aol.com</div>
             </div>
 
             <div class="row">
@@ -76,8 +77,14 @@
                     <div class="sidebar">
                         <ul class="nav nav-stacked nav-pills">
                             <!-- Section Names -->
-                            <li ng-repeat="section in form.formDefinition">
-                                <a ng-href="{{'#' + section.id}}">{{section.name}}</a>
+                            <li>
+                                <a href="student-form.html">Add a new Student</a>
+                            </li>
+                            <li>
+                                <a href="#">Add a new Tutor</a>
+                            </li>
+                            <li>
+                                <a href="#">...</a>
                             </li>
                         </ul>
                     </div>
@@ -85,33 +92,14 @@
                 <div class="col-md-9">
                     <form role="form">
 
-                        <div class="form-group" ng-repeat="section in form.formDefinition" id="{{section.id}}">
+                        <div class="form-group" id="main">
                             <hr/>
-                            <div class="row" ng-repeat="row in section.fields">
-                                <div class="{{field.class || 'col-md-12'}}" ng-repeat="field in row">
-                                    <label for="{{field.name}}">
-                                        {{field.placeholder}}
-                                    </label>
-
-                                    <div ng-switch="field.type">
-                                        <!-- Boolean (Yes/No) -->
-                                        <input ng-switch-when="boolean" type="checkbox" name="boolean-checkbox">
-
-                                        <!-- Dropdown with customizable options -->
-                                        <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle">
-                                            <option value="" disabled>{{field.placeholder}}</option>
-                                            <option ng-repeat="option in field.options" ng-value="{{option}}">{{option}}</option>
-                                        </select>
-
-                                        <!-- Other inputs -->
-                                        <input ng-switch-default type="{{field.type}}" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" maxlength="{{field.maxlength}}" />
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    Here are the latest updates...
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-default">
-                            Submit
-                        </button>
                     </form>
                 </div>
             </div>
@@ -119,10 +107,4 @@
     </div>
 </div>
 </body>
-
-<script>
-    $(document).ready(function() {
-        $("[name='boolean-checkbox']").bootstrapSwitch({onText: 'Yes', offText: 'No'});
-    });
-</script>
 </html>

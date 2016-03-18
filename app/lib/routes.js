@@ -17,9 +17,10 @@ module.exports = function (app, envConfig, statusCodes, HomeController, Authenti
      * Sends 405 for routes that are not allowed in this model
      */
     var methodNotAllowed = function (req, res, next) {
+        console.log(req, res, next);
         var error = new Error('Non supported method.');
         error.status = statusCodes.METHOD_NOT_ALLOWED;
-        next(error);
+        return next(error);
     };
     
     var test = function (req, res) {
@@ -41,7 +42,7 @@ module.exports = function (app, envConfig, statusCodes, HomeController, Authenti
     
     router.route('/dashboard')
         .get(function (req, res, next) { res.send('It works!'); })
-        .all(methodNotAllowed());
+        .all(methodNotAllowed);
 
     return router;
 };
