@@ -21,20 +21,26 @@ module.exports = function (app, envConfig, statusCodes, HomeController, Authenti
         error.status = statusCodes.METHOD_NOT_ALLOWED;
         next(error);
     };
+    
+    var test = function (req, res) {
+        res.send('It works!');
+    };
 
     /** API Routes **/
+
+    router.route('/login')
+        .post(AuthenticationController.login)
+        .all(methodNotAllowed);
+    router.use('/logout', AuthenticationController.logout);
 
     /** ADMIN Routes **/
 
     /** FRONT-END Route **/
     
-    router.use('/login', HomeController.login);
-    router.use('/authenticate', AuthenticationController.login);
-    router.use('/logout', AuthenticationController.logout);
-    
-    router.use('/dashboard', function (req, res, next) {
-        res.send('It works!');
-    });
+    router.route('/dashboard')
+        .get(function (req, res, next) {
+            res.send('It works!');
+        });
 
     router.route('/')
         .all(HomeController.index);

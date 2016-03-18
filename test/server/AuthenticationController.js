@@ -566,13 +566,18 @@ describe('Testing AuthenticationController', function() {
                 body : {
                     username: 'mike',
                     password: 'mikethedev'
+                },
+                session: {
+                    regenerate: null
                 }
             };
+            spyOn(req.session, 'regenerate').and.callFake(function (cb) { return cb(null); });
+            
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
             expect(res.send).not.toHaveBeenCalled();
-            expect(res.json).toHaveBeenCalledWith({response : true});
+            expect(res.redirect).toHaveBeenCalledWith('/dashboard');
             done();
         });
         
@@ -581,12 +586,17 @@ describe('Testing AuthenticationController', function() {
                 body : {
                     username: '498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421',
                     password: 'testing'
+                },
+                session: {
+                    regenerate: null
                 }
             };
+            spyOn(req.session, 'regenerate').and.callFake(function (cb) { return cb(null); });
+            
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.json).toHaveBeenCalledWith({response : true});
+            expect(res.redirect).toHaveBeenCalledWith('/dashboard');
             done();
         });
         
@@ -595,12 +605,17 @@ describe('Testing AuthenticationController', function() {
                 body : {
                     username: 'tester',
                     password: '498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421'
+                },
+                session: {
+                    regenerate: null
                 }
             };
+            spyOn(req.session, 'regenerate').and.callFake(function (cb) { return cb(null); });
+            
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.json).toHaveBeenCalledWith({response : true});
+            expect(res.redirect).toHaveBeenCalledWith('/dashboard');
             done();
         });
         
@@ -609,6 +624,9 @@ describe('Testing AuthenticationController', function() {
                 body : {
                     username: 'mike',
                     password: 'mikeisnotadev'
+                },
+                session: {
+                    regenerate: jasmine.createSpy('regenerate')
                 }
             };
             AuthenticationController.login(req, res, next);
@@ -652,12 +670,17 @@ describe('Testing AuthenticationController', function() {
                 body : {
                     username: '>todo!tester@google.comZ<2',
                     password: '#%$@^@$^()*)*#@$JL'
+                },
+                session: {
+                    regenerate: null
                 }
             };
+            spyOn(req.session, 'regenerate').and.callFake(function (cb) { return cb(null); });
+            
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.json).toHaveBeenCalledWith({response : true});
+            expect(res.redirect).toHaveBeenCalledWith('/dashboard');
             done();
         });
     });
