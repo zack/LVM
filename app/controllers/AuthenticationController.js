@@ -99,7 +99,7 @@ module.exports = function (auth, statusCodes) {
                     return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred.');
                 }
                 req.session.user = authResp;
-                return res.redirect('/lvm/dashboard.html');
+                return res.redirect('/lvm/dashboard');
             });
         },
         
@@ -109,7 +109,7 @@ module.exports = function (auth, statusCodes) {
               if (err) {
                   return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred.');
               }
-              res.redirect('/lvm/login.html');
+              res.redirect('/lvm/login');
             });
         }
     };

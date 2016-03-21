@@ -9,36 +9,31 @@ var pjson = require('../../package.json'),
     _ = require('underscore');
 
 module.exports = function (envConfig, constants, statusCodes) {
+    var config = {
+        homeConfig: {
+
+            version: pjson.version,
+
+            envConfig: JSON.stringify(_.extend(envConfig, {
+                statusCodes: statusCodes
+            })),
+
+            constants: constants
+        }
+    };
+    
     return {
-        // Landing page
-        index: function (req, res, next) {
-            res.render('index', {
-                homeConfig: {
-
-                    version: pjson.version,
-
-                    envConfig: JSON.stringify(_.extend(envConfig, {
-                        statusCodes: statusCodes
-                    })),
-
-                    constants: constants
-                }
-            });
+        // Landing & Login page
+        login: function (req, res, next) {
+            res.render('login', config);
         },
         
-        login: function (req, res, next) {
-            res.render('login', {
-                homeConfig: {
-
-                    version: pjson.version,
-
-                    envConfig: JSON.stringify(_.extend(envConfig, {
-                        statusCodes: statusCodes
-                    })),
-
-                    constants: constants
-                }
-            });
+        dashboard: function (req, res, next) {
+            res.render('dashboard', _.extend(config, {user: req.session.user}));
+        },
+        
+        addStudent: function (req, res, next) {
+            res.render('student-form', config);
         }
     };
 };
