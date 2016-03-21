@@ -37,6 +37,7 @@ This application uses an `express-train` framework on top of `express` for organ
 		* **views.js** - Configures application for rendering views (ie. *.hbs files). Typically used if server-side values need to be rendered into the HTML/JS for the client.
 	* **middleware/**
 		* **errorMiddleware.js** - Configures application level middleware to catch errors, log them, and gracefully indicate the error to the client.
+	* **protected/** - Static HTML, CSS, JavaScript, etc. files to be served to the client that are protected and only accessible to users that are logged in.
 	* **public/** - Static HTML, CSS, JavaScript, etc. files to be served to the client.
 	* **views/** - Views to be rendered (*.hbs) for the client.
 	* **index.js** - Configures express-train to be able to automatically inject app dependencies into controllers or components.

@@ -5,7 +5,8 @@
 
 'use strict';
 
-var express = require('express');
+var express = require('express'),
+    path = require('path');
 
 /*jshint -W072 */
 module.exports = function (app, envConfig, statusCodes, HomeController, AuthenticationController) {
@@ -67,10 +68,9 @@ module.exports = function (app, envConfig, statusCodes, HomeController, Authenti
     router.route('/dashboard')
         .get(HomeController.dashboard)
         .all(methodNotAllowed);
-        
-    router.route('/add-student')
-        .get(HomeController.addStudent)
-        .all(methodNotAllowed);
+
+    // Static Content for Protected content - prevents non-authenticated users from accessing these files        
+    router.all('*', express.static(path.resolve(__dirname + '/../protected')));   // static protected files in /protected        
 
     return router;
 };
