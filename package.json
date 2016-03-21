@@ -56,8 +56,6 @@
   },
   "main": "./app/index.js",
   "scripts": {
-    "start": "node ./app/index.js",
-    "test": "npm run server-test; npm run client-test",
     "server-test": "./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/server/jasmine.json",
     "client-test": "./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/client/jasmine.json"
   },
