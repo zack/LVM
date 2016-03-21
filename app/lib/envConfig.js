@@ -42,7 +42,6 @@ module.exports = function() {
         var scopedConfig = new BaseEnvConfig();
 
         scopedConfig.name = 'production';
-        // TODO: change this to be a permanent location on the server
         scopedConfig.express_train_config_file_location = '/config/';
 
         return scopedConfig;
