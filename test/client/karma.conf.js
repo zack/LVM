@@ -20,6 +20,8 @@ module.exports = function(config) {
             "karma-phantomjs-launcher"
         ],
         
+        port: 9876,
+        
         singleRun: true
     });
 };
