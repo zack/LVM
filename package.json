@@ -48,7 +48,7 @@
     "mysql": "~2.10.x",
     "request": "~2.69.x",
     "underscore": "~1.8.x",
-    "winston": "~0.8.x"
+    "winston": "~2.2.x"
   },
   "devDependencies": {
     "jasmine": "~2.4.x"
