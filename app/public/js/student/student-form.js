@@ -99,5 +99,5 @@ angular.module('lvmApp')
         
         $scope.gatherValues = function () {
             return 5;
-        }
+        };
     });
