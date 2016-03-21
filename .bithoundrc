@@ -1,6 +1,10 @@
 {
   "ignore": [
-    "**/node_modules/**"
+    "**/node_modules/**",
+    "**/test/lib/**",
+    "**/**-min-**",
+    "**/**-min.**",
+    "**/**.min.**"
   ],
   "test": [
     "**/test/**"

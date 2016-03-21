@@ -41,7 +41,7 @@
     "console-stamp": "~0.2.x",
     "cors": "~2.7.x",
     "express": "~4.13.x",
-    "express-session": "^1.13.0",
+    "express-session": "~1.13.x",
     "express-train": "~4.0.x",
     "hbs": "~4.0.x",
     "method-override": "~2.3.0",
@@ -51,12 +51,16 @@
     "winston": "~2.2.x"
   },
   "devDependencies": {
-    "jasmine": "~2.4.x"
+    "jasmine": "~2.4.x",
+    "karma": "~0.13.x",
+    "karma-jasmine": "~0.3.x",
+    "karma-phantomjs-launcher": "~1.0.x",
+    "phantomjs-prebuilt": "~2.1.x"
   },
   "main": "./app/index.js",
   "scripts": {
     "server-test": "./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/server/jasmine.json",
-    "client-test": "./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/client/jasmine.json"
+    "client-test": "LC_ALL=C && ./node_modules/.bin/karma start test/client/karma.conf.js"
   },
   "constants": {
     "title": "lvm"

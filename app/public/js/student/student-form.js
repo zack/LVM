@@ -3,8 +3,8 @@
  *   explicit written consent of all authors of this project.
  */
  
-angular.module('lvmApp', [])
-    .controller('FormController', function() {
+angular.module('lvmApp')
+    .controller('FormController', function($scope) {
         var form = this;
 
         form.formDefinition = [
@@ -96,4 +96,8 @@ angular.module('lvmApp', [])
                 ]
             }
         ];
+        
+        $scope.gatherValues = function () {
+            return 5;
+        };
     });
