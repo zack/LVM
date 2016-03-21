@@ -14,8 +14,8 @@ module.exports = function(logging, config) {
     var connection = mysql.createConnection({
         host     : config.database_url,
         user     : config.database_user,
-        password : config.database_password
-        // TODO: add the specific database here
+        password : config.database_password,
+        database : config.database_name
     });
     
     connection.connect(function(err) {

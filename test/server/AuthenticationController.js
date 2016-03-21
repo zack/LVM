@@ -566,13 +566,18 @@ describe('Testing AuthenticationController', function() {
                 body : {
                     username: 'mike',
                     password: 'mikethedev'
+                },
+                session: {
+                    regenerate: null
                 }
             };
+            spyOn(req.session, 'regenerate').and.callFake(function (cb) { return cb(null); });
+            
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
             expect(res.send).not.toHaveBeenCalled();
-            expect(res.json).toHaveBeenCalledWith({response : true});
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
             done();
         });
         
@@ -581,12 +586,17 @@ describe('Testing AuthenticationController', function() {
                 body : {
                     username: '498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421',
                     password: 'testing'
+                },
+                session: {
+                    regenerate: null
                 }
             };
+            spyOn(req.session, 'regenerate').and.callFake(function (cb) { return cb(null); });
+            
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.json).toHaveBeenCalledWith({response : true});
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
             done();
         });
         
@@ -595,12 +605,17 @@ describe('Testing AuthenticationController', function() {
                 body : {
                     username: 'tester',
                     password: '498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421498066631439527714214980666314395277142149806663143952771421'
+                },
+                session: {
+                    regenerate: null
                 }
             };
+            spyOn(req.session, 'regenerate').and.callFake(function (cb) { return cb(null); });
+            
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.json).toHaveBeenCalledWith({response : true});
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
             done();
         });
         
@@ -609,6 +624,9 @@ describe('Testing AuthenticationController', function() {
                 body : {
                     username: 'mike',
                     password: 'mikeisnotadev'
+                },
+                session: {
+                    regenerate: jasmine.createSpy('regenerate')
                 }
             };
             AuthenticationController.login(req, res, next);
@@ -652,12 +670,82 @@ describe('Testing AuthenticationController', function() {
                 body : {
                     username: '>todo!tester@google.comZ<2',
                     password: '#%$@^@$^()*)*#@$JL'
+                },
+                session: {
+                    regenerate: null
                 }
             };
+            spyOn(req.session, 'regenerate').and.callFake(function (cb) { return cb(null); });
+            
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.json).toHaveBeenCalledWith({response : true});
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
+            done();
+        });
+        
+        it('should not redirect a successful login if there is an error with the session', function(done) {
+            var req = { 
+                body : {
+                    username: '>todo!tester@google.comZ<2',
+                    password: '#%$@^@$^()*)*#@$JL'
+                },
+                session: {
+                    regenerate: null
+                }
+            };
+            spyOn(req.session, 'regenerate').and.callFake(function (cb) { return cb(new Error()); });
+            
+            AuthenticationController.login(req, res, next);
+            
+            expect(res.status).toHaveBeenCalledWith(statusCodes.INTERNAL_SERVER_ERROR);
+            expect(res.redirect).not.toHaveBeenCalledWith();
+            done();
+        });
+    });
+    
+    describe('logout', function() {
+        beforeEach(resetSpies);
+        
+        // POSITIVE TESTS:
+        it('should log a user out', function (done) {
+            var req = { 
+                body : {
+                    username: 'mike',
+                    password: 'mikethedev'
+                },
+                session: {
+                    destroy: null
+                }
+            };
+            spyOn(req.session, 'destroy').and.callFake(function (cb) { return cb(null); });
+            
+            AuthenticationController.logout(req, res, next);
+            
+            expect(res.status).not.toHaveBeenCalled();
+            expect(res.send).not.toHaveBeenCalled();
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login.html');
+            done();
+        });
+        
+        // NEGATIVE TESTS:
+        it('should report an error if there is one during a logout', function(done) {
+            var req = { 
+                body : {
+                    username: 'mike',
+                    password: 'mikethedev'
+                },
+                session: {
+                    destroy: null
+                }
+            };
+            spyOn(req.session, 'destroy').and.callFake(function (cb) { return cb(new Error()); });
+            
+            AuthenticationController.logout(req, res, next);
+            
+            expect(res.status).toHaveBeenCalledWith(statusCodes.INTERNAL_SERVER_ERROR);
+            expect(res.send).toHaveBeenCalled();
+            expect(res.redirect).not.toHaveBeenCalled();
             done();
         });
     });

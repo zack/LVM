@@ -22,7 +22,7 @@ module.exports = function (app, config, routes, envConfig, errorMiddleware) {
     app.use(bodyParser.json());                                                                       // parse application/json
     app.use(methodOverride('_method'));                                                               // post -> put and delete where not allowed in client
     app.use(session({ secret: 'literacy is the key!', cookie: { maxAge: 60000 }}));
-    app.use(envConfig.public.app_root_url, routes);                                            // app router
+    app.use(envConfig.public.app_root_url, routes);                                                   // app router
 
     app.use(function(req, res, next){                                                                 // barebones 404 handler
         return res.status(404).send('Not Found.').end();

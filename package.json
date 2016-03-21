@@ -46,18 +46,15 @@
     "hbs": "~4.0.x",
     "method-override": "~2.3.0",
     "mysql": "~2.10.x",
-    "path": "~0.12.x",
     "request": "~2.69.x",
     "underscore": "~1.8.x",
-    "winston": "~0.8.x"
+    "winston": "~2.2.x"
   },
   "devDependencies": {
     "jasmine": "~2.4.x"
   },
   "main": "./app/index.js",
   "scripts": {
-    "start": "node ./app/index.js",
-    "test": "npm run server-test; npm run client-test",
     "server-test": "./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/server/jasmine.json",
     "client-test": "./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/client/jasmine.json"
   },

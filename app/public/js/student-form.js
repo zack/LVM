@@ -3,7 +3,7 @@
  *   explicit written consent of all authors of this project.
  */
  
-angular.module('formApp', [])
+angular.module('lvmApp', [])
     .controller('FormController', function() {
         var form = this;
 
