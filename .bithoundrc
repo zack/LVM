@@ -1,0 +1,20 @@
+{
+  "ignore": [
+    "**/node_modules/**",
+    "**/test/**/lib/**",
+    "**/**-min-**",
+    "**/**-min.**",
+    "**/**.min.**"
+  ],
+  "test": [
+    "**/test/**"
+  ],
+  "dependencies": {
+    "mute": [
+      "express-train"
+    ]
+  },
+  "critics": {
+    "wc": { "limit": 5000 }
+  }
+}

@@ -19,25 +19,42 @@ module.exports = function (app, envConfig, statusCodes, HomeController, Authenti
     var methodNotAllowed = function (req, res, next) {
         var error = new Error('Non supported method.');
         error.status = statusCodes.METHOD_NOT_ALLOWED;
-        next(error);
+        return next(error);
     };
-
-    /** API Routes **/
-
-    /** ADMIN Routes **/
-
-    /** FRONT-END Route **/
     
-    router.use('/login', HomeController.login);
-    router.use('/authenticate', AuthenticationController.login);
-    router.use('/logout', AuthenticationController.logout);
+    // UNPROTECTED ROUTES:
     
-    router.use('/dashboard', function (req, res, next) {
-        res.send('It works!');
+        // API
+    router.route('/login')
+        .post(AuthenticationController.login)
+        .all(methodNotAllowed);
+    
+        // FRONT-END
+    
+    
+    // PROTECTED ROUTES:
+    // Verify there is a user logged in before allowing access
+    router.use(function(req, res, next) {
+        // Redirect to the login page if there is no user logged in
+        if (!req.session.user) {
+            return res.redirect('/lvm/login.html');
+        } else {
+            // Otherwise, allow the user through to the next matching route
+            return next();
+        }
     });
 
-    router.route('/')
-        .all(HomeController.index);
+        // API
+    router.route('/logout')
+        .get(AuthenticationController.logout)
+        .all(methodNotAllowed);
+
+        // ADMIN
+
+        // FRONT-END
+    router.route('/dashboard')
+        .get(function (req, res, next) { res.send('It works!'); })
+        .all(methodNotAllowed);
 
     return router;
 };

@@ -29,15 +29,6 @@ module.exports = function() {
         };
     }
 
-    function createLocalConfiguration() {
-        var scopedConfig = new BaseEnvConfig();
-
-        scopedConfig.name = 'local';
-        scopedConfig.express_train_config_file_location = '../config';
-
-        return scopedConfig;
-    }
-
     function createDevelopmentConfiguration() {
         var scopedConfig = new BaseEnvConfig();
 
@@ -51,8 +42,7 @@ module.exports = function() {
         var scopedConfig = new BaseEnvConfig();
 
         scopedConfig.name = 'production';
-        // TODO: change this to be a permanent location on the server
-        scopedConfig.express_train_config_file_location = '../config';
+        scopedConfig.express_train_config_file_location = '/config/';
 
         return scopedConfig;
     }
@@ -62,8 +52,6 @@ module.exports = function() {
             return createProductionConfiguration();
         case 'development':
             return createDevelopmentConfiguration();
-        case 'local':
-            return createLocalConfiguration();
         default:
             throw new Error('Unsupported environment ' + process.env.NODE_ENV);
     }

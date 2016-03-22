@@ -2,9 +2,9 @@
  * Copyright (C) 2016. No part of this file may be replicated without the
  *   explicit written consent of all authors of this project.
  */
-
-angular.module('formApp', [])
-    .controller('FormController', function() {
+angular.module('lvmApp')
+    .controller('FormController', function($scope) {
+		origin:app/public/js/student/student-form.js
         var form = this;
 
         form.formDefinition = [
@@ -154,4 +154,8 @@ angular.module('formApp', [])
                 ]
             }
         ];
+
+        $scope.gatherValues = function () {
+            return 5;
+        };
     });

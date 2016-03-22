@@ -1,6 +1,6 @@
-<html ng-app="formApp">
+<html ng-app="lvmApp">
 <head>
-    <title>Student Form</title>
+    <title>LVM App - Student Form</title>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 
@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="css/form-style.css">
 
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -22,50 +22,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <script src="js/student-form.js"></script>
+    <script src="js/lvm.js"></script>
+    <script src="js/student/student-form.js"></script>
 </head>
 
 <body ng-controller="FormController as form">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="navbar-header">
-
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                    </button>
-                    <img src="smalllogo.png" style="padding:10px 0px 0px 0px"></img>
-                    <a class="navbar-brand" href="#">Literacy Volunteers of Massachusetts</a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <form class="navbar-form navbar-left" role="search">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Search" />
-                                </div>
-                                <button type="submit" class="btn btn-default">
-                                    Submit
-                                </button>
-                            </form>
-                        </li>
-                        <li>
-                            <a href="#">Home</a>
-                        </li>
-                        <li>
-                            <a href="#">Account</a>
-                        </li>
-                        <li>
-                            <a href="#">Admin Portal</a>
-                        </li>
-                        <li>
-                            <a href="#">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <div id="header-include" ng-include="'components/header.html'"></div>
 
             <div class="row">
                 <div class="col-md-3"></div>
@@ -105,7 +70,7 @@
                                             <option value="" disabled>{{field.placeholder}}</option>
                                             <option ng-repeat="option in field.options" ng-value="{{option}}">{{option}}</option>
                                         </select>
-<!-- time table -->
+										<!-- time table -->
                                         <div ng-switch-when="timetable" class="fixedtable">
                                         	<table class="table table-bordered">
                                         	<tbody>

@@ -1,9 +1,10 @@
 # Literacy Volunteers of Massachusetts Application
 
 ## Information
-* Configured Port: `4000`
+* Configured Port: `8080`
 	* Note: Will probably want to change to 80, or something different depending on specific implementation (ie. Nginx to host static files & Node app for API only).
-* Web Path: http://127.0.0.1:4000/lvm/
+* If running locally: http://127.0.0.1:8080/lvm/
+* If checking on our AWS Development Environment: http://cs4500.duncanbeard.com:8080/lvm/
 
 ## Environment Setup
 * Checkout the repository and change directories to it.
@@ -16,6 +17,8 @@
 	* Development: `export NODE_ENV=development`
 	* Production: `export NODE_ENV=production`
 * Start the application: `node app/index.js`
+
+When running locally, you can just run: `./start.sh development` in the app directory.
 
 ## Framework Overview
 This application uses an `express-train` framework on top of `express` for organization of application files.
