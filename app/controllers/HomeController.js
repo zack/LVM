@@ -25,7 +25,7 @@ module.exports = function (envConfig, constants, statusCodes) {
     return {
         // Landing & Login page
         login: function (req, res, next) {
-            res.render('login', config);
+            res.render('login', _.extend(config, req.query));
         },
         
         dashboard: function (req, res, next) {
