@@ -2,7 +2,7 @@
  * Copyright (C) 2016. No part of this file may be replicated without the
  *   explicit written consent of all authors of this project.
  */
- 
+
 angular.module('formApp', [])
     .controller('FormController', function() {
         var form = this;
@@ -71,9 +71,67 @@ angular.module('formApp', [])
                 id: 'demographics',
                 name: 'Demographics',
                 fields: [
-
+                	[
+                		{name: 'race', class: 'col-md-4', value: '', type: 'dropdown', options: ['American Indian','Native Hawaiian/Pacific Islander','Asian','White','Black or African American','Hispanic/Latino'], placeholder: 'Race'},
+                		{name: 'countryoforigin', class: 'col-md-4', value:'', type:'dropdown', options: ['USA', 'Afghanistan','Albania','Algeria','American Samoa','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan',
+                		'Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bermuda','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei Darussalam','Bulgaria','Burkina Faso','Burundi','Cambodia','Cameroon','Canada','Cape Verde','Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Cook Islands','Costa Rica',
+						'Cote d\'Ivoire','Croatia','Cuba','Cyprus','Czech Republic','Dem.Rep.of the Congo','Denmark','Djibouti','Dominica','Dominican Republic','East Timor','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Ethiopia','Fiji',
+						'Finland','France','French Guiana','French Polynesia','Gabon','Gambia','Georgia','Germany','Ghana','Gibraltar','Greece','Grenada','Guadeloupe','Guam','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hong Kong S A R','Hungary',
+						'Iceland','India','Indonesia','Iran (Islamic Rep. Of)','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Korea, Dem.People\'s Rep.','Korea, Republic of','Kuwait','Kyrgyzstan','Lao People\'s Dem. Rep.','Latvia',
+						'Lebanon','Lesotho','Liberia','Libyan Arab Jamahiriya','Liechtenstein','Lithuania','Luxembourg','Macao S A R','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Marshall Islands','Martinique','Mauritania','Mauritius','Mexico','Micronesia, Fed. States of',
+						'Monaco','Mongolia','Morocco','Mozambique','Myanmar','Namibia','Nauru','Nepal','Netherlands','Netherlands Antilles','New Caledonia','New Zealand','Nicaragua','Niger','Nigeria','Northern Mariana Islands','Norway','Occ. Palestinian Territory','Oman',
+						'Pakistan','Palau','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Puerto Rico','Qatar','Republic of Moldova','Reunion','Romania','Russian Federation','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent / Grenadines','Samoa',
+						'San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia','South Africa','Spain','Sri Lanka','Sudan','Suriname','Swaziland','Sweden','Switzerland','Syrian Arab Republic',
+						'Tajikistan','Thailand','The FYR of Macedonia','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','U.S. Virgin Islands','Uganda','Ukraine','United Arab Emirates','United Kingdom','United Rep. Of Tanzania','Uruguay',
+						'Uzbekistan','Vanuatu','Venezuela','Viet Nam','Western Sahara','Yemen','Yugoslavia','Zambia','Zimbabwe'], placeholder: 'Country of Origin'},
+                		{name: 'nativelanguage', class: 'col-md-3', value:'', type: 'dropdown', options: ['English','Albanian','Arabic','Cambodian','CapeVerdeanCreole','Chinese - Cantonese','Chinese - Mandarin','Chinese - Toisanese','Farsi','French','Gaelic','German','Greek','Haitian Creole','Hindi','Italian','Japanese',
+                		'Korean','Laotian','Lebanese','Polish','Portuguese','Russian','Spanish','Syrian','Turkish','Urdu','Vietnamese','Other'], placeholder: 'Native Language'}
+                		],
+                ]
+			},
+			{
+                id: 'timesavailable',
+                name: 'Times',
+                fields: [
+                [
+                	{name: 'available', type: 'timetable'}
+                ],
                 ]
             },
+            {
+				id: 'tutorpreference',
+				name: 'Tutor Preference',
+				fields: [
+				[
+					{name: 'preference', type: 'preferenceTable'},
+					{name: 'preferencecomments', type: 'text', placeholder:'Comments:'},
+					{name: 'meetatbpl', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Can you meet at BPL-Coply?'},
+					{name: 'if not, where?', class: 'col-md-9', value: '', type: 'text', trim:true, placeholder: 'If not, where?'}
+				],
+				]
+			},
+			{
+				id: 'family',
+				name: 'Family Information',
+				fields: [
+				[
+					{name: 'haschildren', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do you have any Children?'},
+					{name: 'dependantTable', type: 'dependantTable'},
+					{name: 'singleparent', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Are you a single parent?'},
+					{name: 'familycomments', type: 'text', placeholder:'Comments:'}
+				],
+				]
+			},
+			{
+				id: 'education',
+				name: 'Educational Experience',
+				fields: [
+				[
+					{name: 'parentsread', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do your parents read?'},
+					{name: 'parentsread', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do your parents read?'},
+				],
+				]
+			},
             {
                 id: 'goals',
                 name: 'Goals',
