@@ -1,6 +1,7 @@
 # Literacy Volunteers of Massachusetts Application
 
 ## Information
+[![Build Status](http://cs4500.duncanbeard.com:8090/buildStatus/icon?job=server)](http://cs4500.duncanbeard.com:8090/job/server)
 * Configured Port: `8080`
 	* Note: Will probably want to change to 80, or something different depending on specific implementation (ie. Nginx to host static files & Node app for API only).
 * If running locally: http://127.0.0.1:8080/lvm/
