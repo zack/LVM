@@ -2,6 +2,10 @@
 
 ## Information
 [![Build Status](http://cs4500.duncanbeard.com:8090/buildStatus/icon?job=server)](http://cs4500.duncanbeard.com:8090/job/server)
+[![bitHound Overall Score](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/score.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server)
+[![bitHound Dependencies](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/dependencies.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/devDependencies.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/master/dependencies/npm)
+[![bitHound Code](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/code.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server)
 
 * Configured Port: `8080`
 	* Note: Will probably want to change to 80, or something different depending on specific implementation (ie. Nginx to host static files & Node app for API only).
