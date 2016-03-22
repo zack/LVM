@@ -5,7 +5,8 @@
 
 'use strict';
 
-var express = require('express');
+var express = require('express'),
+    path = require('path');
 
 /*jshint -W072 */
 module.exports = function (app, envConfig, statusCodes, HomeController, AuthenticationController) {
@@ -22,22 +23,34 @@ module.exports = function (app, envConfig, statusCodes, HomeController, Authenti
         return next(error);
     };
     
+    // --------------------------------------------------------------    
     // UNPROTECTED ROUTES:
     
         // API
-    router.route('/login')
+    
+    // authentication route
+    router.route('/account/login')
         .post(AuthenticationController.login)
         .all(methodNotAllowed);
     
         // FRONT-END
     
-    
+    // Login route
+    router.route('/login')
+        .get(HomeController.login)
+        .all(methodNotAllowed);
+        
+    // Home/Landing page - redirect to login
+    router.route('/')
+        .all(function (req, res, next) { res.redirect('/lvm/login'); });
+
+    // --------------------------------------------------------------    
     // PROTECTED ROUTES:
     // Verify there is a user logged in before allowing access
     router.use(function(req, res, next) {
         // Redirect to the login page if there is no user logged in
         if (!req.session.user) {
-            return res.redirect('/lvm/login.html');
+            return res.redirect('/lvm/login');
         } else {
             // Otherwise, allow the user through to the next matching route
             return next();
@@ -53,8 +66,11 @@ module.exports = function (app, envConfig, statusCodes, HomeController, Authenti
 
         // FRONT-END
     router.route('/dashboard')
-        .get(function (req, res, next) { res.send('It works!'); })
+        .get(HomeController.dashboard)
         .all(methodNotAllowed);
+
+    // Static Content for Protected content - prevents non-authenticated users from accessing these files        
+    router.all('*', express.static(path.resolve(__dirname + '/../protected')));   // static protected files in /protected        
 
     return router;
 };

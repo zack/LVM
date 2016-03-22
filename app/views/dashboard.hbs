@@ -36,25 +36,12 @@
                 <div class="col-md-7">
                     <h2>LVM Dashboard</h2>
                 </div>
-                <div style="text-align:right" class="col-md-2">User: litvolma@aol.com</div>
+                <div style="text-align:right" class="col-md-2">User: {{user.username}}</div>
             </div>
 
             <div class="row">
                 <div class="col-md-3 sidebar-outer">
-                    <div class="sidebar">
-                        <ul class="nav nav-stacked nav-pills">
-                            <!-- Section Names -->
-                            <li>
-                                <a href="student-form.html">Add a new Student</a>
-                            </li>
-                            <li>
-                                <a href="#">Add a new Tutor</a>
-                            </li>
-                            <li>
-                                <a href="#">...</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <div id="sidebar-include" ng-include="'components/dashboard-sidebar.html'"></div>
                 </div>
                 <div class="col-md-9">
                     <form role="form">

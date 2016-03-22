@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-9">
                     <form role="form">
-
+            
                         <div class="form-group" ng-repeat="section in form.formDefinition" id="{{section.id}}">
                             <hr/>
                             <div class="row" ng-repeat="row in section.fields">
@@ -59,17 +59,17 @@
                                     <label for="{{field.name}}">
                                         {{field.placeholder}}
                                     </label>
-
+            
                                     <div ng-switch="field.type">
                                         <!-- Boolean (Yes/No) -->
                                         <input ng-switch-when="boolean" type="checkbox" name="boolean-checkbox">
-
+            
                                         <!-- Dropdown with customizable options -->
                                         <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle">
                                             <option value="" disabled>{{field.placeholder}}</option>
                                             <option ng-repeat="option in field.options" ng-value="{{option}}">{{option}}</option>
                                         </select>
-
+            
                                         <!-- Other inputs -->
                                         <input ng-switch-default type="{{field.type}}" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" maxlength="{{field.maxlength}}" />
                                     </div>

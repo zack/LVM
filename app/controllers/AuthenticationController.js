@@ -92,14 +92,14 @@ module.exports = function (auth, statusCodes) {
                 return res.status(statusCodes.BAD_REQUEST_STATUS).send('A password is required.');
             }
             var authResp = auth.authenticate(req.body.username, req.body.password);
-            if (!authResp) { return res.status(statusCodes.AUTH_FAILED).json({response : false}); }
+            if (!authResp) { return res.redirect('/lvm/login?failed=true'); }
             // authResp is the user object at this point since it was not false
             req.session.regenerate(function(err) {
                 if (err) {
-                    return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred.');
+                    return res.redirect('/lvm/login?error=true');
                 }
                 req.session.user = authResp;
-                return res.redirect('/lvm/dashboard.html');
+                return res.redirect('/lvm/dashboard');
             });
         },
         
@@ -109,7 +109,7 @@ module.exports = function (auth, statusCodes) {
               if (err) {
                   return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred.');
               }
-              res.redirect('/lvm/login.html');
+              res.redirect('/lvm/login');
             });
         }
     };

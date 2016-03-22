@@ -577,7 +577,7 @@ describe('Testing AuthenticationController', function() {
             
             expect(res.status).not.toHaveBeenCalled();
             expect(res.send).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard');
             done();
         });
         
@@ -596,7 +596,7 @@ describe('Testing AuthenticationController', function() {
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard');
             done();
         });
         
@@ -615,7 +615,7 @@ describe('Testing AuthenticationController', function() {
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard');
             done();
         });
         
@@ -631,8 +631,8 @@ describe('Testing AuthenticationController', function() {
             };
             AuthenticationController.login(req, res, next);
             
-            expect(res.status).toHaveBeenCalledWith(statusCodes.AUTH_FAILED);
-            expect(res.json).toHaveBeenCalledWith({response : false});
+            expect(res.status).not.toHaveBeenCalled();
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?failed=true');
             done();
         });
         
@@ -680,7 +680,7 @@ describe('Testing AuthenticationController', function() {
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard');
             done();
         });
         
@@ -698,8 +698,8 @@ describe('Testing AuthenticationController', function() {
             
             AuthenticationController.login(req, res, next);
             
-            expect(res.status).toHaveBeenCalledWith(statusCodes.INTERNAL_SERVER_ERROR);
-            expect(res.redirect).not.toHaveBeenCalledWith();
+            expect(res.status).not.toHaveBeenCalled();
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?error=true');
             done();
         });
     });
@@ -724,7 +724,7 @@ describe('Testing AuthenticationController', function() {
             
             expect(res.status).not.toHaveBeenCalled();
             expect(res.send).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/login.html');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login');
             done();
         });
         
