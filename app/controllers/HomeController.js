@@ -30,10 +30,6 @@ module.exports = function (envConfig, constants, statusCodes) {
         
         dashboard: function (req, res, next) {
             res.render('dashboard', _.extend(config, {user: req.session.user}));
-        },
-        
-        addStudent: function (req, res, next) {
-            res.render('student-form', config);
         }
     };
 };
