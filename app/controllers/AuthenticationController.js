@@ -9,6 +9,8 @@
 
 var _ = require('underscore');
 
+var failedLoginAttemptsTimeout = 1000 * 60 * 10; // 10 minutes
+
 var passwordMeetsRequirements = function (pw) {
     // TODO: determine password reqmts
     return pw.length < 256;
@@ -91,12 +93,18 @@ module.exports = function (auth, statusCodes) {
             } else if (!req.body.password) {
                 return res.status(statusCodes.BAD_REQUEST_STATUS).send('A password is required.');
             }
+            req.session.loginAttempts = (req.session.loginAttempts || 0) + 1;
+            // 3 login attempts
+            if (req.session.lastLoginAttemptTime && req.session.loginAttempts > 2 && ((new Date().getTime()) - req.session.lastLoginAttemptTime) < failedLoginAttemptsTimeout) {
+                return res.redirect('/lvm/login?errorMessage=Maximum login attempts reached. Please try again in 10 minutes.');
+            }
+            req.session.lastLoginAttemptTime = new Date().getTime();
             var authResp = auth.authenticate(req.body.username, req.body.password);
-            if (!authResp) { return res.redirect('/lvm/login?failed=true'); }
+            if (!authResp) { return res.redirect('/lvm/login?errorMessage=Bad username or password.'); }
             // authResp is the user object at this point since it was not false
             req.session.regenerate(function(err) {
                 if (err) {
-                    return res.redirect('/lvm/login?error=true');
+                    return res.redirect('/lvm/login?errorMessage=Unable to create a new session.');
                 }
                 req.session.user = authResp;
                 return res.redirect('/lvm/dashboard');
