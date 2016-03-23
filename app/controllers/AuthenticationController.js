@@ -88,23 +88,27 @@ module.exports = function (auth, statusCodes) {
         
         // Requires: req.body.username, req.body.password
         login : function (req, res, next) {
+            var redirectToLogin = function (errorMessage) {
+                return res.redirect('/lvm/login?errorMessage=' + errorMessage);
+            };
+            
             if (!req.body.username) {
-                return res.status(statusCodes.BAD_REQUEST_STATUS).send('A username is required.');
+                return redirectToLogin('A username is required.');
             } else if (!req.body.password) {
-                return res.status(statusCodes.BAD_REQUEST_STATUS).send('A password is required.');
+                return redirectToLogin('A password is required.');
             }
             req.session.loginAttempts = (req.session.loginAttempts || 0) + 1;
             // 3 login attempts
             if (req.session.lastLoginAttemptTime && req.session.loginAttempts > 2 && ((new Date().getTime()) - req.session.lastLoginAttemptTime) < failedLoginAttemptsTimeout) {
-                return res.redirect('/lvm/login?errorMessage=Maximum login attempts reached. Please try again in 10 minutes.');
+                return redirectToLogin('Maximum login attempts reached. Please try again in 10 minutes.');
             }
             req.session.lastLoginAttemptTime = new Date().getTime();
             var authResp = auth.authenticate(req.body.username, req.body.password);
-            if (!authResp) { return res.redirect('/lvm/login?errorMessage=Bad username or password.'); }
+            if (!authResp) { return redirectToLogin('Bad username or password.'); }
             // authResp is the user object at this point since it was not false
             req.session.regenerate(function(err) {
                 if (err) {
-                    return res.redirect('/lvm/login?errorMessage=Unable to create a new session.');
+                    return redirectToLogin('Unable to create a new session.');
                 }
                 req.session.user = authResp;
                 return res.redirect('/lvm/dashboard');

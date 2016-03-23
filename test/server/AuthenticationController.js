@@ -684,8 +684,7 @@ describe('Testing AuthenticationController', function() {
             };
             AuthenticationController.login(req, res, next);
             
-            expect(res.status).toHaveBeenCalledWith(statusCodes.BAD_REQUEST_STATUS);
-            expect(res.send).toHaveBeenCalledWith('A username is required.');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?errorMessage=A username is required.');
             done();
         });
         
@@ -698,8 +697,7 @@ describe('Testing AuthenticationController', function() {
             };
             AuthenticationController.login(req, res, next);
             
-            expect(res.status).toHaveBeenCalledWith(statusCodes.BAD_REQUEST_STATUS);
-            expect(res.send).toHaveBeenCalledWith('A password is required.');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?errorMessage=A password is required.');
             done();
         });
         
