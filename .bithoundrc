@@ -15,6 +15,7 @@
     ]
   },
   "critics": {
-    "wc": { "limit": 5000 }
+    "lint": {"engine": "jshint"},
+    "wc": { "limit": 10000 }
   }
 }
