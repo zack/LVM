@@ -25,7 +25,7 @@
                                 //   "single" : require single quotes
                                 //   "double" : require double quotes
     "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
-    "unused"        : true,     // Unused variables:
+    "unused"        : "vars",     // Unused variables:
                                 //   true     : all variables, last function parameter
                                 //   "vars"   : all variables only
                                 //   "strict" : all variables, all function parameters
@@ -42,7 +42,6 @@
     "boss"          : false,     // true: Tolerate assignments where comparisons would be expected
     "debug"         : false,     // true: Allow debugger statements e.g. browser breakpoints.
     "eqnull"        : false,     // true: Tolerate use of `== null`
-    "esversion"     : 5,         // {int} Specify the ECMAScript version to which the code must adhere.
     "moz"           : false,     // true: Allow Mozilla specific syntax (extends and overrides esnext features)
                                  // (ex: `for each`, multiple try/catch, function expression…)
     "evil"          : false,     // true: Tolerate use of `eval` and `new Function()`
@@ -88,6 +87,9 @@
 
     // Custom Globals
     "globals"       : { 
-        "angular" : true
+        "angular" : true,
+        "module"  : true,
+        "process" : true,
+        "__dirname": true
     }
 }

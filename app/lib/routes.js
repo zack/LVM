@@ -8,10 +8,7 @@
 var express = require('express'),
     path = require('path');
 
-/*jshint -W072 */
 module.exports = function (statusCodes, HomeController, AuthenticationController) {
-/*jshint +W072 */
-
     var router = express.Router();
 
     /**
