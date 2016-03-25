@@ -13,6 +13,10 @@ module.exports = function(config) {
             './**/*.js'
         ],
 
+        client: {
+            captureConsole: true
+        },
+
         frameworks: ["jasmine"],
         
         browsers : ['PhantomJS'],
