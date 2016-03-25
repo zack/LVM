@@ -53,14 +53,9 @@
                 <div class="col-md-6">
                     <form role="form" method="POST" action="/lvm/account/login">
                         <div>
-                            {{#if failed}}
+                            {{#if errorMessage}}
                                 <div class="alert alert-danger">
-                                    <b>Error:</b> Bad username and/or password.
-                                </div>
-                            {{/if}}
-                            {{#if error}}
-                                <div class="alert alert-danger">
-                                    <b>Error:</b> There was an error creating a new session.
+                                    <b>Error:</b> {{errorMessage}}
                                 </div>
                             {{/if}}
                             <div>
