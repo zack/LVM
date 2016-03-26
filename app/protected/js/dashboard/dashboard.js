@@ -9,4 +9,7 @@ angular.module('lvmApp')
     .controller('DashboardController', function() {
         var form = this;
         
+        form.fetchData = function () {
+            
+        };
     });

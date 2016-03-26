@@ -12,15 +12,25 @@ var _ = require('underscore');
 var failedLoginAttemptsTimeout = 1000 * 60 * 10; // 10 minutes
 
 var passwordMeetsRequirements = function (pw) {
-    // TODO: determine password reqmts
     return pw.length < 256;
 };
 
+
 module.exports = function (auth, statusCodes) {
+    var validateField = function (res, field, errorMsg, checkFn) {
+        var valid = checkFn ? checkFn(field) : !_.isUndefined(field);
+        return valid ? true : res.status(statusCodes.BAD_REQUEST_STATUS).send(errorMsg);
+    };
+
     return {
-        
         // Requires: req.body.username, req.body.password, req.body.role, req.body.branch
         createAccount : function (req, res, next) {
+            var validationFn = _.partial(validateField, res);
+            var addUser = function () {
+                var resp = auth.addUser(req.body.username, req.body.password, req.body.role, {branch : req.body.branch});
+                return resp ? res.send('Account created successfully!') : res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred creating the account.');
+            };
+            
             if (!req.body.username) {
                 return res.status(statusCodes.BAD_REQUEST_STATUS).send('A username is required.');
             } else if (auth.checkUsernameExists(req.body.username)) {
@@ -34,8 +44,7 @@ module.exports = function (auth, statusCodes) {
             } else if (!req.body.branch || !_.isNumber(req.body.branch)) {
                 return res.status(statusCodes.BAD_REQUEST_STATUS).send('An affiliate branch is required.');
             }
-            var resp = auth.addUser(req.body.username, req.body.password, req.body.role, {branch : req.body.branch});
-            return resp ? res.send('Account created successfully!') : res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred creating the account.');
+            return addUser();
         },
         
         // Requires: req.body.username
