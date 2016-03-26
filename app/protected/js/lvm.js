@@ -4,7 +4,7 @@
  * 
  * Created by: Michael Rodrigues
  */
- 
+
 'use strict';
 
 /**
@@ -14,7 +14,11 @@
 function Config($locationProvider, $httpProvider) {
 
     //gets rid of the # in urls
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false,
+        rewriteLinks: false
+    });
 
     //Disable all caching for HTTP get requests
     if (!$httpProvider.defaults.headers.get) {

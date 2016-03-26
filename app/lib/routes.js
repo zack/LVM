@@ -8,10 +8,7 @@
 var express = require('express'),
     path = require('path');
 
-/*jshint -W072 */
-module.exports = function (app, envConfig, statusCodes, HomeController, AuthenticationController) {
-/*jshint +W072 */
-
+module.exports = function (statusCodes, HomeController, AuthenticationController) {
     var router = express.Router();
 
     /**
@@ -21,6 +18,16 @@ module.exports = function (app, envConfig, statusCodes, HomeController, Authenti
         var error = new Error('Non supported method.');
         error.status = statusCodes.METHOD_NOT_ALLOWED;
         return next(error);
+    };
+    
+    /**
+     * Sends user object in JSON to client
+     */
+    var returnUserObject = function (req, res, next) {
+        if (!req.session.user) {
+            return res.send({user: null});
+        }
+        return res.json({user: req.session.user});
     };
     
     // --------------------------------------------------------------    
@@ -60,6 +67,10 @@ module.exports = function (app, envConfig, statusCodes, HomeController, Authenti
         // API
     router.route('/logout')
         .get(AuthenticationController.logout)
+        .all(methodNotAllowed);
+        
+    router.route('/user')
+        .get(returnUserObject)
         .all(methodNotAllowed);
 
         // ADMIN
