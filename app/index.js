@@ -33,7 +33,7 @@ var tree = train({
     base : __dirname,
     files : [
         '**/*.js',
-        '!{public, views, test, node_modules}/**'
+        '!{protected, public, views, test, node_modules}/**'
     ]
 });
 

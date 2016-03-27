@@ -1,6 +1,12 @@
 # Literacy Volunteers of Massachusetts Application
 
 ## Information
+[![Build Status](http://cs4500.duncanbeard.com:8090/buildStatus/icon?job=server)](http://cs4500.duncanbeard.com:8090/job/server)
+[![bitHound Overall Score](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/score.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server)
+[![bitHound Dependencies](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/dependencies.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/devDependencies.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/master/dependencies/npm)
+[![bitHound Code](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/code.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server)
+
 * Configured Port: `8080`
 	* Note: Will probably want to change to 80, or something different depending on specific implementation (ie. Nginx to host static files & Node app for API only).
 * If running locally: http://127.0.0.1:8080/lvm/
@@ -37,6 +43,7 @@ This application uses an `express-train` framework on top of `express` for organ
 		* **views.js** - Configures application for rendering views (ie. *.hbs files). Typically used if server-side values need to be rendered into the HTML/JS for the client.
 	* **middleware/**
 		* **errorMiddleware.js** - Configures application level middleware to catch errors, log them, and gracefully indicate the error to the client.
+	* **protected/** - Static HTML, CSS, JavaScript, etc. files to be served to the client that are protected and only accessible to users that are logged in.
 	* **public/** - Static HTML, CSS, JavaScript, etc. files to be served to the client.
 	* **views/** - Views to be rendered (*.hbs) for the client.
 	* **index.js** - Configures express-train to be able to automatically inject app dependencies into controllers or components.

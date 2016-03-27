@@ -70,6 +70,7 @@
                                             <option value="" disabled>{{field.placeholder}}</option>
                                             <option ng-repeat="option in field.options" ng-value="{{option}}">{{option}}</option>
                                         </select>
+
 										<!-- time table -->
                                         <div ng-switch-when="timetable" class="fixedtable">
                                         	<table class="table table-bordered">
@@ -399,7 +400,6 @@
                                            </tbody>
                                           </table>
                                         </div>
-
 
                                         <!-- Other inputs -->
                                         <input ng-switch-default type="{{field.type}}" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" maxlength="{{field.maxlength}}" />
