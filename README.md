@@ -1,11 +1,15 @@
 # Literacy Volunteers of Massachusetts Application
-
+ 
 ## Information
 [![Build Status](http://cs4500.duncanbeard.com:8090/buildStatus/icon?job=server)](http://cs4500.duncanbeard.com:8090/job/server)
 [![bitHound Overall Score](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/score.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server)
 [![bitHound Dependencies](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/dependencies.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/devDependencies.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/code.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server)
+
+Thanks to [BrowserStack](https://www.browserstack.com/) for allowing us to use their Browser Testing suite for free under the Open Source plan.
+
+![BrowserStack Browser Testing](http://i170.photobucket.com/albums/u254/mikesta711/BrowserStack_small_zpsw0jdprbv.png "BrowserStack Open-Source Browser Testing")
 
 * Configured Port: `8080`
 	* Note: Will probably want to change to 80, or something different depending on specific implementation (ie. Nginx to host static files & Node app for API only).

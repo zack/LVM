@@ -25,11 +25,11 @@ module.exports = function (envConfig, constants, statusCodes) {
     return {
         // Landing & Login page
         login: function (req, res, next) {
-            res.render('login', _.extend(config, req.query));
+            res.render('login', _.extend(JSON.parse(JSON.stringify(config)), req.query));
         },
         
         dashboard: function (req, res, next) {
-            res.render('dashboard', _.extend(config, {user: req.session.user}));
+            res.render('dashboard', _.extend(JSON.parse(JSON.stringify(config)), {user: req.session.user}));
         }
     };
 };

@@ -632,7 +632,45 @@ describe('Testing AuthenticationController', function() {
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?failed=true');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?errorMessage=Bad username or password.');
+            done();
+        });
+        
+        it('should not authenticate a user if there are too many attempts and too short a period since the last one', function(done) {
+            var req = { 
+                body : {
+                    username: 'mike',
+                    password: 'mikethedev'
+                },
+                session: {
+                    lastLoginAttemptTime: new Date().getTime(),
+                    loginAttempts: 70
+                }
+            };
+            AuthenticationController.login(req, res, next);
+            
+            expect(res.status).not.toHaveBeenCalled();
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?errorMessage=Maximum login attempts reached. Please try again in 10 minutes.');
+            done();
+        });
+        
+        it('should authenticate a user if there were too many attempts, but the time has expired', function(done) {
+            var req = { 
+                body : {
+                    username: 'mike',
+                    password: 'mikethedev'
+                },
+                session: {
+                    lastLoginAttemptTime: new Date().getTime() - (1000 * 60 * 30),
+                    loginAttempts: 70,
+                    regenerate: null
+                }
+            };
+            spyOn(req.session, 'regenerate').and.callFake(function (cb) { return cb(null); });
+            AuthenticationController.login(req, res, next);
+            
+            expect(res.status).not.toHaveBeenCalled();
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard');
             done();
         });
         
@@ -646,8 +684,7 @@ describe('Testing AuthenticationController', function() {
             };
             AuthenticationController.login(req, res, next);
             
-            expect(res.status).toHaveBeenCalledWith(statusCodes.BAD_REQUEST_STATUS);
-            expect(res.send).toHaveBeenCalledWith('A username is required.');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?errorMessage=A username is required.');
             done();
         });
         
@@ -660,8 +697,7 @@ describe('Testing AuthenticationController', function() {
             };
             AuthenticationController.login(req, res, next);
             
-            expect(res.status).toHaveBeenCalledWith(statusCodes.BAD_REQUEST_STATUS);
-            expect(res.send).toHaveBeenCalledWith('A password is required.');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?errorMessage=A password is required.');
             done();
         });
         
@@ -699,7 +735,7 @@ describe('Testing AuthenticationController', function() {
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?error=true');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/login?errorMessage=Unable to create a new session.');
             done();
         });
     });

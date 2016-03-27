@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('../../config/default.json');
 var accm = require('accm');
 
