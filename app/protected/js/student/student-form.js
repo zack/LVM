@@ -5,7 +5,6 @@
 'use strict';
 angular.module('lvmApp')
     .controller('FormController', function($scope) {
-		origin:app/public/js/student/student-form.js
         var form = this;
 
         form.formDefinition = [
