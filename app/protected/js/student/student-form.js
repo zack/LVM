@@ -6,7 +6,6 @@
 angular.module('lvmApp')
     .controller('FormController', function($scope) {
         var form = this;
-
         form.formDefinition = [
             {
                 id: 'studentinfo',
@@ -105,7 +104,7 @@ angular.module('lvmApp')
 				[
 					{name: 'preference', type: 'preferenceTable'},
 					{name: 'preferencecomments', type: 'text', placeholder:'Comments:'},
-					{name: 'meetatbpl', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Can you meet at BPL-Coply?'},
+					{name: 'meetatpl', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Can you meet at the Public Library?'},
 					{name: 'if not, where?', class: 'col-md-9', value: '', type: 'text', trim:true, placeholder: 'If not, where?'}
 				],
 				]
@@ -128,29 +127,119 @@ angular.module('lvmApp')
 				fields: [
 				[
 					{name: 'parentsread', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do your parents read?'},
-					{name: 'parentsread', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do your parents read?'},
+					{name: 'readtoyou', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Did they read to you?'},
+					{name: 'schoolattended', class: 'col-md-9', value: '', type: 'text', trim: true, placeholder: 'Where did you attend school?'},
+					{name: 'lastgradecompleted', class: 'col-md-3', value: '', type: 'dropdown', options: ['5 or below', '6', '7', '8', '9', '10', '11', '12'], placeholder: 'Grade Completed:'},
+					{name: 'completeddate', class: 'col-md-3', value: '', type: 'date', trim: true, placeholder: 'Completion Date:'},
+					{name: 'whatwasschoollike', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'What was school like? When did you realize reading was difficult?'},
+					{name: 'tutoredbefore', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'Are you now/were you ever in a reading/tutoring program? (If yes, where and when, and what did you like or dislike about your experience?)'},
+					{name: 'howwillyourlifeimprove', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'How will your life be different when your reading and writing improve?'},
 				],
 				]
 			},
+     		{
+                id: 'branchinfo',
+                name: 'Branch Information',
+                fields: [
+                [
+				 {name: 'occupation', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'Occupation:'},
+				  {name: 'employer', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'Employer:'},
+				   {name: 'city', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'City/Town'},
+				    {name: 'fulltime', class: 'col-md-2', value: '', type: 'checkbox', trim: true, placeholder: 'Full-Time'},
+				     {name: 'partime', class: 'col-md-2', value: '', type: 'checkbox', trim: true, placeholder: 'Part-Time'},
+				      {name: 'multiplejobs', class: 'col-md-2', value: '', type: 'checkbox', trim: true, placeholder: 'Multiple Jobs?'},
+				       {name: 'temporaryjobs', class: 'col-md-2', value: '', type: 'checkbox', trim: true, placeholder: 'Temporary Jobs(s)?'},
+				        {name: 'recentlayoff', class: 'col-md-6', value: '', type: 'boolean', trim: true, placeholder: 'Recent Layoff?'},
+				         {name: 'concernlayoff', class: 'col-md-6', value: '', type: 'boolean', trim: true, placeholder: 'Concern Re: Recent Layoff?'},
+				          {name: 'tafdc', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'Public Assistance: Transitional Aid to Families with Dependent Children?'},
+				           {name: 'eaedc', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'Public Assistance: Emergency Assistance to Elderly, Disabled and Children?'},
+				            {name: 'snap', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'Public Assistance: Supplemental Nutrition Assistance Program or Food Stamps?'},
+				             {name: 'ea', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'Public Assistance: Emergency Assistance?'},
+				              {name: 'ssi', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'Public Assistance: Supplimental Security Income?'},
+				               {name: 'wic', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'Public Assistance: Women, Infants, and Childrens Programs?'},
+				                {name: 'otherpublicassistance', class: 'col-md-3', value: '', type: 'text', trim: true, placeholder: 'Other:'},
+				                 {name: 'workexperience', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'Tell me about your work experience (Job Tittles(s) and duration of employment, what job skills do you have; What did you like or dislike about past jobs?):'},
+				                  {name: 'jobtraining', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'Have you attended any job-related training or earned any job-related certificates, licenses, etc? (If yes, what kind, where, and when?'}
+
+				],
+                ]
+		    },
             {
                 id: 'goals',
                 name: 'Goals',
                 fields: [
+                [
+                {name: 'whylitval', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'Is there a special reason you are seeking help now? What goals would you like to work towards (E.G, GED, Driver\'s license, Help kids with homework, Get a better job) '},
+                 {name: 'anychallanges', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'Are there any factors that you think will make it especially challanging for you to reach your goals? (Housing, Health, Work, Personal or Family Issues?)'},
+                  {name: 'vaktlearningstrengths', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'V A K T Learning Strengths:'},
+                   {name: 'hobbies', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'Hobbies (i.e Movies, Exercise, Gardening), Interests and Activities/Community Engagement:'},
+                    {name: 'whatareyougoodat', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'What are you good at? What do you enjoy doing?'},
+                     {name: 'readinginterests', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'Things/Topics interested in reading:'},
+                      {name: 'anyotherinfo', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'Is there anything else you would like us to know about you?'}
 
+                ],
                 ]
             },
             {
-                id: 'dependents',
-                name: 'Dependents',
+                id: 'computerskills',
+                name: 'Computer Skills',
                 fields: [
+                [
+                {name: 'havecomputer', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do you have a computer at home?'},
+                {name: 'usesmartphone', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do you use a smart phone?'},
+                {name: 'usecomputer', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do you use a computer at home?'},
+                {name: 'useemail', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do you use email?'},
+                {name: 'usecomputeratlibrary', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do you use a computer at the library?'},
+                {name: 'useinternet', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do you use the Internet?'},
+                {name: 'usecomputeratwork', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do you use a computer at work?'}
+				],
+                ]
+            },
+			{
+                id: 'disabilitiesandaccommodations',
+                name: 'Disabilities and Accommodations',
+                fields: [
+                [
+				{name: 'understanddisclosure', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'Does the Student understand that He/She is not required to disclose a disability?'},
+				{name: 'wishtodisclose', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'Does the Student wish to disclose a disability?'},
+				{name: 'understandaccommodations', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'Does the student understand that self-disclosing a disability makes him/her eligible for reasonable accommoations?'},
+				{name: 'requestanyspecific', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'If Yes to #3, Does the student wish to request any specific accomodations? If yes, Please explain below in the notes.'},
+				{name: 'intervierwerobservations', class: 'col-md-12', value: '', type: 'boolean', trim: true, placeholder: 'Does the interviewer observe anything?'},
+				{name: 'explainobservations', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'If Yes, Explain below.'}
+                ],
+                ]
+            },
+			{
+                id: 'testresults',
+                name: 'Test Results',
+                fields: [
+                [
+                {name: 'explainobservations', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'TABE Score:'},
+                {name: 'explainobservations', class: 'col-md-6', value: '', type: 'date', trim: true, placeholder: 'TABE Date:'},
+                {name: 'explainobservations', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'MAPT Score:'},
+                {name: 'explainobservations', class: 'col-md-6', value: '', type: 'date', trim: true, placeholder: 'MAPT Date:'},
 
+
+                ],
+                ]
+            },
+			{
+                id: 'interviewerscomments',
+                name: 'Interviewer\'s Comments/Other Information',
+                fields: [
+                [
+                {name: 'explainobservations', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'Any other comments?:'}
+
+                ],
                 ]
             },
             {
                 id: 'branchinfo',
                 name: 'Branch Information',
                 fields: [
+                [
 
+                ],
                 ]
             }
         ];
