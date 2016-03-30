@@ -5,4 +5,4 @@
 -- Drops the lvm database
 -- --------------------------------------------
 
-DROP DATABASE lvm;
+DROP DATABASE IF EXISTS lvm;
