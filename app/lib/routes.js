@@ -8,7 +8,7 @@
 var express = require('express'),
     path = require('path');
 
-module.exports = function (statusCodes, HomeController, AuthenticationController) {
+module.exports = function (statusCodes, HomeController, AuthenticationController, TutorController) {
     var router = express.Router();
 
     /**
@@ -71,6 +71,29 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
         
     router.route('/user')
         .get(returnUserObject)
+        .all(methodNotAllowed);
+        
+    router.route('/api/account')
+        .post(AuthenticationController.createAccount)
+        .delete(AuthenticationController.deleteAccount)
+        .all(methodNotAllowed);
+        
+    router.route('/api/account/password')
+        .post(AuthenticationController.updatePassword)
+        .all(methodNotAllowed);
+        
+    router.route('/api/account/role')
+        .all()
+        .post(AuthenticationController.updateRole)
+        .all(methodNotAllowed);
+        
+    router.route('/person/tutor/:pid?')
+        .get(TutorController.getTutor)
+        .delete(TutorController.exitTutor)
+        .all(methodNotAllowed);
+        
+    router.route('/api/autocomplete/tutor/:name')
+        .get(TutorController.autocomplete)
         .all(methodNotAllowed);
 
         // ADMIN

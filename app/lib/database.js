@@ -20,13 +20,30 @@ module.exports = function(logging, config) {
     
     connection.connect(function(err) {
         if (err) {
-            console.error('database: connection error.  Stack Trace: ' + err.stack);
+            logging.error('database: connection error', err.stack);
             return;
-        }
+        } 
      
-        console.log('database: successfully connected. id: ' + connection.threadId);
+        logging.info('database: successfully connected. id: ' + connection.threadId);
     });
     
-    return connection;
+    // Setup safe disconnection from the database
+    process.stdin.resume(); //so the program will not close instantly
     
+    var exitHandler = function (options, err) {
+        if (err) console.log(err.stack);
+        if (options.exit) {
+            connection.end();
+            logging.info('Database safely disconnected.');
+            process.exit();
+        }
+    };
+    
+    //catches ctrl+c event
+    process.on('SIGINT', exitHandler.bind(null, {exit: true}));
+    
+    //catches uncaught exceptions
+    process.on('uncaughtException', exitHandler.bind(null, {exit: true}));
+    
+    return connection;
 };

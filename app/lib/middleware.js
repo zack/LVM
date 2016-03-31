@@ -11,7 +11,8 @@ var express = require('express'),
     methodOverride = require('method-override'),
     session = require('express-session'),
     path = require('path'),
-    connect_timeout = require('connect-timeout');
+    connect_timeout = require('connect-timeout'),
+    sessionMaxAge = 60 * 60 * 1000; // 1 hr
 
 module.exports = function (app, config, routes, envConfig, errorMiddleware) {
     // Middleware stack for all requests
@@ -21,7 +22,7 @@ module.exports = function (app, config, routes, envConfig, errorMiddleware) {
     app.use(bodyParser.urlencoded({extended: false}));                                                // parse application/x-www-form-urlencoded
     app.use(bodyParser.json());                                                                       // parse application/json
     app.use(methodOverride('_method'));                                                               // post -> put and delete where not allowed in client
-    app.use(session({ secret: 'literacy is the key!', rolling: true, cookie: { maxAge: 60*60*100 }}));
+    app.use(session({ secret: 'literacy is the key!', saveUninitialized: false, resave: true, cookie: { maxAge: sessionMaxAge }, maxAge: sessionMaxAge}));
     app.use(envConfig.public.app_root_url, routes);                                                   // app router
 
     app.use(function(req, res, next){                                                                 // barebones 404 handler
