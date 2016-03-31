@@ -238,7 +238,7 @@ angular.module('lvmApp')
                 name: 'Branch Information',
                 fields: [
                 [
-
+				{name: 'affiliate', class: 'col-md-12', value: '', type: 'dropdown', options: ['boston', 'Project Lighthouse', 'Fitchburg', 'Framingham', 'Lowell', 'Norwood', 'Orange-Athol', 'Pittsfield', 'Quaboag Valley', 'Quincy', 'Tri Community', 'Soughton', 'Worcester'], placeholder:'Affiliate Site'}
                 ],
                 ]
             }
