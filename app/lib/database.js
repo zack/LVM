@@ -31,7 +31,7 @@ module.exports = function(logging, config) {
     process.stdin.resume(); //so the program will not close instantly
     
     var exitHandler = function (options, err) {
-        if (err) console.log(err.stack);
+        if (err) { console.log(err.stack); }
         if (options.exit) {
             connection.end();
             logging.info('Database safely disconnected.');

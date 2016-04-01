@@ -11,7 +11,7 @@ var _ = require('underscore');
 
 module.exports = function (logging, database, statusCodes) {
     var cleanseData = function (data) {
-        delete data['isTestData'];
+        delete data.isTestData;
         return data;
     };
     
@@ -57,7 +57,7 @@ module.exports = function (logging, database, statusCodes) {
                     return res.status(statusCodes.INTERNAL_SERVER_ERROR).json([null]);
                 }
                 results = _.map(results, cleanseData);
-                if (results.length == 1) {
+                if (results.length === 1) {
                     results = results[0];
                 }
                 res.json(results);
@@ -98,6 +98,8 @@ module.exports = function (logging, database, statusCodes) {
         },
         
         autocomplete: function (req, res, next) {
+            if (req.params.name.length < 3) { return res.json([]); }
+            
             var queryValue = req.params.name + '%'; // add wildcard on end
             
             database.query({

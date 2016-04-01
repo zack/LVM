@@ -1,3 +1,9 @@
+test
+test/*
 test/**
+node_modules
+node_modules/*
 node_modules/**
+scripts
+scripts/*
 scripts/**
