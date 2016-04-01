@@ -22,7 +22,7 @@ module.exports = function(envConfig) {
     /**
      * If we are running locally don't remove the console so we can see the output
      */
-    if(envConfig.name === 'local'){
+    if(envConfig.name === 'development'){
         winston.add(winston.transports.Console, {
             timestamp: function(){return new Date().toString();},
             level: 'silly', //Show all logs when developing locally
