@@ -17,6 +17,8 @@
 -- DOEExitReasons = 18
 -- DOENativeLanguage = 29
 -- DOEReferral = 25
+-- DOEGoals = 65
+-- DOEOccupation = 1094
 -- 
 -- --------------------------------------------
 
@@ -34,3 +36,5 @@ SELECT COUNT(*) FROM DOECountryOfOrigin;
 SELECT COUNT(*) FROM DOEExitReasons;
 SELECT COUNT(*) FROM DOENativeLanguage;
 SELECT COUNT(*) FROM DOEReferral;
+SELECT COUNT(*) FROM DOEGoals;
+SELECT COUNT(*) FROM DOEOccupation;

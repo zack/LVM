@@ -1,5 +1,5 @@
 -- --------------------------------------------
--- 04LVMAddTestSudentSproc
+-- 04LVMUpdateSudentTableSproc
 -- Date: MAR 24 2016
 -- 
 -- Creates sproc to insert data into the student table
@@ -7,12 +7,11 @@
 
 USE lvm;
 
-DROP PROCEDURE IF EXISTS addTestStudent;
+DROP PROCEDURE IF EXISTS updateStudentTable;
 
 DELIMITER //
 
-CREATE PROCEDURE addTestStudent(
-  `id` int,
+CREATE PROCEDURE updateStudentTable(
   `person` int, -- FK
   `smarttID` int,
   `okayToCall` boolean,
@@ -20,17 +19,19 @@ CREATE PROCEDURE addTestStudent(
   `okayToEmail` boolean,
   `zipCodeID` int,
   `countryOfOrigin` int,
+  `timeInJobMonths` int,
+  `timeInJobYears` int,
   `publicAssistance` int,
   `singleParent` boolean,
   `learningDisability` boolean,
   `physicalDisability` boolean,
   `dateAdded` datetime,
-  `dateModified` datetime)
+  `dateModified` datetime,
+  `isTestData` bit)
 
 BEGIN
 
 INSERT INTO Student(
-	id,
 	person, 
     smarttID, 
     okayToCall, 
@@ -38,6 +39,8 @@ INSERT INTO Student(
     okayToEmail, 
     zipCodeID, 
     countryOfOrigin, 
+    timeInJobMonths,
+    timeInJobYears,
     publicAssistance,
     singleParent,
     learningDisability,
@@ -46,20 +49,21 @@ INSERT INTO Student(
     dateModified,
     isTestData)
 VALUES(
-	`id`,
 	`person`, 
     `smarttID`, 
     `okayToCall`, 
     `okayToMail`, 
     `okayToEmail`, 
     `zipCodeID`, 
-    `countryOfOrigin`, 
+    `countryOfOrigin`,
+    `timeInJobMonths`,
+	`timeInJobYears`,
     `publicAssistance`,
     `singleParent`,
     `learningDisability`,
     `physicalDisability`,
     `dateAdded`,
     `dateModified`,
-    1);
+    `isTestData`);
     
 END //

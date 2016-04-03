@@ -6,21 +6,25 @@
 -- 
 -- EXPECTED RESULTS:
 -- -----------------
--- Student = 4
--- StudentAssessment = 4
--- StudentDependents = 4
--- StudentGoals = 4
+-- Student = 3
+-- StudentPreferences = 3
+-- StudentPublicAssistance = 3
+-- StudentAssessment = 3
+-- StudentDependents = 3
+-- StudentGoals = 3
 -- Tutor = 3
--- Matches = 4
--- Meeting = 5
--- Person = 7
--- Exit = 1
+-- Matches = 0
+-- Meeting = 0
+-- Person = 6
+-- Exit = 0
 -- 
 -- --------------------------------------------
 
 USE lvm;
 
 SELECT COUNT(*) FROM Student WHERE isTestData = 1;
+SELECT COUNT(*) FROM StudentPreferences WHERE isTestData = 1;
+SELECT COUNT(*) FROM StudentPublicAssistance WHERE isTestData = 1;
 SELECT COUNT(*) FROM StudentAssessment WHERE isTestData = 1;
 SELECT COUNT(*) FROM StudentDependents WHERE isTestData = 1;
 SELECT COUNT(*) FROM StudentGoals WHERE isTestData = 1;

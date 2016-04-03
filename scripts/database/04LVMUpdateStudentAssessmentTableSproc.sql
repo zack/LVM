@@ -1,5 +1,5 @@
 -- --------------------------------------------
--- 04LVMAddTestStudentAssessmentSproc
+-- 04LVMUpdateStudentAssessmentTableSproc
 -- Date: MAR 24 2016
 -- 
 -- Creates sproc to insert data into the StudentAssessment table
@@ -7,12 +7,11 @@
 
 USE lvm;
 
-DROP PROCEDURE IF EXISTS addTestStudentAssessment;
+DROP PROCEDURE IF EXISTS updateStudentAssessmentTable;
 
 DELIMITER //
 
-CREATE PROCEDURE addTestStudentAssessment(
-  `id` int,
+CREATE PROCEDURE updateStudentAssessmentTable(
   `student` int, -- FK
   `date` date,
   `test` int, -- FK
@@ -20,12 +19,12 @@ CREATE PROCEDURE addTestStudentAssessment(
   `fedLevel` int, -- FK??
   `fedType` int, -- FK??
   `dateAdded` datetime,
-  `dateModified` datetime)
+  `dateModified` datetime,
+  `isTestData` bit)
 
 BEGIN
 
 INSERT INTO StudentAssessment(
-	id,
 	student, 
     date,
     test,
@@ -36,7 +35,6 @@ INSERT INTO StudentAssessment(
     dateModified,
     isTestData)
 VALUES(
-	`id`,
 	`student`, 
     `date`,
     `test`,
@@ -45,6 +43,6 @@ VALUES(
     `fedType`,
     `dateAdded`,
     `dateModified`,
-    1);
+    `isTestData`);
     
 END //

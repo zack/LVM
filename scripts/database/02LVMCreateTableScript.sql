@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS AssessmentTypes (
 -- -------------------------------------------
 CREATE TABLE IF NOT EXISTS EmploymentStatus (
   `id` int NOT NULL,
-  `status` varchar(255) NOT NULL
+  `estatus` varchar(255) NOT NULL
 );
 
 -- -------------------------------------------
@@ -72,6 +72,43 @@ CREATE TABLE IF NOT EXISTS Student (
 );
 
 -- -------------------------------------------
+CREATE TABLE IF NOT EXISTS StudentPreferences (
+  `id` int NOT NULL,
+  `student` int NOT NULL, -- FK
+  `maleTeen` bit DEFAULT 0,
+  `femaleTeen` bit DEFAULT 0,
+  `male20-25` bit DEFAULT 0,
+  `female20-25` bit DEFAULT 0,
+  `male26-35` bit DEFAULT 0,
+  `female26-35` bit DEFAULT 0,
+  `male36-45` bit DEFAULT 0,
+  `female36-45` bit DEFAULT 0,
+  `male46-65` bit DEFAULT 0,
+  `female46-65` bit DEFAULT 0,
+  `male66+` bit DEFAULT 0,
+  `female66+` bit DEFAULT 0,
+  `dateAdded` datetime NOT NULL,
+  `dateModified` datetime NOT NULL,
+  `isTestData` bit DEFAULT 0
+);
+
+-- -------------------------------------------
+CREATE TABLE IF NOT EXISTS StudentPublicAssistance (
+  `id` int NOT NULL,
+  `student` int NOT NULL, -- FK
+  `TFADC` bit DEFAULT 0,
+  `EAEDC` bit DEFAULT 0,
+  `Food Stamps` bit DEFAULT 0,
+  `EA` bit DEFAULT 0,
+  `SSI` bit DEFAULT 0,
+  `None` bit DEFAULT 0,
+  `Other` bit DEFAULT 0,
+  `dateAdded` datetime NOT NULL,
+  `dateModified` datetime NOT NULL,
+  `isTestData` bit DEFAULT 0
+);
+
+-- -------------------------------------------
 CREATE TABLE IF NOT EXISTS StudentAssessment (
   `id` int NOT NULL,
   `student` int NOT NULL, -- FK
@@ -100,9 +137,9 @@ CREATE TABLE IF NOT EXISTS StudentDependents (
 CREATE TABLE IF NOT EXISTS StudentGoals (
   `id` int NOT NULL,
   `student` int NOT NULL, -- FK
-  `goal` varchar(255) NOT NULL,
-  `dateSet` date NOT NULL,
-  `dateMet` date NOT NULL,
+  `goal` int NOT NULL, -- FK
+  `dateSet` date NOT NULL, 
+  `dateMet` date DEFAULT NULL,
   `main` boolean NOT NULL,
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
@@ -110,9 +147,22 @@ CREATE TABLE IF NOT EXISTS StudentGoals (
 );
 
 -- -------------------------------------------
+CREATE TABLE IF NOT EXISTS DOEGoals (
+  `id` int NOT NULL,
+  `goal` varchar(255) NOT NULL,
+  `def` varchar(500) DEFAULT NULL,
+  `doc` varchar(255) DEFAULT NULL,
+  `section` varchar(20) NOT NULL,
+  `category`varchar(50) DEFAULT NULL,
+  `followUp` bit DEFAULT 0
+);
+
+-- -------------------------------------------
 CREATE TABLE IF NOT EXISTS DOEOccupation (
   `id` int NOT NULL,
-  `occupation` varchar(255) NOT NULL
+  `code` varchar(15) NOT NULL,
+  `occupation` varchar(255) NOT NULL,
+  `category` varchar(500) NOT NULL
 );
 
 -- -------------------------------------------
@@ -162,6 +212,7 @@ CREATE TABLE IF NOT EXISTS DOENativeLanguage (
 -- -------------------------------------------
 CREATE TABLE IF NOT EXISTS DOEExitReasons (
   `id` int NOT NULL,
+  `type` enum('student','tutor') NOT NULL,
   `reason` varchar(255) NOT NULL
 );
 

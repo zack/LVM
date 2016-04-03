@@ -1,5 +1,5 @@
 -- --------------------------------------------
--- 04LVMAddTestMeetingSproc
+-- 04LVMUpdateMeetingTableSproc
 -- Date: MAR 24 2016
 -- 
 -- Creates sproc to insert data into the Meeting table
@@ -7,24 +7,23 @@
 
 USE lvm;
 
-DROP PROCEDURE IF EXISTS addTestMeeting;
+DROP PROCEDURE IF EXISTS updateMeetingTable;
 
 DELIMITER //
 
-CREATE PROCEDURE addTestMeeting(
-  `id` int,
+CREATE PROCEDURE updateMeetingTable(
   `matching` int, -- FK
   `date` date,
   `hours` int,
   `didNotMeet` boolean,
   `couldNotContact` boolean,
   `dateAdded` datetime,
-  `dateModified` datetime)
+  `dateModified` datetime,
+  `isTestData` bit)
 
 BEGIN
 
 INSERT INTO Meeting(
-	id,
 	matching,
     date,
     hours,
@@ -34,7 +33,6 @@ INSERT INTO Meeting(
     dateModified,
     isTestData)
 VALUES(
-	`id`,
 	`matching`,
     `date`,
     `hours`,
@@ -42,6 +40,6 @@ VALUES(
     `couldNotContact`,
     `dateAdded`,
     `dateModified`,
-    1);
+    `isTestData`);
     
 END //

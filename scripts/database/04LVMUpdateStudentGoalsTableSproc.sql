@@ -1,5 +1,5 @@
 -- --------------------------------------------
--- 04LVMAddTestStudentGoalsSproc
+-- 04LVMUpdateStudentGoalsTableSproc
 -- Date: MAR 24 2016
 -- 
 -- Creates sproc to insert data into the StudentGoals table
@@ -7,24 +7,23 @@
 
 USE lvm;
 
-DROP PROCEDURE IF EXISTS addTestStudentGoals;
+DROP PROCEDURE IF EXISTS updateStudentGoalsTable;
 
 DELIMITER //
 
-CREATE PROCEDURE addTestStudentGoals(
-  `id` int,
+CREATE PROCEDURE updateStudentGoalsTable(
   `student` int, -- FK
   `goal` varchar(255),
   `dateSet` date,
   `dateMet` date,
   `main` boolean,
   `dateAdded` datetime,
-  `dateModified` datetime)
+  `dateModified` datetime,
+  `isTestData` bit)
 
 BEGIN
 
 INSERT INTO StudentGoals(
-	id,
 	student, 
     goal,
     dateSet,
@@ -34,7 +33,6 @@ INSERT INTO StudentGoals(
     dateModified,
     isTestData)
 VALUES(
-	`id`,
 	`student`, 
     `goal`,
     `dateSet`,
@@ -42,6 +40,6 @@ VALUES(
     `main`,
     `dateAdded`,
     `dateModified`,
-    1);
+    `isTestData`);
     
 END //
