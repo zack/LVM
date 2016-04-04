@@ -99,9 +99,6 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
         // ADMIN
 
         // FRONT-END
-    router.route('/dashboard')
-        .get(HomeController.dashboard)
-        .all(methodNotAllowed);
 
     // Static Content for Protected content - prevents non-authenticated users from accessing these files        
     router.all('*', express.static(path.resolve(__dirname + '/../protected')));   // static protected files in /protected        
