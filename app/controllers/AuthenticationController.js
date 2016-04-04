@@ -111,7 +111,7 @@ module.exports = function (auth, statusCodes) {
         // Requires: req.body.username, req.body.password
         login : function (req, res, next) {
             var redirectToLogin = function (errorMessage) {
-                return res.redirect('/lvm/login?errorMessage=' + errorMessage);
+                return res.redirect('/login?errorMessage=' + errorMessage);
             };
             
             if (!req.body.username) {
@@ -133,7 +133,7 @@ module.exports = function (auth, statusCodes) {
                     return redirectToLogin('Unable to create a new session.');
                 }
                 req.session.user = authResp;
-                return res.redirect('/lvm/dashboard');
+                return res.redirect('/dashboard');
             });
         },
         
@@ -143,7 +143,7 @@ module.exports = function (auth, statusCodes) {
               if (err) {
                   return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred.');
               }
-              res.redirect('/lvm/login');
+              res.redirect('/login');
             });
         }
     };

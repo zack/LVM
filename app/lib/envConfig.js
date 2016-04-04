@@ -24,7 +24,7 @@ module.exports = function() {
                 time: 7000
             },
             public: {
-                app_root_url : '/lvm'
+                app_root_url : ''
             }
         };
     }

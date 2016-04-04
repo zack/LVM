@@ -49,7 +49,7 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
         
     // Home/Landing page - redirect to login
     router.route('/')
-        .all(function (req, res, next) { res.redirect('/lvm/login'); });
+        .all(function (req, res, next) { res.redirect('/login'); });
 
     // --------------------------------------------------------------    
     // PROTECTED ROUTES:
@@ -57,7 +57,7 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
     router.use(function(req, res, next) {
         // Redirect to the login page if there is no user logged in
         if (!req.session.user) {
-            return res.redirect('/lvm/login');
+            return res.redirect('/login');
         } else {
             // Otherwise, allow the user through to the next matching route
             return next();
