@@ -1,6 +1,6 @@
 -- --------------------------------------------
--- LVMDeleteTestData
--- Date: MAR 28 2016
+-- 05LVMDeleteTestData
+-- Date: MAR 28 2116
 -- 
 -- Deletes all test data from the database
 -- --------------------------------------------

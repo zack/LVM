@@ -1,18 +1,17 @@
 -- --------------------------------------------
--- 04LVMAddTestMatchSproc
+-- 04LVMUpdateMatchesTableSproc
 -- Date: MAR 24 2016
 -- 
--- Creates sproc to insert data into the match table
+-- Creates sproc to insert data into the matches table
 -- --------------------------------------------
 
 USE lvm;
 
-DROP PROCEDURE IF EXISTS addTestMatches;
+DROP PROCEDURE IF EXISTS updateMatchesTable;
 
 DELIMITER //
 
-CREATE PROCEDURE addTestMatches(
-  `id` int,
+CREATE PROCEDURE updateMatchesTable(
   `site` int, -- FK
   `doeMatchID` int,
   `status` enum('Current','Dissolved'),
@@ -22,12 +21,12 @@ CREATE PROCEDURE addTestMatches(
   `matchEnd` date,
   `onHold` boolean,
   `dateAdded` datetime,
-  `dateModified` datetime)
+  `dateModified` datetime,
+  `isTestData` bit)
 
 BEGIN
 
 INSERT INTO Matches(
-	id,
 	site,
     doeMatchID,
     status,
@@ -40,7 +39,6 @@ INSERT INTO Matches(
 	dateModified,
     isTestData)
 VALUES(
-	`id`,
     `site`,
     `doeMatchID`,
     `status`,
@@ -51,6 +49,6 @@ VALUES(
     `onHold`,
     `dateAdded`,
     `dateModified`,
-    1);
+    `isTestData`);
     
 END //

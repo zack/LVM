@@ -1,29 +1,28 @@
 -- --------------------------------------------
--- 04LVMAddTestExitsSproc
+-- 04LVMUpdateExitTableSproc
 -- Date: MAR 24 2016
 -- 
--- Creates sproc to insert data into the Exits table
+-- Creates sproc to insert data into the Exit table
 -- --------------------------------------------
 
 USE lvm;
 
-DROP PROCEDURE IF EXISTS addTestExit;
+DROP PROCEDURE IF EXISTS updateExitTable;
 
 DELIMITER //
 
-CREATE PROCEDURE addTestExit(
-  `id` int,
+CREATE PROCEDURE updateExitTable(
   `person` int, -- FK
   `date` date,
   `doeReason` int,
   `lvmReason` int,
   `dateAdded` datetime,
-  `dateModified` datetime)
+  `dateModified` datetime,
+  `isTestData` bit)
 
 BEGIN
 
 INSERT INTO `Exit`(
-	id,
 	person, 
     date,
     doeReason,
@@ -32,13 +31,12 @@ INSERT INTO `Exit`(
     dateModified,
     isTestData)
 VALUES(
-	`id`,
 	`person`, 
     `date`,
     `doeReason`,
     `lvmReason`,
     `dateAdded`,
     `dateModified`,
-    1);
+    `isTestData`);
     
 END //

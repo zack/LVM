@@ -1,5 +1,5 @@
 -- --------------------------------------------
--- 04LVMAddTestTutorSproc
+-- 04LVMUpdateTutorTableSproc
 -- Date: MAR 24 2016
 -- 
 -- Creates sproc to insert data into the tutor table
@@ -7,33 +7,31 @@
 
 USE lvm;
 
-DROP PROCEDURE IF EXISTS addTestTutor;
+DROP PROCEDURE IF EXISTS updateTutorTable;
 
 
 DELIMITER //
 
-CREATE PROCEDURE addTestTutor(
-  `id` int,
+CREATE PROCEDURE updateTutorTable(
   `person` int,
   `occupation` varchar(255),
   `dateAdded` datetime,
-  `dateModified` datetime)
+  `dateModified` datetime,
+  `isTestData` bit)
 
 BEGIN
 
 INSERT INTO Tutor(
-	id,
 	person,
 	occupation,
 	dateAdded,
 	dateModified,
     isTestData)
 VALUES(
-	`id`,
     `person`,
     `occupation`,
     `dateAdded`,
     `dateModified`,
-    1);
+    `isTestData`);
     
 END //

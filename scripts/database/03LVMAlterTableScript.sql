@@ -59,18 +59,9 @@ BEGIN
 	IF _count = 0 THEN
 		ALTER TABLE `EmploymentStatus` ADD PRIMARY KEY (`id`),
 						 MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-                         
-   INSERT IGNORE INTO `EmploymentStatus` (`id`, `status`) VALUES
-		(1, 'Employed'),
-		(2, 'Homemaker'),
-		(3, 'Student'),
-		(4, 'Inmate'),
-		(5, 'Unemployed and looking for work'),
-		(6, 'Unemployed and not looking for work'),
-		(7, 'Retired');
 
 END IF ; 
-	INSERT IGNORE INTO `EmploymentStatus` (`id`, `status`) VALUES
+	INSERT IGNORE INTO `EmploymentStatus` (`id`, `estatus`) VALUES
 		(1, 'Employed'),
 		(2, 'Homemaker'),
 		(3, 'Student'),
@@ -257,6 +248,142 @@ BEGIN
 END IF ; 
 END//
 
+-- ------------------ ALTERING StudentPreferences TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableStudentPreferences; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableStudentPreferences()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'StudentPreferences' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `StudentPreferences` ADD PRIMARY KEY (`id`),
+					MODIFY `id` int NOT NULL AUTO_INCREMENT,
+					ADD CONSTRAINT `FK_StudentP` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+END IF ;
+END//
+
+-- ------------------ ALTERING StudentPublicAssistance TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableStudentPublicAssistance; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableStudentPublicAssistance()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'StudentPublicAssistance' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `StudentPublicAssistance` ADD PRIMARY KEY (`id`),
+					MODIFY `id` int NOT NULL AUTO_INCREMENT,
+					ADD CONSTRAINT `FK_StudentPA` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+END IF ;
+END//
+
+-- ------------------ ALTERING DOEGoals TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableDOEGoals; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableDOEGoals()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'DOEGoals' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `DOEGoals`
+				ADD PRIMARY KEY (`id`),
+				MODIFY `id` int NOT NULL AUTO_INCREMENT;
+                
+END IF ; 
+	INSERT IGNORE INTO `DOEGoals` (`id`, `goal`, `def`, `doc`, `section`, `category`, `followUp`) values
+			(1,'Enter Employment','Currently unemployed student gets a job and earns wages one quarter after the goal has been set.','Survey student via Follow-Up Goals ''New For Month'' report','A',NULL,1),
+			(2,'Retain New Employment','Student who gets a job continues to be employed in the third quarter after the Retain Employment goal has been met.','Survey student via Follow-Up Goals ''New For Month'' report','A',NULL,1),
+			(3,'Retain Current Employment','Student who is currently employed continues to be employed in the third quarter after the Retain Current Employment goal has been set.','Survey student via Follow-Up Goals ''New For Month'' report','A',NULL,1),
+			(4,'Obtain GED','Achieves score that qualifies for GED during enrollment; or up to 8/5 in prior fiscal year ending 6/30; or after 8/5 in current fiscal year up to 6/30','Data match regardless of whether or not SSN is provided','A',NULL,1),
+			(5,'Complete some adult HS credits toward ADP/EDP','Achieves or successfully completes required high school course work for an Adult Diploma Program or External Diploma Program.','Transcript from adult high school','A',NULL,0),
+			(6,'Obtain ADP/EDP','Achieves high school diploma or competency determination as granted by local school committee.','Survey student to obtain either: (1) copy of diploma; (2) student''s transcripts signed by the principal or director; (3) student''s permanent record card','A',NULL,1),
+			(7,'Enter Post-Secondary Education','Enrolls as a matriculating student in a program leading to a certificate, certification, or Associates degree. A matriculating student has been formally admitted to an institution and is enrolled in a course of study leading to one of the above credentials.','Signed letter or other document on the school''s letterhead confirming enrollment','A',NULL,1),
+			(8,'Retain in Post-Secondary Education','Continues to be actively enrolled in the post-secondary education program and maintains matriculating status for at least 6 months after enrollment.','Letter or other document signed by the student or the training program.','A',NULL,1),
+			(9,'Enter Occupational Training Program','Enrolls in a program of 12 or more months in duration to develop occupational skills and abilities for a specific career; excludes post-secondary degree programs.','Letter or other document signed by the student or the training program and kept in the student''s file at the ABE program.','A',NULL,1),
+			(10,'Retain Occupational Training','Continues to be actively enrolled for at least 3 months in a training program of 12 or more months in duration.','Letter or other document signed by the student or the training program and kept in the student''s file at the ABE program.','A',NULL,1),
+			(11,'Complete Occupational Training','Successfully completes a training program of 12 or more months in duration. Meets the requirements for a certificate or other formal documentation of successful completion.','Copy of certificate, formal documentation, or letter of completion from the training program and kept in the student’s file at the ABE program.','A',NULL,1),
+			(12,'Enter Transitional Education','Enrolls in a program specifically designed to enhance a student''s chance of succeeding in post-secondary education.','Copy of an acceptance letter or other written verification on the school''s letterhead.','A',NULL,1),
+			(13,'Retain in Transitional Education','Continues to be actively enrolled in a transitional program for at least 3 months.','Letter or other document signed by the student or the training program.','A',NULL,1),
+			(14,'Complete Transitional Education','Successfully completes a transitional program.','Copy of certificate or letter of completion from the training program.','A',NULL,1),
+			(15,'Increase Earnings','Increase earnings between two quarterly wage-earning periods','Copies of pay stubs showing increase between two quarterly wage-earning periods.','A',NULL,0),
+			(16,'Read, write, do mathematical problem-solving and/or help child with homework','Parent or adult caregiver engages a child in reading, writing, or math activities and/or homework for at least 30 minutes, twice per week, for at least four consecutive months.','Adult caregiver tracks work within a portfolio (at a minimum including a log of what materials are used/worked on, date and time duration of each interaction).','A',NULL,0),
+			(17,'Apply for U.S. Citizenship','Complete eligibility worksheet and send Application for Naturalization to appropriate Service Center.','A copy of Application Receipt Notice kept in the student''s file at the ABE program.','A',NULL,0),
+			(18,'Receive Appointment for Citizenship Interview','Schedule an oral interview and written exam on basic English reading and writing skills and knowledge of American history and current events.','A copy of Citizenship Interview Notice kept in the student''s file at the ABE program.','A',NULL,0),
+			(19,'Pass Citizenship Exam','Receive ''Approval of Exam'' document from USCIS','A copy of Approval of Exam document kept in the student''s file at the ABE program.','A',NULL,0),
+			(20,'Receive Certificate of Citizenship at Oath Ceremony','Candidate is sworn in as a naturalized citizen and receives Certificate of Citizenship.','Teacher verifies the student’s receipt of Certificate of Citizenship.','A',NULL,0),
+			(21,'Get a learner’s permit to drive','Student completes requirements for obtaining a learner’s permit to drive','Copy of learner’s permit kept in student’s file at the ABE program. [NOTE: The social security number does not appear on the learner’s permit.]','B',NULL,0),
+			(22,'Get a Driver''s License','Student completes requirements for obtaining a driver''s license.','Copy of driver''s license kept in student''s file at the ABE program. [NOTE: The social security number does not appear on the driver’s license.]','B',NULL,0),
+			(23,'Get and Use Library Card','Student brings library card and materials withdrawn from library to program.','Teacher verifies checked-out library material; copy of library card kept in the student’s file','B',NULL,0),
+			(24,'Register to Vote','Student completes requirements for registering to vote.','Copy of voter registration card or letter kept in the student''s file.','B',NULL,0),
+			(25,'Vote in Federal, State, or Local Elections','Student completes requirements for voting in elections.','Based on student self-report.','B',NULL,0),
+			(26,'Learn About or Use Community Organizations or Resources','Student gathers information about community organizations for informational or practical purposes (e.g., a needed support service, health agency, social service agency, financial workshop, child care agency, etc.)','Student demonstrates knowledge, skills, abilities gained by either (1) providing evidence of the experience in writing, on video and/or on audio tape; (2) delivering a presentation to students or other interested parties; (3) assembling a portfolio containing brochures/flyers or other descriptions','B',NULL,0),
+			(27,'Volunteer in a Program, Community, School, Daycare','Student volunteers their time, skill or a needed service on a regular basis for at least three months','Letter of participation from the program, community organization, agency, school, daycare, etc. kept in student’s file at ABE program.','B',NULL,0),
+			(28,'Participate in Community Activities','Student participates in an activity in their community (e.g., health fair, blood drive, food drive, election campaign, parade, public outreach or other information dissemination activities)','Student shows evidence of participation by either (1) submitting in writing, video, or audio tape a description of the activity; or (2) by delivering a presentation about the activity to students or other interested parties','B',NULL,0),
+			(29,'Obtain More Satisfying/ Appropriate Employment','Student obtains a job that is better suited to the individual’s interests, skills, time schedule, prior training. Improved employment may also provide personal growth, career path, better or more healthy working conditions, etc.','Student documents this goal by demonstrating improved employment by either (1) providing evidence in writing, a portfolio, a video, an audio tape; (2) delivering a presentation about the improved employment to students or other interested parties','B',NULL,0),
+			(30,'Get Industry Related Certificate or License','Student completes all requirements for license or certificate program','Copy of certificate or license.','B',NULL,0),
+			(31,'Attain legal residency','Student obtains legal residency (“green card”)','Teacher verifies the student’s receipt of Legal Residency (“Green”) Card','B',NULL,0),
+			(32,'Open a Checking or Savings Account','Student completes requirements for opening a checking and/or savings account.','Student provides copy of a blank check or deposit slip printed with student''s name and with the account number(s) blacked out.','B',NULL,0),
+			(33,'Obtain Stable Housing','A student who lacks stable housing (e.g., homeless, residing in an institutional setting or in the domicile of a friend or relative) obtains a stable domicile for her/him self and/or family.','Oral or written report made by student while enrolled (or in response to a follow-up survey) completed by the student and kept in the student''s file at the ABE program.','B',NULL,0),
+			(34,'Buy a Domicile','Student completes requirements for purchase of a home.','Student provides copy of appointment letter for closing; copy of letter confirming homeowners insurance; or copy of a water/sewer bill.','B',NULL,0),
+			(35,'Start a Business','Student starts a new business or is a partner in the formation of a new business.','Copy of business tax identification number from Massachusetts Department of Revenue','B',NULL,0),
+			(36,'Retain current job by meeting new requirements',NULL,NULL,'C','ECONOMIC',0),
+			(37,'Be removed from public assistance',NULL,NULL,'C','ECONOMIC',0),
+			(38,'Increase computer literacy skills',NULL,NULL,'C','EDUCATIONAL',0),
+			(39,'Quit smoking',NULL,NULL,'C','HEALTH',0),
+			(40,'Improve health of children',NULL,NULL,'C','HEALTH',0),
+			(41,'Improve personal health',NULL,NULL,'C','HEALTH',0),
+			(42,'Learn about nutrition',NULL,NULL,'C','HEALTH',0),
+			(43,'Learn about effects of second hand smoke',NULL,NULL,'C','HEALTH',0),
+			(44,'Learn about domestic violence',NULL,NULL,'C','HEALTH',0),
+			(45,'Learn ways to reduce stress',NULL,NULL,'C','HEALTH',0),
+			(46,'Learn about HIV / AIDS',NULL,NULL,'C','HEALTH',0),
+			(47,'Learn about drug / alcohol dependence',NULL,NULL,'C','HEALTH',0),
+			(48,'Increase participation in school activities',NULL,NULL,'C','PARENTING/FAMILY LITERACY/LEARNING',0),
+			(49,'Join an organization at your child’s school',NULL,NULL,'C','PARENTING/FAMILY LITERACY/LEARNING',0),
+			(50,'Have greater involvement in children’s schooling',NULL,NULL,'C','PARENTING/FAMILY LITERACY/LEARNING',0),
+			(51,'Improve family communication',NULL,NULL,'C','PARENTING/FAMILY LITERACY/LEARNING',0),
+			(52,'Enhance household management skills (interact with utility company, plumbers, electricians, etc.)',NULL,NULL,'C','SOCIETAL',0),
+			(53,'Enhance financial management skills (interact with insurance companies, banks, etc.)',NULL,NULL,'C','SOCIETAL',0),
+			(54,'Reconnect/reintegrate to community after institutionalization',NULL,NULL,'C','SOCIETAL',0),
+			(55,'Mentoring/Leadership role (student council, advisory board, student speakers at a public event, student action health team, student leadership team, planning team, curriculum development)',NULL,NULL,'C','SOCIETAL',0),
+			(56,'Learn about US culture',NULL,NULL,'C','SOCIETAL',0),
+			(57,'Enter Military',NULL,NULL,'C','SOCIETAL',0),
+			(58,'Create a resume',NULL,NULL,'C','EMPLOYMENT',0),
+			(59,'Register at and/or visit a career center',NULL,NULL,'C','EMPLOYMENT',0),
+			(60,'Go on a job interview',NULL,NULL,'C','EMPLOYMENT',0),
+			(61,'Apply for a job',NULL,NULL,'C','EMPLOYMENT',0),
+			(62,'Learn about financial planning',NULL,NULL,'C','FINANCIAL LITERACY',0),
+			(63,'Learn about credit and debit card use',NULL,NULL,'C','FINANCIAL LITERACY',0),
+			(64,'Learn about employee benefits packages',NULL,NULL,'C','FINANCIAL LITERACY',0),
+			(65,'Develop a personal and/or a family budget',NULL,NULL,'C','FINANCIAL LITERACY',0);
+END//
 
 -- ------------------ ALTERING StudentGoals TABLE -------------------------
 DELIMITER //
@@ -276,7 +403,9 @@ BEGIN
 	IF _count = 0 THEN
 		ALTER TABLE `StudentGoals` ADD PRIMARY KEY (`id`),
 					MODIFY `id` int NOT NULL AUTO_INCREMENT,
-					ADD CONSTRAINT `FK_StudentG` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+					ADD CONSTRAINT `FK_StudentG` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+					ADD CONSTRAINT `FK_Goal` FOREIGN KEY (`goal`) REFERENCES DOEGoals (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 
 END IF ; 
 END//
@@ -719,25 +848,51 @@ BEGIN
 				MODIFY `id` int NOT NULL AUTO_INCREMENT;
                 
 END IF ; 
-	INSERT IGNORE INTO `DOEExitReasons` (`id`, `reason`) values
-			(1, 'Death'),
-			(2, 'Did not comply with program policies'),
-			(3, 'Entered college or training program'),
-			(4, 'Entered employment'),
-			(5, 'Entered other ABE program'),
-			(6, 'Family problems'),
-			(7, 'Illness/incapacity'),
-			(8, 'Lack of dependent child care resources'),
-			(9, 'Lack of interest'),
-			(10, 'Lack of transportation resources'),
-			(11, 'Met goal(s)'),
-			(12, 'Moved'),
-			(13, 'Personal Reasons'),
-			(14, 'Prison sentence ended'),
-			(15, 'Program did not meet student needs'),
-			(16, 'Time and/or location of resources not feasible'),
-			(17, 'Tutor ended the match'),
-			(18, 'Unable to contact');
+	INSERT IGNORE INTO `DOEExitReasons` (`id`, `type`, `reason`) values
+			(1, 'student', 'Death'),
+			(2, 'student', 'Did not comply with program policies'),
+			(3, 'student', 'Entered college or training program'),
+			(4, 'student', 'Entered employment'),
+			(5, 'student', 'Entered other ABE program'),
+			(6, 'student', 'Family problems'),
+			(7, 'student', 'Illness/incapacity'),
+			(8, 'student', 'Lack of dependent child care resources'),
+			(9, 'student', 'Lack of interest'),
+			(10, 'student', 'Lack of transportation resources'),
+			(11, 'student', 'Met goal(s)'),
+			(12, 'student', 'Moved'),
+			(13, 'student', 'Personal Reasons'),
+			(14, 'student', 'Prison sentence ended'),
+			(15, 'student', 'Program did not meet student needs'),
+			(16, 'student', 'Time and/or location of resources not feasible'),
+			(17, 'student', 'Tutor ended the match'),
+			(18, 'student', 'Unable to contact'),
+            (19, 'tutor', 'Child care issues'),
+			(20, 'tutor', 'Devote time to family matters'),
+			(21, 'tutor', 'Illness'),
+			(22, 'tutor', 'Increased responsibilities'),
+			(23, 'tutor', 'Maternity leave'),
+			(24, 'tutor', 'Moved'),
+			(25, 'tutor', 'Promoted'),
+			(26, 'tutor', 'Retired'),
+			(27, 'tutor', 'Returned to school'),
+			(28, 'tutor', 'Job/schedule conflict'),
+			(29, 'tutor', 'Secured employment closer to home'),
+			(30, 'tutor', 'Secured employment with benefits'),
+			(31, 'tutor', 'Secured full time employment'),
+			(32, 'tutor', 'Took a full time job in adult education'),
+			(33, 'tutor', 'Took another job in related field'),
+			(34, 'tutor', 'Took another job in unrelated field'),
+			(35, 'tutor', 'Took another volunteer position'),
+			(36, 'tutor', 'Took teaching position in K-12 area'),
+			(37, 'tutor', 'Terminated'),
+			(38, 'tutor', 'Deceased'),
+			(39, 'tutor', 'Tutee/student achieved goal'),
+			(40, 'tutor', 'Volunteer/student match not appropriate'),
+			(41, 'tutor', 'Completed volunteer contract'),
+			(42, 'tutor', 'Student left program/match dissolved'),
+			(43, 'tutor', 'Other');
+
 END//
 
 
@@ -921,13 +1076,19 @@ BEGIN
 
 	CALL alterTableDOEExitReasons();
 
+	CALL alterTableDOEGoals();
+
 	CALL alterTableLVMExitReasons();
 
 	CALL alterTableLVMReferral();
     
 	CALL alterTablePerson();
-
+    
 	CALL alterTableStudent();
+    
+	CALL alterTableStudentPreferences();
+    
+    CALL alterTableStudentPublicAssistance();
 
 	CALL alterTableStudentAssessment();
 

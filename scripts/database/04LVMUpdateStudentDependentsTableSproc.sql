@@ -1,5 +1,5 @@
 -- --------------------------------------------
--- 04LVMAddTestStudentDependentsSproc
+-- 04LVMUpdateStudentDependentsTableSproc
 -- Date: MAR 24 2016
 -- 
 -- Creates sproc to insert data into the StudentDependents table
@@ -7,22 +7,21 @@
 
 USE lvm;
 
-DROP PROCEDURE IF EXISTS addTestStudentDependents;
+DROP PROCEDURE IF EXISTS updateStudentDependentsTable;
 
 DELIMITER //
 
-CREATE PROCEDURE addTestStudentDependents(
-  `id` int,
+CREATE PROCEDURE updateStudentDependentsTable(
   `student` int, -- FK
   `yearOfBirth` int,
   `inSchool` boolean,
   `dateAdded` datetime,
-  `dateModified` datetime)
+  `dateModified` datetime,
+  `isTestData` bit)
 
 BEGIN
 
 INSERT INTO StudentDependents(
-	id,
 	student, 
     yearOfBirth,
     inSchool,
@@ -30,12 +29,11 @@ INSERT INTO StudentDependents(
     dateModified,
     isTestData)
 VALUES(
-	`id`,
 	`student`, 
     `yearOfBirth`,
     `inSchool`,
     `dateAdded`,
     `dateModified`,
-    1);
+    `isTestData`);
     
 END //
