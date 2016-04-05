@@ -30,6 +30,16 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
         return res.json({user: req.session.user});
     };
     
+    /**
+     * Checks if the user is already logged in. If they are, redirect to the dashboard.
+     */
+    var checkIfAlreadyLoggedIn = function (req, res, next) {
+        if (req.session.user) {
+            return res.redirect('/lvm/dashboard.html');
+        }
+        next();
+    };
+    
     // --------------------------------------------------------------    
     // UNPROTECTED ROUTES:
     
@@ -44,6 +54,7 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
     
     // Login route
     router.route('/login')
+        .get(checkIfAlreadyLoggedIn)
         .get(HomeController.login)
         .all(methodNotAllowed);
         
@@ -73,18 +84,25 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
         .get(returnUserObject)
         .all(methodNotAllowed);
         
-    router.route('/api/account')
-        .post(AuthenticationController.createAccount)
-        .delete(AuthenticationController.deleteAccount)
-        .all(methodNotAllowed);
-        
     router.route('/api/account/password')
         .post(AuthenticationController.updatePassword)
         .all(methodNotAllowed);
         
+    router.route('/api/accounts')
+        .get(AuthenticationController.listUsers)
+        .all(methodNotAllowed);
+        
     router.route('/api/account/role')
-        .all()
         .post(AuthenticationController.updateRole)
+        .all(methodNotAllowed);
+        
+    router.route('/api/account/branch')
+        .post(AuthenticationController.updateBranch)
+        .all(methodNotAllowed);
+
+    router.route('/api/account/:username?')
+        .post(AuthenticationController.createAccount)
+        .delete(AuthenticationController.deleteAccount)
         .all(methodNotAllowed);
         
     router.route('/person/tutor/:pid?')
