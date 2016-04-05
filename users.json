@@ -1,19 +1,19 @@
 {
-    "nextId": 2,
+    "nextId": 6,
     "users": [
         {
             "id": 0,
             "username": "roberta",
-            "password": "sha1$356c26b3$1$243e7f5bf2e12d51759615aefd9bfb1de0460b04",
+            "password": "sha1$87967ebf$1$64b81e17de7e1bbbde5625c885f1165d91228b99",
             "role": "Administrator",
-            "affiliate": 0
+            "branch": 0
         },
         {
             "id": 1,
             "username": "grace",
-            "password": "sha1$1e293bd6$1$df9999949ba01ec6f2f546aebb13f4a5c43e5097",
-            "role": "Administrator",
-            "affiliate": 5
+            "password": "sha1$4ddf085c$1$942a44af57a173c4bfc3dfb86499cd64466c1b41",
+            "role": "Affiliate Coordinator",
+            "branch": 5
         }
     ]
 }

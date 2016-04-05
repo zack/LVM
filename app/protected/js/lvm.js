@@ -29,6 +29,19 @@ function Config($locationProvider, $httpProvider) {
     $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
 }
 
+function Run($rootScope, $http) {
+    $http({
+        method: 'GET',
+        url: '/lvm/user'
+    }).then(function successCallback(response) {
+        $rootScope.user = response.data.user;
+      }, function errorCallback(response) {
+        // Redirect to login?
+        $rootScope.user = {};
+      });
+}
+
 //declare app level module and hook in config and run blocks
 angular.module('lvmApp', [])
-    .config(Config);
+    .config(Config)
+    .run(Run);

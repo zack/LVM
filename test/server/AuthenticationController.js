@@ -257,21 +257,6 @@ describe('Testing AuthenticationController', function() {
             done();
         });
         
-        it('should not update the password if the current password is not correct', function (done) {
-            var req = { 
-                body : {
-                    username: 'test',
-                    password: 'tester0', // bad password
-                    newPassword: 'test123'
-                }
-            };
-            AuthenticationController.updatePassword(req, res, next);
-            
-            expect(res.status).toHaveBeenCalledWith(statusCodes.BAD_REQUEST_STATUS);
-            expect(res.send).toHaveBeenCalledWith('Could not authenticate. The current password does not match.');
-            done();
-        });
-        
         // NEGATIVE TESTS:
         it('should not update the password when a username is not provided', function (done) {
             var req = { 
@@ -288,7 +273,7 @@ describe('Testing AuthenticationController', function() {
             done();
         });
         
-        it('should not update the password when the current password was not provided', function (done) {
+        it('should update the password when the current password was not provided', function (done) {
             var req = { 
                 body : {
                     username: 'test',
@@ -298,8 +283,8 @@ describe('Testing AuthenticationController', function() {
             };
             AuthenticationController.updatePassword(req, res, next);
             
-            expect(res.status).toHaveBeenCalledWith(statusCodes.BAD_REQUEST_STATUS);
-            expect(res.send).toHaveBeenCalledWith('The current password is required.');
+            expect(res.status).not.toHaveBeenCalled();
+            expect(res.send).toHaveBeenCalledWith('Password was updated successfully!');
             done();
         });
         
@@ -340,7 +325,7 @@ describe('Testing AuthenticationController', function() {
         // POSITIVE TESTS:
         it('should delete the account when all info is provided', function (done) {
             var req = { 
-                body : {
+                params : {
                     username: 'test'
                 }
             };
@@ -353,7 +338,7 @@ describe('Testing AuthenticationController', function() {
         
         it('should delete the account when the username contains special characters', function (done) {
             var req = { 
-                body : {
+                params : {
                     username: '>todo!tester@google.comZ<'
                 }
             };
@@ -367,7 +352,7 @@ describe('Testing AuthenticationController', function() {
         // NEGATIVE TESTS:
         it('should not delete an account when a username is not provided', function (done) {
             var req = { 
-                body : {
+                params : {
                     username: ''
                 }
             };
@@ -577,7 +562,7 @@ describe('Testing AuthenticationController', function() {
             
             expect(res.status).not.toHaveBeenCalled();
             expect(res.send).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
             done();
         });
         
@@ -596,7 +581,7 @@ describe('Testing AuthenticationController', function() {
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
             done();
         });
         
@@ -615,7 +600,7 @@ describe('Testing AuthenticationController', function() {
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
             done();
         });
         
@@ -670,7 +655,7 @@ describe('Testing AuthenticationController', function() {
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
             done();
         });
         
@@ -716,7 +701,7 @@ describe('Testing AuthenticationController', function() {
             AuthenticationController.login(req, res, next);
             
             expect(res.status).not.toHaveBeenCalled();
-            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard');
+            expect(res.redirect).toHaveBeenCalledWith('/lvm/dashboard.html');
             done();
         });
         
