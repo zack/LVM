@@ -71,13 +71,8 @@ module.exports = function (auth, statusCodes) {
                 var resp = auth.updatePassword(req.body.username, req.body.newPassword);
                 return resp ? res.send('Password was updated successfully!') : res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred updating the password.');
             };
-            var authenticate = function () {
-                return auth.authenticate(req.body.username, req.body.password);
-            };
             
             return validationFn(req.body.username, 'A username is required.') &&
-                    //validationFn(req.body.password, 'The current password is required.') &&
-                    //validationFn(req.body.password, 'Could not authenticate. The current password does not match.', authenticate) &&
                     validationFn(req.body.newPassword, 'A new password is required.') &&
                     validationFn(req.body.newPassword, 'The new password does not meet the requirements.', passwordMeetsRequirements) &&
                     update();
