@@ -14,7 +14,7 @@ describe('admin', function () {
         var $scope = {};
         //var $http = jasmine.createSpy('$http');
         //var controller = $controller('AdminController', { $scope: $scope, $http: $http });
-        //expect($scope.fetchAccounts).toHaveBeenCalled();
+        //expect($scope.fetchAccounts).toHaveBeenCalled(); 
       });
     });
   });
