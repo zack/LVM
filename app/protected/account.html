@@ -54,7 +54,7 @@
                             </li>
                             <li>
                                 <span class="col-md-6"><b>Affiliate: </b></span>
-                                <span class="col-md-6">{{form.mapNumToAffiliate($root.user.branch)}}</span>
+                                <span class="col-md-6">{{$root.mapNumToAffiliate($root.user.branch)}}</span>
                             </li>
                         </ul>
                     </div>
@@ -67,8 +67,8 @@
                             <hr/>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p class="alert alert-success" ng-if="form.manageStatus === true">Password updated successfully!</p>
-                                    <p class="alert alert-danger"  ng-if="form.manageStatus === false">{{form.errorManageMessage}}</p>
+                                    <p class="alert alert-success" ng-if="form.updateStatus === true">Password updated successfully!</p>
+                                    <p class="alert alert-danger"  ng-if="form.updateStatus === false">{{form.errorMessage}}</p>
                                 </div>
                             </div>
                             <div class="row">

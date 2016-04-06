@@ -56,10 +56,7 @@ angular.module('lvmApp')
                 method: 'GET',
                 url: '/lvm/api/accounts'
             }).then(function successCallback(response) {
-                form.accounts = _.map(response.data, function (account) {
-                    account.branchName = mapNumToAffiliate(account.branch);
-                    return account;
-                });
+                form.accounts = response.data;
                 
                 // Setup the state arrays
                 _.each(form.accounts, function (item, index) {

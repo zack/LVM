@@ -10,32 +10,10 @@ angular.module('lvmApp')
         var form = this;
         
         $scope.resetState = function () {
-            form.manageStatus = null;
-            form.errorManageMessage = '';
+            form.updateStatus = null;
+            form.errorMessage = '';
             $scope.$apply();
         };
-        
-        form.mapNumToAffiliate = function (affiliateNum) {
-            var affiliate = _.findWhere(form.affiliates, {value: affiliateNum});
-            return affiliate && affiliate.name;
-        };
-        
-        form.affiliates = [
-            { name: 'Administrator (Non-Affiliated)', value: 0 },
-            { name: 'Boston', value: 5 },
-            { name: 'Project Lighthouse', value: 10 },
-            { name: 'Fitchburg', value: 15 },
-            { name: 'Framingham', value: 20 },
-            { name: 'Lowell', value: 25 },
-            { name: 'Norwood', value: 30 },
-            { name: 'Orange-Athol', value: 35 },
-            { name: 'Pittsfield', value: 40 },
-            { name: 'Quaboag Valley', value: 45 },
-            { name: 'Quincy', value: 50 },
-            { name: 'Tri.Community', value: 60 },
-            { name: 'Stoughton', value: 65 },
-            { name: 'Worcester', value: 70 },
-        ];
         
         form.updatePassword = function (username) {
             return $http({
@@ -46,12 +24,12 @@ angular.module('lvmApp')
                     newPassword: $scope.password,
                 }
             }).then(function successCallback(response) {
-                    form.manageStatus = true;
+                    form.updateStatus = true;
                     $scope.password = "";
                     setTimeout($scope.resetState, 5 * 1000);
                 }, function errorCallback(response) {
-                    form.manageStatus = false;
-                    form.errorManageMessage = response.data;
+                    form.updateStatus = false;
+                    form.errorMessage = response.data;
                     setTimeout($scope.resetState, 5 * 1000);
                 });
         };

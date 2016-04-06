@@ -30,7 +30,31 @@ function Config($locationProvider, $httpProvider) {
 }
 
 function Run($rootScope, $http) {
-    $http({
+    
+    $rootScope.affiliates = [
+        { name: 'Administrator (Non-Affiliated)', value: 0 },
+        { name: 'Boston', value: 5 },
+        { name: 'Project Lighthouse', value: 10 },
+        { name: 'Fitchburg', value: 15 },
+        { name: 'Framingham', value: 20 },
+        { name: 'Lowell', value: 25 },
+        { name: 'Norwood', value: 30 },
+        { name: 'Orange-Athol', value: 35 },
+        { name: 'Pittsfield', value: 40 },
+        { name: 'Quaboag Valley', value: 45 },
+        { name: 'Quincy', value: 50 },
+        { name: 'Tri.Community', value: 60 },
+        { name: 'Stoughton', value: 65 },
+        { name: 'Worcester', value: 70 },
+    ];
+    
+    $rootScope.mapNumToAffiliate = function (affiliateNum) {
+        var affiliate = _.findWhere($rootScope.affiliates, {value: affiliateNum});
+        return affiliate && affiliate.name;
+    };    
+    
+    var fetchUser = function () {
+        $http({
         method: 'GET',
         url: '/lvm/user'
     }).then(function successCallback(response) {
@@ -39,6 +63,9 @@ function Run($rootScope, $http) {
         // Redirect to login?
         $rootScope.user = {};
       });
+    };
+    
+    fetchUser();
 }
 
 //declare app level module and hook in config and run blocks
