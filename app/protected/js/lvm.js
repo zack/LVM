@@ -48,6 +48,13 @@ function Run($rootScope, $http) {
         { name: 'Worcester', value: 70 },
     ];
     
+    $rootScope.roles = [
+        'Administrator',
+        'Affiliate Coordinator',
+        'Affiliate Staff',
+        'Tutor'
+    ];
+    
     $rootScope.mapNumToAffiliate = function (affiliateNum) {
         var affiliate = _.findWhere($rootScope.affiliates, {value: affiliateNum});
         return affiliate && affiliate.name;
