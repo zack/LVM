@@ -16,6 +16,9 @@
 
 .dropdown {
     height: 35px;
+}
+
+.dropdown-full {
     width: 100%;
 }
 

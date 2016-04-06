@@ -91,6 +91,7 @@
         "module"  : true,
         "process" : true,
         "__dirname": true,
-        "_": true
+        "_": true,
+        "window": true
     }
 }
