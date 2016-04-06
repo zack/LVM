@@ -22,44 +22,12 @@ angular.module('lvmApp')
         $scope.manageRoles = [];
         $scope.manageAffiliates = [];
         
-        var mapNumToAffiliate = function (affiliateNum) {
-            var affiliate = _.findWhere(form.affiliates, {value: affiliateNum});
-            return affiliate && affiliate.name;
-        };
-        
-        form.affiliates = [
-            { name: 'Administrator (Non-Affiliated)', value: 0 },
-            { name: 'Boston', value: 5 },
-            { name: 'Project Lighthouse', value: 10 },
-            { name: 'Fitchburg', value: 15 },
-            { name: 'Framingham', value: 20 },
-            { name: 'Lowell', value: 25 },
-            { name: 'Norwood', value: 30 },
-            { name: 'Orange-Athol', value: 35 },
-            { name: 'Pittsfield', value: 40 },
-            { name: 'Quaboag Valley', value: 45 },
-            { name: 'Quincy', value: 50 },
-            { name: 'Tri.Community', value: 60 },
-            { name: 'Stoughton', value: 65 },
-            { name: 'Worcester', value: 70 },
-        ];
-        
-        form.roles = [
-            'Administrator',
-            'Affiliate Coordinator',
-            'Affiliate Staff',
-            'Tutor'
-        ];
-        
         form.fetchAccounts = function () {
             $http({
                 method: 'GET',
                 url: '/lvm/api/accounts'
             }).then(function successCallback(response) {
-                form.accounts = _.map(response.data, function (account) {
-                    account.branchName = mapNumToAffiliate(account.branch);
-                    return account;
-                });
+                form.accounts = response.data;
                 
                 // Setup the state arrays
                 _.each(form.accounts, function (item, index) {
@@ -105,7 +73,7 @@ angular.module('lvmApp')
         };
         
         form.updatePassword = function (username) {
-            var newPassword = prompt("Please enter your name");
+            var newPassword = prompt("Please enter a new password.");
             
             return $http({
                 method: 'POST',

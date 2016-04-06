@@ -85,7 +85,7 @@
                                     <div> 
                                         <select required ng-model="role" class="dropdown dropdown-full btn btn-default dropdown-toggle">
                                             <option value="-1" disabled>User Role</option>
-                                            <option ng-repeat="role in form.roles" ng-value="role">{{role}}</option>
+                                            <option ng-repeat="role in $root.roles" ng-value="role">{{role}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@
                                     <div> 
                                         <select required ng-model="affiliate" class="dropdown dropdown-full btn btn-default dropdown-toggle">
                                             <option value="-1" disabled>Affiliate</option>
-                                            <option ng-repeat="affiliate in form.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
+                                            <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -158,13 +158,13 @@
                                     {{account.role}}
                                 </div>
                                 <div class="col-md-2">
-                                    {{account.branchName}}
+                                    {{$root.mapNumToAffiliate(account.branch)}}
                                 </div>
                                 <div class="col-md-5">
                                     <div class="col-md-12 command-row">
                                         <select ng-model="manageRoles[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">
                                             <option selected value="-1" disabled>User Role</option>
-                                            <option ng-repeat="role in form.roles" ng-value="role">{{role}}</option>
+                                            <option ng-repeat="role in $root.roles" ng-value="role">{{role}}</option>
                                         </select>
                                         <span class="col-md-2"></span>
                                         <button ng-click="form.updateRole(account.username, $index)" class="btn btn-default col-md-5">Update Role</button>
@@ -172,7 +172,7 @@
                                     <div class="col-md-12 command-row">
                                         <select ng-model="manageAffiliates[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">
                                             <option selected value="-1" disabled>Affiliate</option>
-                                            <option ng-repeat="affiliate in form.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
+                                            <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
                                         </select>
                                         <span class="col-md-2"></span>
                                         <button ng-click="form.updateAffiliate(account.username, $index)" class="btn btn-default col-md-5">Update Affiliate</button>
