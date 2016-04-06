@@ -25,7 +25,7 @@ describe('admin', function () {
         var controller = $controller('AdminController', { $scope: $scope, $http: $http });
         //controller.fetchAccounts();
         //expect($http).toHaveBeenCalledWith(jasmine.any(Object));
-      });
+      }); 
       
       it('should report an error if unable to change the password', function() {
         var $scope = {};
