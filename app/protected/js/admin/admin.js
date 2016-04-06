@@ -105,7 +105,7 @@ angular.module('lvmApp')
         };
         
         form.updatePassword = function (username) {
-            var newPassword = prompt("Please enter your name");
+            var newPassword = prompt("Please enter a new password.");
             
             return $http({
                 method: 'POST',
