@@ -51,7 +51,7 @@ angular.module('lvmApp')
             'Tutor'
         ];
         
-        form.fetchAccounts = function () {
+        $scope.fetchAccounts = function () {
             $http({
                 method: 'GET',
                 url: '/lvm/api/accounts'
@@ -89,19 +89,13 @@ angular.module('lvmApp')
                 }
             }).then(function successCallback(response) {
                     form.accountCreated = true;
-                    form.fetchAccounts();
+                    $scope.fetchAccounts();
                     setTimeout(resetState, 5 * 1000);
                 }, function errorCallback(response) {
                     form.accountCreated = false;
                     form.accountCreationErrorMessage = response.data;
                     setTimeout(resetState, 5 * 1000);
                 });
-        };
-        
-        var manageErrorCallback = function (response) {
-            form.manageStatus = false;
-            form.errorManageMessage = response.data;
-            setTimeout($scope.resetStateManage, 5 * 1000);
         };
         
         form.updatePassword = function (username) {
@@ -118,14 +112,17 @@ angular.module('lvmApp')
                     form.manageStatus = true;
                     form.successManageMessage = 'Password updated successfully!';
                     setTimeout($scope.resetStateManage, 5 * 1000);
-                }, manageErrorCallback);
+                }, function errorCallback(response) {
+                    form.manageStatus = false;
+                    form.errorManageMessage = response.data;
+                    setTimeout($scope.resetStateManage, 5 * 1000);
+                });
         };
         
         form.updateAffiliate = function (username, index) {
             var confirmation = confirm('Are you sure you would like to modify this account?');
-            if (!confirmation) { 
-                return null;
-            }
+            if (!confirmation) { return null; }
+            
             return $http({
                 method: 'POST',
                 url: '/lvm/api/account/branch',
@@ -133,12 +130,16 @@ angular.module('lvmApp')
                     username: username,
                     branch: parseInt($scope.manageAffiliates[index], 10),
                 }
-            }).then(function (response) {
+            }).then(function successCallback(response) {
                     form.manageStatus = true;
                     form.successManageMessage = 'Affiliate updated successfully!';
-                    form.fetchAccounts();
+                    $scope.fetchAccounts();
                     setTimeout($scope.resetStateManage, 5 * 1000);
-                }, manageErrorCallback);
+                }, function errorCallback(response) {
+                    form.manageStatus = false;
+                    form.errorManageMessage = response.data;
+                    setTimeout($scope.resetStateManage, 5 * 1000);
+                });
         };
         
         form.updateRole = function (username, index) {
@@ -155,9 +156,13 @@ angular.module('lvmApp')
             }).then(function successCallback(response) {
                     form.manageStatus = true;
                     form.successManageMessage = 'Role updated successfully!';
-                    form.fetchAccounts();
+                    $scope.fetchAccounts();
                     setTimeout($scope.resetStateManage, 5 * 1000);
-                }, manageErrorCallback);
+                }, function errorCallback(response) {
+                    form.manageStatus = false;
+                    form.errorManageMessage = response.data;
+                    setTimeout($scope.resetStateManage, 5 * 1000);
+                });
         };
         
         form.deleteAccount = function (username) {
@@ -170,10 +175,14 @@ angular.module('lvmApp')
             }).then(function successCallback(response) {
                     form.manageStatus = true;
                     form.successManageMessage = 'Account deleted successfully!';
-                    form.fetchAccounts();
+                    $scope.fetchAccounts();
                     setTimeout($scope.resetStateManage, 5 * 1000);
-                }, manageErrorCallback);
+                }, function errorCallback(response) {
+                    form.manageStatus = false;
+                    form.errorManageMessage = response.data;
+                    setTimeout($scope.resetStateManage, 5 * 1000);
+                });
         };
         
-        form.fetchAccounts();
+        $scope.fetchAccounts();
     });

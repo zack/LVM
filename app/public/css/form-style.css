@@ -16,6 +16,9 @@
 
 .dropdown {
     height: 35px;
+}
+
+.dropdown-full {
     width: 100%;
 }
 
@@ -46,4 +49,8 @@
 
 .command-row {
     padding-top: 5px;
+}
+
+.account-row {
+    padding-top: 10px;
 }
