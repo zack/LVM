@@ -27,7 +27,7 @@ describe('account', function () {
         controller.updatePassword('test');
         expect($http).toHaveBeenCalledWith(jasmine.any(Object));
         expect(thenObj.then).toHaveBeenCalledWith(jasmine.any(Function), jasmine.any(Function));
-        expect(controller.manageStatus).toEqual(true);
+        expect(controller.updateStatus).toEqual(true);
         expect($scope.password).toEqual("");
       }); 
       
@@ -44,8 +44,8 @@ describe('account', function () {
         controller.updatePassword('test');
         expect($http).toHaveBeenCalledWith(jasmine.any(Object));
         expect(thenObj.then).toHaveBeenCalledWith(jasmine.any(Function), jasmine.any(Function));
-        expect(controller.manageStatus).toEqual(false);
-        expect(controller.errorManageMessage).toEqual('A new password is required.');
+        expect(controller.updateStatus).toEqual(false);
+        expect(controller.errorMessage).toEqual('A new password is required.');
         expect($scope.password).toEqual('testing');
       });
     });

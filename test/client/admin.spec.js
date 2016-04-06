@@ -37,8 +37,7 @@ describe('admin', function () {
           "id": 0,
           "username": "roberta",
           "role": "Administrator",
-          "branch": 0,
-          "branchName": "Administrator (Non-Affiliated)"
+          "branch": 0
         }]);
         expect($scope.manageRoles.length).toEqual(controller.accounts.length);
         expect($scope.manageAffiliates.length).toEqual(controller.accounts.length);
