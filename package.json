@@ -46,7 +46,7 @@
     "hbs": "~4.0.x",
     "method-override": "~2.3.0",
     "mysql": "~2.10.x",
-    "request": "~2.69.x",
+    "request": "~2.70.x",
     "underscore": "~1.8.x",
     "winston": "~2.2.x"
   },
