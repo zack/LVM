@@ -30,12 +30,14 @@ module.exports = function (auth, statusCodes) {
         // Requires: req.body.username, req.body.password, req.body.role, req.body.branch
         createAccount : function (req, res, next) {
             var validationFn = _.partial(validateField, res);
+
+            var checkUserExists = function () {
+                return !auth.checkUsernameExists(req.body.username);
+            };
+
             var add = function () {
                 var resp = auth.addUser(req.body.username, req.body.password, req.body.role, {branch : req.body.branch});
                 return resp ? res.send('Account created successfully!') : res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred creating the account.');
-            };
-            var checkUserExists = function () {
-                return !auth.checkUsernameExists(req.body.username);
             };
             
             return validationFn(req.body.username, 'A username is required.') &&
@@ -49,15 +51,16 @@ module.exports = function (auth, statusCodes) {
                     add();
         },
         
-        // Requires: req.body.username
+        // Requires: req.params.username
         deleteAccount : function (req, res, next) {
             var validationFn = _.partial(validateField, res);
+
             var deleteUser = function () {
-                var resp = auth.removeUser(req.body.username);
+                var resp = auth.removeUser(req.params.username);
                 return resp ? res.send('Account deleted successfully!') : res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred deleting the account.');
             };
             
-            return validationFn(req.body.username, 'A username is required.') &&
+            return validationFn(req.params.username, 'A username is required.') &&
                     deleteUser();
         },
         
@@ -68,13 +71,8 @@ module.exports = function (auth, statusCodes) {
                 var resp = auth.updatePassword(req.body.username, req.body.newPassword);
                 return resp ? res.send('Password was updated successfully!') : res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred updating the password.');
             };
-            var authenticate = function () {
-                return auth.authenticate(req.body.username, req.body.password);
-            };
             
             return validationFn(req.body.username, 'A username is required.') &&
-                    validationFn(req.body.password, 'The current password is required.') &&
-                    validationFn(req.body.password, 'Could not authenticate. The current password does not match.', authenticate) &&
                     validationFn(req.body.newPassword, 'A new password is required.') &&
                     validationFn(req.body.newPassword, 'The new password does not meet the requirements.', passwordMeetsRequirements) &&
                     update();
@@ -89,7 +87,7 @@ module.exports = function (auth, statusCodes) {
             };
             
             return validationFn(req.body.username, 'A username is required.') &&
-                    validationFn(req.body.branch, 'An affiliate branch is required.') &&
+                    validationFn(req.body.branch, 'An affiliate branch is required.', function (value) { return !_.isNull(value); }) &&
                     validationFn(req.body.branch, 'An affiliate branch is required.', _.isNumber) &&
                     update();
         },
@@ -108,10 +106,14 @@ module.exports = function (auth, statusCodes) {
                     update();
         },
         
+        listUsers : function (req, res, next) {
+            return res.json(auth.listUsers());
+        },
+
         // Requires: req.body.username, req.body.password
         login : function (req, res, next) {
             var redirectToLogin = function (errorMessage) {
-                return res.redirect('/lvm/login?errorMessage=' + errorMessage);
+                return res.redirect('/login?errorMessage=' + errorMessage);
             };
             
             if (!req.body.username) {
@@ -133,7 +135,7 @@ module.exports = function (auth, statusCodes) {
                     return redirectToLogin('Unable to create a new session.');
                 }
                 req.session.user = authResp;
-                return res.redirect('/lvm/dashboard');
+                return res.redirect('/dashboard');
             });
         },
         
@@ -143,7 +145,7 @@ module.exports = function (auth, statusCodes) {
               if (err) {
                   return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred.');
               }
-              res.redirect('/lvm/login');
+              res.redirect('/login');
             });
         }
     };

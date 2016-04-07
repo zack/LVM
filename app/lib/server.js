@@ -6,6 +6,7 @@
 'use strict';
 
 module.exports = function(app, config) {
-    console.log('[express train application listening on %s]', config.port);
-    return app.listen(config.port);
+    var port = process.env.NODE_PORT || config.port;
+    console.log('[express train application listening on %s]', port);
+    return app.listen(port);
 };

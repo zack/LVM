@@ -1,7 +1,7 @@
 <html ng-app="lvmApp">
 <head>
     <title>LVM App - Dashboard</title>
-    <base href="/lvm/">
+    <base href="/">
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 
@@ -37,7 +37,7 @@
                 <div class="col-md-7">
                     <h2>LVM Administrator Portal</h2>
                 </div>
-                <div style="text-align:right" class="col-md-2">User: {{user.username}}</div>
+                <div style="text-align:right" class="col-md-2">Welcome, {{$root.user.username}}!</div>
             </div>
 
             <div class="row">
