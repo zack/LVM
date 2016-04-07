@@ -25,7 +25,7 @@ angular.module('lvmApp')
         form.fetchAccounts = function () {
             $http({
                 method: 'GET',
-                url: '/lvm/api/accounts'
+                url: '/api/accounts'
             }).then(function successCallback(response) {
                 form.accounts = response.data;
                 
@@ -48,7 +48,7 @@ angular.module('lvmApp')
             
             return $http({
                 method: 'POST',
-                url: '/lvm/api/account',
+                url: '/api/account',
                 data: {
                     username: $scope.username,
                     password: $scope.password,
@@ -77,7 +77,7 @@ angular.module('lvmApp')
             
             return $http({
                 method: 'POST',
-                url: '/lvm/api/account/password',
+                url: '/api/account/password',
                 data: {
                     username: username,
                     newPassword: newPassword,
@@ -96,7 +96,7 @@ angular.module('lvmApp')
             }
             return $http({
                 method: 'POST',
-                url: '/lvm/api/account/branch',
+                url: '/api/account/branch',
                 data: {
                     username: username,
                     branch: parseInt($scope.manageAffiliates[index], 10),
@@ -115,7 +115,7 @@ angular.module('lvmApp')
             
             return $http({
                 method: 'POST',
-                url: '/lvm/api/account/role',
+                url: '/api/account/role',
                 data: {
                     username: username,
                     role: $scope.manageRoles[index],
@@ -134,7 +134,7 @@ angular.module('lvmApp')
             
             return $http({
                 method: 'DELETE',
-                url: '/lvm/api/account/{{username}}'.replace(/{{username}}/, username),
+                url: '/api/account/{{username}}'.replace(/{{username}}/, username),
             }).then(function successCallback(response) {
                     form.manageStatus = true;
                     form.successManageMessage = 'Account deleted successfully!';

@@ -63,7 +63,7 @@ function Run($rootScope, $http) {
     var fetchUser = function () {
         $http({
         method: 'GET',
-        url: '/lvm/user'
+        url: '/user'
     }).then(function successCallback(response) {
         $rootScope.user = response.data.user;
       }, function errorCallback(response) {
