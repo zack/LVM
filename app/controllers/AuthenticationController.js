@@ -30,11 +30,11 @@ module.exports = function (auth, statusCodes) {
         // Requires: req.body.username, req.body.password, req.body.role, req.body.branch
         createAccount : function (req, res, next) {
             var validationFn = _.partial(validateField, res);
-            
+
             var checkUserExists = function () {
                 return !auth.checkUsernameExists(req.body.username);
             };
-            
+
             var add = function () {
                 var resp = auth.addUser(req.body.username, req.body.password, req.body.role, {branch : req.body.branch});
                 return resp ? res.send('Account created successfully!') : res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred creating the account.');
@@ -54,7 +54,7 @@ module.exports = function (auth, statusCodes) {
         // Requires: req.params.username
         deleteAccount : function (req, res, next) {
             var validationFn = _.partial(validateField, res);
-            
+
             var deleteUser = function () {
                 var resp = auth.removeUser(req.params.username);
                 return resp ? res.send('Account deleted successfully!') : res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred deleting the account.');
@@ -109,11 +109,11 @@ module.exports = function (auth, statusCodes) {
         listUsers : function (req, res, next) {
             return res.json(auth.listUsers());
         },
-        
+
         // Requires: req.body.username, req.body.password
         login : function (req, res, next) {
             var redirectToLogin = function (errorMessage) {
-                return res.redirect('/lvm/login?errorMessage=' + errorMessage);
+                return res.redirect('/login?errorMessage=' + errorMessage);
             };
             
             if (!req.body.username) {
@@ -135,7 +135,7 @@ module.exports = function (auth, statusCodes) {
                     return redirectToLogin('Unable to create a new session.');
                 }
                 req.session.user = authResp;
-                return res.redirect('/lvm/dashboard.html');
+                return res.redirect('/dashboard');
             });
         },
         
@@ -145,7 +145,7 @@ module.exports = function (auth, statusCodes) {
               if (err) {
                   return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred.');
               }
-              res.redirect('/lvm/login');
+              res.redirect('/login');
             });
         }
     };
