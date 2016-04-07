@@ -260,7 +260,7 @@ angular.module('lvmApp')
 
 		    $scope.submitForm=function(){
 		        var data=$scope.fields;
-		        var url='/lvm/api/createstudent/0';
+		        var url='api/createstudent/0';
 		        $http.post(url, data);
 		    }
     });
