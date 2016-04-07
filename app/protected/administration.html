@@ -22,10 +22,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="js/lvm.js"></script>
-    <script src="js/student/student-form.js"></script>
+    <script src="js/admin/admin.js"></script>
 </head>
-<body ng-controller="FormController as form">
+<body ng-controller="AdminController as form">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -34,7 +35,7 @@
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-9">
-                    <h2>New Student Form</h2>
+                    <h2>Administration Portal</h2>
                 </div>
             </div>
 
@@ -43,42 +44,148 @@
                     <div class="sidebar">
                         <ul class="nav nav-stacked nav-pills">
                             <!-- Section Names -->
-                            <li ng-repeat="section in form.formDefinition">
-                                <a ng-href="{{'#' + section.id}}">{{section.name}}</a>
+                            <li>
+                                <a href="#createAccount">Create Account</a>
+                            </li>
+                            <li>
+                                <a href="#manageAccounts">Manage Accounts</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <form role="form">
+                    <form role="form" name="createAccount">
             
-                        <div class="form-group" ng-repeat="section in form.formDefinition" id="{{section.id}}">
+                        <div class="form-group" id="createAccount">
+                            <h4>Create Account</h4>
                             <hr/>
-                            <div class="row" ng-repeat="row in section.fields">
-                                <div class="{{field.class || 'col-md-12'}}" ng-repeat="field in row">
-                                    <label for="{{field.name}}">
-                                        {{field.placeholder}}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="username">
+                                        Username
                                     </label>
-            
-                                    <div ng-switch="field.type">
-                                        <!-- Boolean (Yes/No) -->
-                                        <input ng-switch-when="boolean" type="checkbox" name="boolean-checkbox">
-            
-                                        <!-- Dropdown with customizable options -->
-                                        <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle">
-                                            <option value="" disabled>{{field.placeholder}}</option>
-                                            <option ng-repeat="option in field.options" ng-value="{{option}}">{{option}}</option>
+                                    
+                                    <input type="text" required ng-model="username" class="form-control" id="username" ng-trim="true" maxlength="255" name="username"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="password">
+                                        Password
+                                    </label>
+                                    
+                                    <input type="password" required ng-model="password" class="form-control" id="password" ng-trim="true" maxlength="255" name="password"/>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="role">
+                                        User Role
+                                    </label>
+                                    
+                                    <div> 
+                                        <select required ng-model="role" class="dropdown dropdown-full btn btn-default dropdown-toggle">
+                                            <option value="-1" disabled>User Role</option>
+                                            <option ng-repeat="role in $root.roles" ng-value="role">{{role}}</option>
                                         </select>
-            
-                                        <!-- Other inputs -->
-                                        <input ng-switch-default type="{{field.type}}" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" maxlength="{{field.maxlength}}" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="affiliate">
+                                        Affiliate
+                                    </label>
+                                    
+                                    <div> 
+                                        <select required ng-model="affiliate" class="dropdown dropdown-full btn btn-default dropdown-toggle">
+                                            <option value="-1" disabled>Affiliate</option>
+                                            <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="row" style="padding-top: 20px; text-align:center">
+                                <div class="col-md-12">
+                                    <p class="alert alert-success" ng-if="form.accountCreated === true">Account created successfully!</p>
+                                    <p class="alert alert-danger"  ng-if="form.accountCreated === false">{{form.accountCreationErrorMessage}}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="row" style="padding-top: 5px; text-align:center">
+                                <div class="col-md-12">
+                                    <button ng-click="form.createAccount()" class="btn btn-default">Submit</button>
+                                </div>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-default">
-                            Submit
-                        </button>
+                    </form>
+                    
+                    <form role="form" name="manageAccounts">
+            
+                        <div class="form-group" id="manageAccounts">
+                            <h4>Manage Accounts</h4>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="alert alert-success" ng-if="form.manageStatus === true">{{form.successManageMessage}}</p>
+                                    <p class="alert alert-danger"  ng-if="form.manageStatus === false">{{form.errorManageMessage}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    ID
+                                </div>
+                                <div class="col-md-2">
+                                    Username
+                                </div>
+                                <div class="col-md-2">
+                                    Role
+                                </div>
+                                <div class="col-md-2">
+                                    Affiliate
+                                </div>
+                                <div class="col-md-4">
+                                    Commands
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row account-row" ng-repeat="account in form.accounts">
+                                <div class="col-md-1">
+                                    {{account.id}}
+                                </div>
+                                <div class="col-md-2">
+                                    {{account.username}}
+                                </div>
+                                <div class="col-md-2">
+                                    {{account.role}}
+                                </div>
+                                <div class="col-md-2">
+                                    {{$root.mapNumToAffiliate(account.branch)}}
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="col-md-12 command-row">
+                                        <select ng-model="manageRoles[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">
+                                            <option selected value="-1" disabled>User Role</option>
+                                            <option ng-repeat="role in $root.roles" ng-value="role">{{role}}</option>
+                                        </select>
+                                        <span class="col-md-2"></span>
+                                        <button ng-click="form.updateRole(account.username, $index)" class="btn btn-default col-md-5">Update Role</button>
+                                    </div>
+                                    <div class="col-md-12 command-row">
+                                        <select ng-model="manageAffiliates[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">
+                                            <option selected value="-1" disabled>Affiliate</option>
+                                            <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
+                                        </select>
+                                        <span class="col-md-2"></span>
+                                        <button ng-click="form.updateAffiliate(account.username, $index)" class="btn btn-default col-md-5">Update Affiliate</button>
+                                    </div>
+                                    <div class="col-md-12 command-row">
+                                        <button ng-click="form.updatePassword(account.username)" class="btn btn-default col-md-5">Update Password</button>
+                                        <span class="col-md-2"></span>
+                                        <button ng-click="form.deleteAccount(account.username)" class="btn btn-default col-md-5">Delete Account</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" ng-if="!$last"><hr/></div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -86,10 +193,4 @@
     </div>
 </div>
 </body>
-
-<script>
-    $(document).ready(function() {
-        $("[name='boolean-checkbox']").bootstrapSwitch({onText: 'Yes', offText: 'No'});
-    });
-</script>
 </html>

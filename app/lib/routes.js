@@ -8,7 +8,7 @@
 var express = require('express'),
     path = require('path');
 
-module.exports = function (statusCodes, HomeController, AuthenticationController) {
+module.exports = function (statusCodes, HomeController, AuthenticationController, TutorController, StudentController) {
     var router = express.Router();
 
     /**
@@ -30,6 +30,16 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
         return res.json({user: req.session.user});
     };
     
+    /**
+     * Checks if the user is already logged in. If they are, redirect to the dashboard.
+     */
+    var checkIfAlreadyLoggedIn = function (req, res, next) {
+        if (req.session.user) {
+            return res.redirect('/lvm/dashboard.html');
+        }
+        next();
+    };
+    
     // --------------------------------------------------------------    
     // UNPROTECTED ROUTES:
     
@@ -44,12 +54,13 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
     
     // Login route
     router.route('/login')
+        .get(checkIfAlreadyLoggedIn)
         .get(HomeController.login)
         .all(methodNotAllowed);
         
     // Home/Landing page - redirect to login
     router.route('/')
-        .all(function (req, res, next) { res.redirect('/lvm/login'); });
+        .all(function (req, res, next) { res.redirect('/login'); });
 
     // --------------------------------------------------------------    
     // PROTECTED ROUTES:
@@ -57,7 +68,7 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
     router.use(function(req, res, next) {
         // Redirect to the login page if there is no user logged in
         if (!req.session.user) {
-            return res.redirect('/lvm/login');
+            return res.redirect('/login');
         } else {
             // Otherwise, allow the user through to the next matching route
             return next();
@@ -72,13 +83,44 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
     router.route('/user')
         .get(returnUserObject)
         .all(methodNotAllowed);
+        
+    router.route('/api/account/password')
+        .post(AuthenticationController.updatePassword)
+        .all(methodNotAllowed);
+        
+    router.route('/api/accounts')
+        .get(AuthenticationController.listUsers)
+        .all(methodNotAllowed);
+        
+    router.route('/api/account/role')
+        .post(AuthenticationController.updateRole)
+        .all(methodNotAllowed);
+        
+    router.route('/api/account/branch')
+        .post(AuthenticationController.updateBranch)
+        .all(methodNotAllowed);
 
+    router.route('/api/account/:username?')
+        .post(AuthenticationController.createAccount)
+        .delete(AuthenticationController.deleteAccount)
+        .all(methodNotAllowed);
+        
+    router.route('/person/tutor/:pid?')
+        .get(TutorController.getTutor)
+        .delete(TutorController.exitTutor)
+        .all(methodNotAllowed);
+        
+    router.route('/api/autocomplete/tutor/:name')
+        .get(TutorController.autocomplete)
+        .all(methodNotAllowed);
+
+    router.route('/api/createstudent/:id')
+        .get(StudentController.createStudent)
+        .all(methodNotAllowed);
+    
         // ADMIN
 
         // FRONT-END
-    router.route('/dashboard')
-        .get(HomeController.dashboard)
-        .all(methodNotAllowed);
 
     // Static Content for Protected content - prevents non-authenticated users from accessing these files        
     router.all('*', express.static(path.resolve(__dirname + '/../protected')));   // static protected files in /protected        

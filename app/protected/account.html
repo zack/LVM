@@ -1,0 +1,95 @@
+<html ng-app="lvmApp">
+<head>
+    <title>LVM App - Student Form</title>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.css">
+
+    <link rel="stylesheet" href="css/form-style.css">
+    
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="js/lvm.js"></script>
+    <script src="js/account/account.js"></script>
+</head>
+<body ng-controller="AccountController as form">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="header-include" ng-include="'components/header.html'"></div>
+
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <h2>Account Management</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 sidebar-outer">
+                    <div class="sidebar">
+                        <h4>User Account Details</h4>
+                        <ul class="nav nav-stacked nav-pills">
+                            <li>
+                                <span class="col-md-6"><b>Username: </b></span>
+                                <span class="col-md-6">{{$root.user.username}}</span>
+                            </li>
+                            <li>
+                                <span class="col-md-6"><b>Role: </b></span>
+                                <span class="col-md-6">{{$root.user.role}}</span>
+                            </li>
+                            <li>
+                                <span class="col-md-6"><b>Affiliate: </b></span>
+                                <span class="col-md-6">{{$root.mapNumToAffiliate($root.user.branch)}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <form role="form" name="createAccount">
+            
+                        <div class="form-group" id="createAccount">
+                            <h4>Change Password</h4>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="alert alert-success" ng-if="form.updateStatus === true">Password updated successfully!</p>
+                                    <p class="alert alert-danger"  ng-if="form.updateStatus === false">{{form.errorMessage}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="password">
+                                        Password
+                                    </label>
+                                    
+                                    <input type="password" required ng-model="password" class="form-control" id="password" ng-trim="true" maxlength="255" name="password"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <br/>
+                                    <button ng-click="form.updatePassword($root.user.username)" class="btn btn-default">Change Password</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

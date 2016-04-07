@@ -90,6 +90,8 @@
         "angular" : true,
         "module"  : true,
         "process" : true,
-        "__dirname": true
+        "__dirname": true,
+        "_": true,
+        "window": true
     }
 }
