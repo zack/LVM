@@ -1,0 +1,10 @@
+{
+    "request_timeout": 1000,
+    "port": 8080,
+    "character_encoding": "utf-8",
+    "user_database_path": "./users.json",
+    "database_url": "cs4500.duncanbeard.com",
+    "database_user": "test",
+    "database_password": "testing",
+    "database_name": "lvm"
+}
