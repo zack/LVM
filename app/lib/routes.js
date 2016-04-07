@@ -115,7 +115,7 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
         .all(methodNotAllowed);
 
     router.route('/api/createstudent/:id')
-        .get(StudentController.createStudent)
+        .post(StudentController.createStudent)
         .all(methodNotAllowed);
     
         // ADMIN
