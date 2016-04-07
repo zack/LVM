@@ -8,7 +8,7 @@
 var express = require('express'),
     path = require('path');
 
-module.exports = function (statusCodes, HomeController, AuthenticationController, TutorController) {
+module.exports = function (statusCodes, HomeController, AuthenticationController, TutorController, StudentController) {
     var router = express.Router();
 
     /**
@@ -114,6 +114,10 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
         .get(TutorController.autocomplete)
         .all(methodNotAllowed);
 
+    router.route('/api/createstudent/:id')
+        .get(StudentController.createStudent)
+        .all(methodNotAllowed);
+    
         // ADMIN
 
         // FRONT-END
