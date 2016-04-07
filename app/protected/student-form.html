@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <form role="form" name="student-intake">
+                    <form role="form" name="student-intake" ng-submit="submitForm()">
 
                         <div class="form-group" ng-repeat="section in form.formDefinition" id="{{section.id}}">
                             <hr/>
@@ -69,7 +69,7 @@
                                         <!-- Dropdown with customizable options -->
                                         <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle">
                                             <option value="" disabled>{{field.placeholder}}</option>
-                                            <option ng-repeat="option in field.options" ng-value="{{option}}">{{option}}</option>
+                                            <option ng-repeat="option in field.options" ng-value="{{option.value}}">{{option.name}}</option>
                                         </select>
 
 										<!-- time table -->
@@ -410,11 +410,15 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-default">
+                        <button type="submit" class="btn btn-default" ng-click="submitForm()">
                             Submit
                         </button>
                     </form>
+                    <pre>form = {{user | json}}</pre>
                 </div>
+                <script>
+                	angular.module('student-intake', []).controller('exampleController', ['$scope', function($scope) {
+					}]);
             </div>
         </div>
     </div>

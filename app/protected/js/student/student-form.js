@@ -71,20 +71,34 @@ angular.module('lvmApp')
                 name: 'Demographics',
                 fields: [
                 	[
-                		{name: 'race', class: 'col-md-4', value: '', type: 'dropdown', options: ['American Indian','Native Hawaiian/Pacific Islander','Asian','White','Black or African American','Hispanic/Latino'], placeholder: 'Race'},
-                		{name: 'countryoforigin', class: 'col-md-4', value:'', type:'dropdown', options: ['USA', 'Afghanistan','Albania','Algeria','American Samoa','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan',
-                		'Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bermuda','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei Darussalam','Bulgaria','Burkina Faso','Burundi','Cambodia','Cameroon','Canada','Cape Verde','Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Cook Islands','Costa Rica',
-						'Cote d\'Ivoire','Croatia','Cuba','Cyprus','Czech Republic','Dem.Rep.of the Congo','Denmark','Djibouti','Dominica','Dominican Republic','East Timor','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Ethiopia','Fiji',
-						'Finland','France','French Guiana','French Polynesia','Gabon','Gambia','Georgia','Germany','Ghana','Gibraltar','Greece','Grenada','Guadeloupe','Guam','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hong Kong S A R','Hungary',
-						'Iceland','India','Indonesia','Iran (Islamic Rep. Of)','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Korea, Dem.People\'s Rep.','Korea, Republic of','Kuwait','Kyrgyzstan','Lao People\'s Dem. Rep.','Latvia',
-						'Lebanon','Lesotho','Liberia','Libyan Arab Jamahiriya','Liechtenstein','Lithuania','Luxembourg','Macao S A R','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Marshall Islands','Martinique','Mauritania','Mauritius','Mexico','Micronesia, Fed. States of',
-						'Monaco','Mongolia','Morocco','Mozambique','Myanmar','Namibia','Nauru','Nepal','Netherlands','Netherlands Antilles','New Caledonia','New Zealand','Nicaragua','Niger','Nigeria','Northern Mariana Islands','Norway','Occ. Palestinian Territory','Oman',
-						'Pakistan','Palau','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Puerto Rico','Qatar','Republic of Moldova','Reunion','Romania','Russian Federation','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent / Grenadines','Samoa',
-						'San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia','South Africa','Spain','Sri Lanka','Sudan','Suriname','Swaziland','Sweden','Switzerland','Syrian Arab Republic',
-						'Tajikistan','Thailand','The FYR of Macedonia','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','U.S. Virgin Islands','Uganda','Ukraine','United Arab Emirates','United Kingdom','United Rep. Of Tanzania','Uruguay',
-						'Uzbekistan','Vanuatu','Venezuela','Viet Nam','Western Sahara','Yemen','Yugoslavia','Zambia','Zimbabwe'], placeholder: 'Country of Origin'},
-                		{name: 'nativelanguage', class: 'col-md-3', value:'', type: 'dropdown', options: ['English','Albanian','Arabic','Cambodian','CapeVerdeanCreole','Chinese - Cantonese','Chinese - Mandarin','Chinese - Toisanese','Farsi','French','Gaelic','German','Greek','Haitian Creole','Hindi','Italian','Japanese',
-                		'Korean','Laotian','Lebanese','Polish','Portuguese','Russian','Spanish','Syrian','Turkish','Urdu','Vietnamese','Other'], placeholder: 'Native Language'}
+                		{name: 'race', class: 'col-md-4', value: '', type: 'dropdown', options: [{name:'American Indian', value:1},{name:'Native Hawaiian/Pacific Islander', value:5},{name:'Asian', value:2},{name:'White', value:9},{name:'Black or African American', value:3},{name:'Hispanic/Latino', value:7}], placeholder: 'Race'},
+                		{name: 'ishispanic', class: 'col-md-2', type: 'boolean', placeholder: 'Hispanic?'},
+                		{name: 'countryoforigin', class: 'col-md-4', value:'', type:'dropdown', options: [{name:'USA', value:1},{name:'Afghanistan', value:2},{name:'Albania', value:3},{name:'Algeria', value:4},{name:'American Samoa', value:5},{name:'Andorra', value:6},
+                		{name:'Angola', value:7},{name:'Antigua and Barbuda', value:8},{name:'Argentina', value:9},{name:'Armenia', value:10},{name:'Australia', value:11},{name:'Austria', value:12},{name:'Azerbaijan', value:13},
+                		{name:'Bahamas', value:14},{name:'Bahrain', value:15},{name:'Bangladesh', value:16},{name:'Barbados', value:17},{name:'Belarus', value:18},{name:'Belgium', value:19},{name:'Belize', value:20},{name:'Benin', value:21},{name:'Bermuda', value:22},
+                		{name:'Bhutan', value:23},{name:'Bolivia', value:24},{name:'Bosnia and Herzegovina', value:25},{name:'Botswana', value:26},{name:'Brazil', value:27},{name:'Brunei Darussalam', value:28},{name:'Bulgaria', value:29},{name:'Burkina Faso', value:30},
+                		{name:'Burundi', value:31},{name:'Cambodia', value:32}, {name:'Cameroon', value:33},{name:'Canada', value:34},{name:'Cape Verde', value:35},
+                		{name:'Central African Republic', value:36},{name:'Chad', value:37},{name:'Chile', value:38},{name:'China', value:39},{name:'Colombia', value:40},{name:'Comoros', value:41},{name:'Congo', value:42},{name:'Cook Islands', value:43},{name:'Costa Rica', value:44},
+						{name:'Cote d\'Ivoire', value:45},{name:'Croatia', value:46},{name:'Cuba', value:47},{name:'Cyprus', value:48},{name:'Czech Republic', value:49},{name:'Dem.Rep.of the Congo', value:50},{name:'Denmark', value:51},{name:'Djibouti', value:52},{name:'Dominica', value:53},
+						{name:'Dominican Republic', value:54},{name:'East Timor', value:55},{name:'Ecuador', value:56},{name:'Egypt', value:57},{name:'El Salvador', value:58},{name:'Equatorial Guinea', value:59},{name:'Eritrea', value:60},{name:'Estonia', value:61},{name:'Ethiopia', value:62},{name:'Fiji', value:63},
+						{name:'Finland', value:64},{name:'France', value:65},{name:'French Guiana', value:66},{name:'French Polynesia', value:67},{name:'Gabon', value:68},{name:'Gambia', value:69},{name:'Georgia', value:70},{name:'Germany', value:71},{name:'Ghana', value:72},{name:'Gibraltar', value:73},
+						{name:'Greece', value:74},{name:'Grenada', value:75},{name:'Guadeloupe', value:76},{name:'Guam', value:77},{name:'Guatemala', value:78},{name:'Guinea', value:79},{name:'Guinea-Bissau', value:80},{name:'Guyana', value:81},{name:'Haiti', value:82},{name:'Honduras', value:83},{name:'Hong Kong S A R', value:84},{name:'Hungary', value:85},
+						{name:'Iceland', value:86},{name:'India', value:87},{name:'Indonesia', value:88},{name:'Iran (Islamic Rep. Of)', value:89},{name:'Iraq', value:90},{name:'Ireland', value:91},{name:'Israel', value:92},{name:'Italy', value:93},{name:'Jamaica', value:94},{name:'Japan', value:95},{name:'Jordan', value:96},
+						{name:'Kazakhstan', value:97},{name:'Kenya', value:98},{name:'Kiribati', value:99},{name:'Korea, Dem.People\'s Rep.', value:100},{name:'Korea, Republic of', value:101},{name:'Kuwait', value:102},{name:'Kyrgyzstan', 103},{name:'Lao People\'s Dem. Rep.', value:104},{name:'Latvia', value:105},
+						{name:'Lebanon', value:106},{name:'Lesotho', value:107},{name:'Liberia', value:108},{name:'Libyan Arab Jamahiriya', value:109},{name:'Liechtenstein', value:110},{name:'Lithuania', value:111},{name:'Luxembourg', value:112},{name:'Macao S A R', value:113},{name:'Madagascar', value:114},{name:'Malawi', value:115},
+						{name:'Malaysia', value:116},{name:'Maldives', value:117},{name:'Mali', value:118},{name:'Malta', value:119},{name:'Marshall Islands', value:120},{name:'Martinique', value:121},{name:'Mauritania', value:122},{name:'Mauritius', value:123},{name:'Mexico', value:124},{name:'Micronesia, Fed. States of', value:125},
+						{name:'Monaco', value:126},{name:'Mongolia', value:127},{name:'Morocco', value:128},{name:'Mozambique', value:129},{name:'Myanmar', value:130},{name:'Namibia', value:131},{name:'Nauru', value:132},{name:'Nepal', value:133},{name:'Netherlands', value:134},{name:'Netherlands Antilles', value:135},{name:'New Caledonia', value:136},
+						{name:'New Zealand', value:137},{name:'Nicaragua', value:138},{name:'Niger', value:139},{name:'Nigeria', value:140},{name:'Northern Mariana Islands', value:141},{name:'Norway', value:142},{name:'Occ. Palestinian Territory', value:143},{name:'Oman', value:144},
+						{name:'Pakistan', value:145},{name:'Palau', value:146},{name:'Panama', value:147},{name:'Papua New Guinea', value:148},{name:'Paraguay', value:149},{name:'Peru', value:150},{name:'Philippines', value:151},{name:'Poland', value:152},{name:'Puerto Rico', value:153},{name:'Qatar', value:154},
+						{name:'Republic of Moldova', value:155},{name:'Reunion', value:156},{name:'Romania', value:157},{name:'Russian Federation', value:158},{name:'Rwanda', value:159},{name:'Saint Kitts and Nevis', value:160},{name:'Saint Lucia', value:161},{name:'Saint Vincent / Grenadines', value:162},{name:'Samoa', value:163},
+						{name:'San Marino', value:164},{name:'Sao Tome and Principe', value:165},{name:'Saudi Arabia', value:166},{name:'Senegal', value:167},{name:'Seychelles', value:168},{name:'Sierra Leone', value:169},{name:'Singapore', value:170},{name:'Slovakia', value:171},{name:'Slovenia', value:172},{name:'Solomon Islands', value:173},
+						{name:'Somalia', value:174},{name:'South Africa', value:175},{name:'Spain', value:176},{name:'Sri Lanka', value:177},{name:'Sudan', value:178},{name:'Suriname', value:179},{name:'Swaziland', value:180},{name:'Sweden', value:181},{name:'Switzerland', value:182},{name:'Syrian Arab Republic', value:183},
+						{name:'Tajikistan', value:184},{name:'Thailand', value:185},{name:'The FYR of Macedonia', value:186},{name:'Togo', value:187},{name:'Tonga', value:188},{name:'Trinidad and Tobago', value:189},{name:'Tunisia', value:190},{name:'Turkey', value:191},{name:'Turkmenistan', value:192},{name:'Tuvalu', value:193},
+						{name:'U.S. Virgin Islands', value:194},{name:'Uganda', value:195},{name:'Ukraine', value:196},{name:'United Arab Emirates', value:197},{name:'United Kingdom', value:198},{name:'United Rep. Of Tanzania', value:199},{name:'Uruguay', value:200},
+						{name:'Uzbekistan', value:201},{name:'Vanuatu', value:202},{name:'Venezuela', value:203},{name:'Viet Nam', value:204},{name:'Western Sahara', value:205},{name:'Yemen', value:206},{name:'Yugoslavia', value:207},{name:'Zambia', value:208},{name:'Zimbabwe', value:209},{name:'Portugal', value:210}], placeholder: 'Country of Origin'},
+                		{name: 'nativelanguage', class: 'col-md-3', value:'', type: 'dropdown', options: [{name:'English', value:1},{name:'Albanian', value:2},{name:'Arabic', value:3},{name:'Cambodian', value:4},{name:'CapeVerdeanCreole', value:5},{name:'Chinese - Cantonese', value:6},{name:'Chinese - Mandarin', value:7},{name:'Chinese - Toisanese', value:8},
+                		{name:'Farsi', value:9},{name:'French', value:10},{name:'Gaelic', value:11},{name:'German', value:12},{name:'Greek', value:13},{name:'Haitian Creole', value:14},{name:'Hindi', value:15},{name:'Italian', value:16},{name:'Japanese', value:17},
+                		{name:'Korean', value:18},{name:'Laotian', value:19},{name:'Lebanese', value:20},{name:'Polish', value:21},{name:'Portuguese', value:22},{name:'Russian', value:23},{name:'Spanish', value:24},{name:'Syrian', value:25},{name:'Turkish', value:26},{name:'Urdu', value:27},{name:'Vietnamese', value:28},{name:'Other', value:20}], placeholder: 'Native Language'}
                 		],
                 ]
 			},
@@ -244,7 +258,10 @@ angular.module('lvmApp')
             }
         ];
 
-        $scope.gatherValues = function () {
-            return 5;
+		//Post the Form
+        $scope.submitForm=function(){
+			var data=$scope.fields;
+
+			$http.post(url,data)
         };
     });
