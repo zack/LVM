@@ -35,7 +35,7 @@ module.exports = function (statusCodes, HomeController, AuthenticationController
      */
     var checkIfAlreadyLoggedIn = function (req, res, next) {
         if (req.session.user) {
-            return res.redirect('/lvm/dashboard.html');
+            return res.redirect('/dashboard.html');
         }
         next();
     };
