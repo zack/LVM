@@ -52,6 +52,7 @@
                 </div>
                 <div class="col-md-9">
                     <form role="form" name="student-intake" ng-submit="submitForm()">
+                    	<input ng-model="fields.name" />
 
                         <div class="form-group" ng-repeat="section in form.formDefinition" id="{{section.id}}">
                             <hr/>
@@ -405,28 +406,18 @@
                                         <input ng-switch-default type="{{field.type}}" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" maxlength="{{field.maxlength}}" />
                                     </div>
 
-
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-default" ng-click="submitForm()">
+                        <button type="submit" class="btn btn-default">
                             Submit
                         </button>
                     </form>
-                    <pre>form = {{user | json}}</pre>
+
                 </div>
-                <script>
-                	angular.module('student-intake', []).controller('exampleController', ['$scope', function($scope) {
-					}]);
             </div>
         </div>
     </div>
 </div>
 </body>
-
-<script>
-    $(document).ready(function() {
-        $("[name='boolean-checkbox']").bootstrapSwitch({onText: 'Yes', offText: 'No'});
-    });
-</script>
 </html>

@@ -4,7 +4,7 @@
  */
 'use strict';
 angular.module('lvmApp')
-    .controller('FormController', function($scope) {
+    .controller('FormController', function($scope,$http) {
         var form = this;
         form.formDefinition = [
             {
@@ -258,10 +258,9 @@ angular.module('lvmApp')
             }
         ];
 
-		//Post the Form
-        $scope.submitForm=function(){
-			var data=$scope.fields;
-
-			$http.post(url,data)
-        };
+		    $scope.submitForm=function(){
+		        var data=$scope.fields;
+		        var url='api/createstudent/0';
+		        $http.post(url, data);
+		    }
     });

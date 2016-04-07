@@ -18,7 +18,7 @@ angular.module('lvmApp')
         form.updatePassword = function (username) {
             return $http({
                 method: 'POST',
-                url: '/lvm/api/account/password',
+                url: '/api/account/password',
                 data: {
                     username: username,
                     newPassword: $scope.password,
