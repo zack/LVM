@@ -1,6 +1,6 @@
 {
   "request_timeout": 1000,
-  "port": 80,
+  "port": 8000,
   "character_encoding": "utf-8",
   "user_database_path": "./users.json",
   "database_url": "cs4500.duncanbeard.com",
