@@ -262,7 +262,7 @@ angular.module('lvmApp')
         function myController($scope){
 		    $scope.submitForm=function(){
 		        var data=$scope.fields;
-		        var url='/lvm/api/accounts'
+		        var url='/lvm/api/student/0'
 		        $http.post(url, data);
 		    }
 
