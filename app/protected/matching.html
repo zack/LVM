@@ -1,6 +1,6 @@
 <html ng-app="lvmApp">
 <head>
-    <title>LVM App - Administration Portal</title>
+    <title>LVM App - Matching</title>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 
@@ -24,7 +24,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="js/lvm.js"></script>
-    <script src="js/admin/admin.js"></script>
+    <script src="js/matching/matching.js"></script>
 </head>
 <body ng-controller="AdminController as form">
 <div class="container-fluid">
@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-9">
-                    <h2>Administration Portal</h2>
+                    <h2>Create a Matching</h2>
                 </div>
             </div>
 
@@ -45,19 +45,19 @@
                         <ul class="nav nav-stacked nav-pills">
                             <!-- Section Names -->
                             <li>
-                                <a href="#createAccount">Create Account</a>
+                                <a href="#createMatching">Create a Matching</a>
                             </li>
                             <li>
-                                <a href="#manageAccounts">Manage Accounts</a>
+                                <a href="#manageAccounts">View Matchings</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <form role="form" name="createAccount">
+                    <form role="form" name="createMatching">
             
-                        <div class="form-group" id="createAccount">
-                            <h4>Create Account</h4>
+                        <div class="form-group" id="createMatching">
+                            <h4>Create a Matching</h4>
                             <hr/>
                             <div class="row">
                                 <div class="col-md-6">
