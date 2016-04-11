@@ -47,8 +47,6 @@ module.exports = function() {
         return scopedConfig;
     }
     
-    console.log(process.env);
-
     switch( process.env.NODE_ENV ) {
         case 'production':
             return createProductionConfiguration();
