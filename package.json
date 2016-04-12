@@ -41,6 +41,7 @@
     "console-stamp": "~0.2.x",
     "cors": "~2.7.x",
     "express": "~4.13.x",
+    "express-mysql-session": "~1.0.0-rc.0",
     "express-session": "~1.13.x",
     "express-train": "~4.0.x",
     "marko": "~3.1.x",

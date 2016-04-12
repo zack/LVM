@@ -27,23 +27,5 @@ module.exports = function(logging, config) {
         logging.info('database: successfully connected. id: ' + connection.threadId);
     });
     
-    // Setup safe disconnection from the database
-    process.stdin.resume(); //so the program will not close instantly
-    
-    var exitHandler = function (options, err) {
-        if (err) { console.log(err.stack); }
-        if (options.exit) {
-            connection.end();
-            logging.info('Database safely disconnected.');
-            process.exit();
-        }
-    };
-    
-    //catches ctrl+c event
-    process.on('SIGINT', exitHandler.bind(null, {exit: true}));
-    
-    //catches uncaught exceptions
-    process.on('uncaughtException', exitHandler.bind(null, {exit: true}));
-    
     return connection;
 };
