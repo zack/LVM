@@ -165,7 +165,7 @@ module.exports = function(auth, statusCodes) {
           return redirectToLogin('Unable to create a new session.');
         }
         req.session.user = authResp;
-        return res.redirect('/dashboard.html');
+        return res.redirect('/dashboard');
       });
     },
 

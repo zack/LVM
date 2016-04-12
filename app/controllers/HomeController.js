@@ -45,6 +45,10 @@ module.exports = function(envConfig, constants, statusCodes) {
     
     studentForm: function(req, res, next) {
       res.render('student-form', config);
+    },
+    
+    matching: function(req, res, next) {
+      res.render('matching', config);
     }
   };
 };

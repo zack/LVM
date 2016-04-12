@@ -40,7 +40,7 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
    */
   var checkIfAlreadyLoggedIn = function(req, res, next) {
     if (req.session.user) {
-      return res.redirect('/dashboard.html');
+      return res.redirect('/dashboard');
     }
     next();
   };
@@ -142,6 +142,10 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
     
   router.route('/student-form')
     .get(HomeController.studentForm)
+    .all(methodNotAllowed);
+    
+  router.route('/matching')
+    .get(HomeController.matching)
     .all(methodNotAllowed);
 
   // Static Content for Protected content - prevents non-authenticated users from accessing these files

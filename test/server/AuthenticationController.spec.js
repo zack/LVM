@@ -643,7 +643,7 @@ describe('Testing AuthenticationController', function() {
 
         expect(res.status).not.toHaveBeenCalled();
         expect(res.send).not.toHaveBeenCalled();
-        expect(res.redirect).toHaveBeenCalledWith('/dashboard.html');
+        expect(res.redirect).toHaveBeenCalledWith('/dashboard');
         done();
       });
 
@@ -666,7 +666,7 @@ describe('Testing AuthenticationController', function() {
         AuthenticationController.login(req, res, next);
 
         expect(res.status).not.toHaveBeenCalled();
-        expect(res.redirect).toHaveBeenCalledWith('/dashboard.html');
+        expect(res.redirect).toHaveBeenCalledWith('/dashboard');
         done();
       });
 
@@ -689,7 +689,7 @@ describe('Testing AuthenticationController', function() {
         AuthenticationController.login(req, res, next);
 
         expect(res.status).not.toHaveBeenCalled();
-        expect(res.redirect).toHaveBeenCalledWith('/dashboard.html');
+        expect(res.redirect).toHaveBeenCalledWith('/dashboard');
         done();
       });
 
@@ -755,7 +755,7 @@ describe('Testing AuthenticationController', function() {
         AuthenticationController.login(req, res, next);
 
         expect(res.status).not.toHaveBeenCalled();
-        expect(res.redirect).toHaveBeenCalledWith('/dashboard.html');
+        expect(res.redirect).toHaveBeenCalledWith('/dashboard');
         done();
       });
 
@@ -807,7 +807,7 @@ describe('Testing AuthenticationController', function() {
         AuthenticationController.login(req, res, next);
 
         expect(res.status).not.toHaveBeenCalled();
-        expect(res.redirect).toHaveBeenCalledWith('/dashboard.html');
+        expect(res.redirect).toHaveBeenCalledWith('/dashboard');
         done();
       });
 
