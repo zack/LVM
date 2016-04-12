@@ -131,6 +131,18 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
   router.route('/dashboard')
     .get(HomeController.dashboard)
     .all(methodNotAllowed);
+    
+  router.route('/account')
+    .get(HomeController.account)
+    .all(methodNotAllowed);
+    
+  router.route('/administration')
+    .get(HomeController.admin)
+    .all(methodNotAllowed);
+    
+  router.route('/student-form')
+    .get(HomeController.studentForm)
+    .all(methodNotAllowed);
 
   // Static Content for Protected content - prevents non-authenticated users from accessing these files
   router.all('*', express.static(path.resolve(__dirname + '/../protected'))); // static protected files in /protected
