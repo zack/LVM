@@ -26,7 +26,7 @@
     <script src="js/lvm.js"></script>
     <script src="js/matching/matching.js"></script>
 </head>
-<body ng-controller="AdminController as form">
+<body ng-controller="MatchController as form">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-9">
-                    <h2>Create a Matching</h2>
+                    <h2>Student-Tutor Matches</h2>
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
                                 <a href="#createMatching">Create a Matching</a>
                             </li>
                             <li>
-                                <a href="#manageAccounts">View Matchings</a>
+                                <a href="#manageAccounts">Manage Matches</a>
                             </li>
                         </ul>
                     </div>
@@ -60,130 +60,115 @@
                             <h4>Create a Matching</h4>
                             <hr/>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label for="username">
-                                        Username
+                                <div class="col-md-4">
+                                    <label for="doeMatchId">
+                                        DOE Match ID
                                     </label>
                                     
-                                    <input type="text" required ng-model="username" class="form-control" id="username" ng-trim="true" maxlength="255" name="username"/>
+                                    <input type="text" required ng-model="doeMatchId" class="form-control" id="doeMatchId" ng-trim="true" maxlength="255" name="doeMatchId"/>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="password">
-                                        Password
+                                <div class="col-md-4">
+                                    <label for="studentName">
+                                        Student Name
                                     </label>
                                     
-                                    <input type="password" required ng-model="password" class="form-control" id="password" ng-trim="true" maxlength="255" name="password"/>
+                                    <input type="text" required ng-model="studentName" class="form-control" id="studentName" ng-trim="true" maxlength="255" name="studentName"/>
                                 </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="role">
-                                        User Role
+                                <div class="col-md-4">
+                                    <label for="tutorName">
+                                        Tutor Name
                                     </label>
                                     
-                                    <div> 
-                                        <select required ng-model="role" class="dropdown dropdown-full btn btn-default dropdown-toggle">
-                                            <option value="-1" disabled>User Role</option>
-                                            <option ng-repeat="role in $root.roles" ng-value="role">{{role}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="affiliate">
-                                        Affiliate
-                                    </label>
-                                    
-                                    <div> 
-                                        <select required ng-model="affiliate" class="dropdown dropdown-full btn btn-default dropdown-toggle">
-                                            <option value="-1" disabled>Affiliate</option>
-                                            <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
-                                        </select>
-                                    </div>
+                                    <input type="text" required ng-model="tutorName" class="form-control" id="tutorName" ng-trim="true" maxlength="255" name="tutorName"/>
                                 </div>
                             </div>
                             
                             <div class="row" style="padding-top: 20px; text-align:center">
                                 <div class="col-md-12">
-                                    <p class="alert alert-success" ng-if="form.accountCreated === true">Account created successfully!</p>
-                                    <p class="alert alert-danger"  ng-if="form.accountCreated === false">{{form.accountCreationErrorMessage}}</p>
+                                    <p class="alert alert-success" ng-if="form.matchCreated === true">Match created successfully!</p>
+                                    <p class="alert alert-danger"  ng-if="form.matchCreated === false">{{form.matchErrorMessage}}</p>
                                 </div>
                             </div>
                             
                             <div class="row" style="padding-top: 5px; text-align:center">
                                 <div class="col-md-12">
-                                    <button ng-click="form.createAccount()" class="btn btn-default">Submit</button>
+                                    <button ng-click="form.createMatch()" class="btn btn-default">Create Match</button>
                                 </div>
                             </div>
                         </div>
                     </form>
                     
-                    <form role="form" name="manageAccounts">
+                    <form role="form" name="manageMatches">
             
-                        <div class="form-group" id="manageAccounts">
-                            <h4>Manage Accounts</h4>
+                        <div class="form-group" id="manageMatches">
+                            <h4>Manage Matches</h4>
                             <hr/>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p class="alert alert-success" ng-if="form.manageStatus === true">{{form.successManageMessage}}</p>
-                                    <p class="alert alert-danger"  ng-if="form.manageStatus === false">{{form.errorManageMessage}}</p>
+                                    <p class="alert alert-danger" ng-if="form.fetchError === true">An error occurred while retrieving the current matches.</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-1">
-                                    ID
+                                    Match ID
+                                </div>
+                                <div class="col-md-1">
+                                    DOE ID
+                                </div>
+                                <div class="col-md-1">
+                                    On Hold
                                 </div>
                                 <div class="col-md-2">
-                                    Username
+                                    Student
                                 </div>
                                 <div class="col-md-2">
-                                    Role
+                                    Tutor
                                 </div>
                                 <div class="col-md-2">
-                                    Affiliate
+                                    Start Date
                                 </div>
-                                <div class="col-md-4">
-                                    Commands
+                                <div class="col-md-2">
+                                    End Date
                                 </div>
                             </div>
                             <hr/>
-                            <div class="row account-row" ng-repeat="account in form.accounts">
-                                <div class="col-md-1">
-                                    {{account.id}}
-                                </div>
-                                <div class="col-md-2">
-                                    {{account.username}}
-                                </div>
-                                <div class="col-md-2">
-                                    {{account.role}}
-                                </div>
-                                <div class="col-md-2">
-                                    {{$root.mapNumToAffiliate(account.branch)}}
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="col-md-12 command-row">
-                                        <select ng-model="manageRoles[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">
-                                            <option selected value="-1" disabled>User Role</option>
-                                            <option ng-repeat="role in $root.roles" ng-value="role">{{role}}</option>
-                                        </select>
-                                        <span class="col-md-2"></span>
-                                        <button ng-click="form.updateRole(account.username, $index)" class="btn btn-default col-md-5">Update Role</button>
-                                    </div>
-                                    <div class="col-md-12 command-row">
-                                        <select ng-model="manageAffiliates[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">
-                                            <option selected value="-1" disabled>Affiliate</option>
-                                            <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
-                                        </select>
-                                        <span class="col-md-2"></span>
-                                        <button ng-click="form.updateAffiliate(account.username, $index)" class="btn btn-default col-md-5">Update Affiliate</button>
-                                    </div>
-                                    <div class="col-md-12 command-row">
-                                        <button ng-click="form.updatePassword(account.username)" class="btn btn-default col-md-5">Update Password</button>
-                                        <span class="col-md-2"></span>
-                                        <button ng-click="form.deleteAccount(account.username)" class="btn btn-default col-md-5">Delete Account</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-12" ng-if="!$last"><hr/></div>
+                            <div class="row account-row" ng-repeat="match in form.matches">
+                                <!--<div class="col-md-1">-->
+                                <!--    {{account.id}}-->
+                                <!--</div>-->
+                                <!--<div class="col-md-2">-->
+                                <!--    {{account.username}}-->
+                                <!--</div>-->
+                                <!--<div class="col-md-2">-->
+                                <!--    {{account.role}}-->
+                                <!--</div>-->
+                                <!--<div class="col-md-2">-->
+                                <!--    {{$root.mapNumToAffiliate(account.branch)}}-->
+                                <!--</div>-->
+                                <!--<div class="col-md-5">-->
+                                <!--    <div class="col-md-12 command-row">-->
+                                <!--        <select ng-model="manageRoles[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">-->
+                                <!--            <option selected value="-1" disabled>User Role</option>-->
+                                <!--            <option ng-repeat="role in $root.roles" ng-value="role">{{role}}</option>-->
+                                <!--        </select>-->
+                                <!--        <span class="col-md-2"></span>-->
+                                <!--        <button ng-click="form.updateRole(account.username, $index)" class="btn btn-default col-md-5">Update Role</button>-->
+                                <!--    </div>-->
+                                <!--    <div class="col-md-12 command-row">-->
+                                <!--        <select ng-model="manageAffiliates[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">-->
+                                <!--            <option selected value="-1" disabled>Affiliate</option>-->
+                                <!--            <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>-->
+                                <!--        </select>-->
+                                <!--        <span class="col-md-2"></span>-->
+                                <!--        <button ng-click="form.updateAffiliate(account.username, $index)" class="btn btn-default col-md-5">Update Affiliate</button>-->
+                                <!--    </div>-->
+                                <!--    <div class="col-md-12 command-row">-->
+                                <!--        <button ng-click="form.updatePassword(account.username)" class="btn btn-default col-md-5">Update Password</button>-->
+                                <!--        <span class="col-md-2"></span>-->
+                                <!--        <button ng-click="form.deleteAccount(account.username)" class="btn btn-default col-md-5">Delete Account</button>-->
+                                <!--    </div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-12" ng-if="!$last"><hr/></div>-->
                             </div>
                         </div>
                     </form>
