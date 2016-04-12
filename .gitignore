@@ -1,4 +1,5 @@
 .npm
+app/views/*.marko.js
 node_modules
 npm-debug.log*
 *.swp

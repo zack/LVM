@@ -5,14 +5,20 @@
 
 'use strict';
 
-var hbs = require('hbs'),
+var marko = require('marko'),
     path = require('path');
 
 module.exports = function (app) {
 
-    hbs.registerPartials(path.join(__dirname , '../views/partials'));
+    // Setup the 'marko' engine which just loads the template file and calls render on it
+    app.engine('marko', function(filePath, options, callback) {
+        marko.load(filePath).render(options, function(err, output) {
+            callback(err, output);
+        });
+    });
+
     //set up view path and engine
     app.set('views', path.join(__dirname , '../views'));
-    app.set('view engine', 'hbs');
+    app.set('view engine', 'marko');
 
 };

@@ -53,11 +53,11 @@
                 <div class="col-md-6">
                     <form role="form" method="POST" action="/account/login">
                         <div>
-                            {{#if errorMessage}}
+                            <if(data.errorMessage)>
                                 <div class="alert alert-danger">
-                                    <b>Error:</b> {{errorMessage}}
+                                    <b>Error:</b> ${data.errorMessage}
                                 </div>
-                            {{/if}}
+                            </if>
                             <div>
                                 <label for="username">
                                     Username:

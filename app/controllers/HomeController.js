@@ -33,6 +33,18 @@ module.exports = function(envConfig, constants, statusCodes) {
         config)), {
         user: req.session.user
       }));
+    },
+    
+    account: function(req, res, next) {
+      res.render('account', config);
+    },
+    
+    admin: function(req, res, next) {
+      res.render('administration', config);
+    },
+    
+    studentForm: function(req, res, next) {
+      res.render('student-form', config);
     }
   };
 };
