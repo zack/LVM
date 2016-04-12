@@ -6,5 +6,6 @@
     "database_url": "cs4500.duncanbeard.com",
     "database_user": "test",
     "database_password": "testing",
-    "database_name": "lvm"
+    "database_name": "lvm",
+    "session_database_name": "lvm_sessions"
 }

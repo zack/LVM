@@ -13,8 +13,9 @@ var express = require('express'),
     path = require('path'),
     connect_timeout = require('connect-timeout'),
     sessionMaxAge = 60 * 60 * 1000; // 1 hr
-
-module.exports = function (app, config, routes, envConfig, errorMiddleware) {
+    
+module.exports = function (app, config, logging, routes, envConfig, errorMiddleware, sessionStore) {
+        
     // Middleware stack for all requests
     app.use(cors());                                                                                  // enable all CORS requests
     app.use(envConfig.public.app_root_url, express.static(path.resolve(__dirname + '/../public')));   // static files in /public
@@ -22,7 +23,15 @@ module.exports = function (app, config, routes, envConfig, errorMiddleware) {
     app.use(bodyParser.urlencoded({extended: false}));                                                // parse application/x-www-form-urlencoded
     app.use(bodyParser.json());                                                                       // parse application/json
     app.use(methodOverride('_method'));                                                               // post -> put and delete where not allowed in client
-    app.use(session({ secret: 'literacy is the key!', saveUninitialized: false, resave: true, cookie: { maxAge: sessionMaxAge }, maxAge: sessionMaxAge}));
+    app.use(session({ 
+        secret: 'literacy is the key!', 
+        store: sessionStore, 
+        saveUninitialized: false, 
+        resave: true, 
+        cookie: { 
+            maxAge: sessionMaxAge 
+        }, 
+        maxAge: sessionMaxAge}));
     app.use(envConfig.public.app_root_url, routes);                                                   // app router
 
     app.use(function(req, res, next){                                                                 // barebones 404 handler
