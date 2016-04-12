@@ -43,8 +43,8 @@ describe('Testing HomeController', function() {
                     user : { username: 'test' }
                 }
             };
-            HomeController.dashboard(req, res, next);
-            expect(res.render).toHaveBeenCalledWith('dashboard', jasmine.any(Object));
+            HomeController.login(req, res, next);
+            expect(res.render).toHaveBeenCalledWith('login', jasmine.any(Object));
             done();
         });
     });

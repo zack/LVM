@@ -39,9 +39,9 @@ module.exports = function (logging, database, statusCodes) {
             }
             
             // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results
-            if (req.session.user.affiliate) {
+            if (req.session.user.branch) {
                 query += ' and p.site = ? ';
-                queryVals.push(req.session.user.affiliate);
+                queryVals.push(req.session.user.branch);
             }
             
             database.query({
@@ -97,6 +97,30 @@ module.exports = function (logging, database, statusCodes) {
             });
         },
         
+        logHours: function (req, res, next) {
+            // Validate fields:
+            if (!req.params.pid || !_.isNumber(req.params.pid) || 
+                !req.body.hours || !_.isNumber(req.body.hours)) {
+                return res.status(statusCodes.BAD_REQUEST_STATUS).send('Not all required fields are present.');
+            }
+            
+            database.query({
+                sql: 'INSERT INTO lvm.TutorHours (person, hours) VALUES(?, ?);',
+                values: [req.params.pid, req.body.hours]
+            }, function (error, results, fields) {
+                if (error) {
+                    logging.error('adding tutor hours failed', {
+                        pid: req.params.pid,
+                        hours: req.body.hours,
+                        user: req.session.user.username,
+                        error: error
+                    });
+                    return res.status(statusCodes.INTERNAL_SERVER_ERROR).json({success: false});
+                }
+                return res.json(results);
+            });
+        },
+        
         autocomplete: function (req, res, next) {
             if (req.params.name.length < 3) { return res.json([]); }
             
@@ -112,9 +136,9 @@ module.exports = function (logging, database, statusCodes) {
                      '        p.lastName like ? or ' +
                      '        p.email like ?) ' +
                      // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results
-                     (req.session.user.affiliate ? ' and p.site = ? ' : '') +
+                     (req.session.user.branch ? ' and p.site = ? ' : '') +
                      'LIMIT 10;',
-                values: [queryValue, queryValue, queryValue, req.session.user.affiliate]
+                values: [queryValue, queryValue, queryValue, req.session.user.branch]
             }, function (error, results, fields) {
                 if (error) { 
                     logging.error('tutor autocomplete failed', {

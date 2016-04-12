@@ -322,6 +322,73 @@ describe('Testing TutorController', function() {
         });
     });
     
+    describe('logHours', function () {
+        beforeEach(resetSpies);
+
+        it('should not log hours if all fields are not present - no pid', function(done) {
+            var req = {
+                params : { pid : null }
+            };
+            spyOn(database, 'query').and.callFake(function (obj, cb) { return cb(null, [{isTestData: true, success: true, index: 1}, {isTestData: true, success: true, index: 2}]); });
+            TutorController.logHours(req, res, next);
+            expect(database.query).not.toHaveBeenCalled();
+            expect(res.status).toHaveBeenCalledWith(statusCodes.BAD_REQUEST_STATUS);
+            expect(res.send).toHaveBeenCalledWith('Not all required fields are present.');
+            done();
+        });
+        
+        it('should not log hours if all fields are not present - non number pid', function(done) {
+            var req = {
+                params : { pid : '5' }
+            };
+            spyOn(database, 'query').and.callFake(function (obj, cb) { return cb(null, [{isTestData: true, success: true, index: 1}, {isTestData: true, success: true, index: 2}]); });
+            TutorController.logHours(req, res, next);
+            expect(database.query).not.toHaveBeenCalled();
+            expect(res.status).toHaveBeenCalledWith(statusCodes.BAD_REQUEST_STATUS);
+            expect(res.send).toHaveBeenCalledWith('Not all required fields are present.');
+            done();
+        });
+        
+        it('should not log hours if all fields are not present - no hours', function(done) {
+            var req = {
+                params : { pid : 5 },
+                body : { }
+            };
+            spyOn(database, 'query').and.callFake(function (obj, cb) { return cb(null, [{isTestData: true, success: true, index: 1}, {isTestData: true, success: true, index: 2}]); });
+            TutorController.logHours(req, res, next);
+            expect(database.query).not.toHaveBeenCalled();
+            expect(res.status).toHaveBeenCalledWith(statusCodes.BAD_REQUEST_STATUS);
+            expect(res.send).toHaveBeenCalledWith('Not all required fields are present.');
+            done();
+        });
+        
+        it('should not log hours if all fields are not present - non-number hours', function(done) {
+            var req = {
+                params : { pid : 5 },
+                body : { hours : '5' }
+            };
+            spyOn(database, 'query').and.callFake(function (obj, cb) { return cb(null, [{isTestData: true, success: true, index: 1}, {isTestData: true, success: true, index: 2}]); });
+            TutorController.logHours(req, res, next);
+            expect(database.query).not.toHaveBeenCalled();
+            expect(res.status).toHaveBeenCalledWith(statusCodes.BAD_REQUEST_STATUS);
+            expect(res.send).toHaveBeenCalledWith('Not all required fields are present.');
+            done();
+        });
+        
+        it('should log hours', function(done) {
+            var req = {
+                params : { pid : 5 },
+                body : { hours : 5 }
+            };
+            spyOn(database, 'query').and.callFake(function (obj, cb) { return cb(null, [{isTestData: true, hours: 5}]); });
+            TutorController.logHours(req, res, next);
+            expect(database.query).toHaveBeenCalledWith(jasmine.any(Object), jasmine.any(Function));
+            expect(res.status).not.toHaveBeenCalled();
+            expect(res.json).toHaveBeenCalledWith([{isTestData: true, hours: 5}]);
+            done();
+        });
+    });
+    
     describe('autocomplete', function () {
         beforeEach(resetSpies);
 

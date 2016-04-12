@@ -1,0 +1,181 @@
+<html ng-app="lvmApp">
+<head>
+    <title>LVM App - Matching</title>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.css">
+
+    <link rel="stylesheet" href="css/form-style.css">
+    
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="js/lvm.js"></script>
+    <script src="js/matching/matching.js"></script>
+</head>
+<body ng-controller="MatchController as form">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="header-include" ng-include="'components/header.html'"></div>
+
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <h2>Student-Tutor Matches</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 sidebar-outer">
+                    <div class="sidebar">
+                        <ul class="nav nav-stacked nav-pills">
+                            <!-- Section Names -->
+                            <li>
+                                <a href="#createMatching">Create a Matching</a>
+                            </li>
+                            <li>
+                                <a href="#manageAccounts">Manage Matches</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <form role="form" name="createMatching">
+            
+                        <div class="form-group" id="createMatching">
+                            <h4>Create a Matching</h4>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="doeMatchId">
+                                        DOE Match ID
+                                    </label>
+                                    
+                                    <input type="text" required ng-model="doeMatchId" class="form-control" id="doeMatchId" ng-trim="true" maxlength="255" name="doeMatchId"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="studentName">
+                                        Student Name
+                                    </label>
+                                    
+                                    <input type="text" required ng-model="studentName" class="form-control" id="studentName" ng-trim="true" maxlength="255" name="studentName"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="tutorName">
+                                        Tutor Name
+                                    </label>
+                                    
+                                    <input type="text" required ng-model="tutorName" class="form-control" id="tutorName" ng-trim="true" maxlength="255" name="tutorName"/>
+                                </div>
+                            </div>
+                            
+                            <div class="row" style="padding-top: 20px; text-align:center">
+                                <div class="col-md-12">
+                                    <p class="alert alert-success" ng-if="form.matchCreated === true">Match created successfully!</p>
+                                    <p class="alert alert-danger"  ng-if="form.matchCreated === false">{{form.matchErrorMessage}}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="row" style="padding-top: 5px; text-align:center">
+                                <div class="col-md-12">
+                                    <button ng-click="form.createMatch()" class="btn btn-default">Create Match</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <form role="form" name="manageMatches">
+            
+                        <div class="form-group" id="manageMatches">
+                            <h4>Manage Matches</h4>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="alert alert-danger" ng-if="form.fetchError === true">An error occurred while retrieving the current matches.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    Match ID
+                                </div>
+                                <div class="col-md-1">
+                                    DOE ID
+                                </div>
+                                <div class="col-md-1">
+                                    On Hold
+                                </div>
+                                <div class="col-md-2">
+                                    Student
+                                </div>
+                                <div class="col-md-2">
+                                    Tutor
+                                </div>
+                                <div class="col-md-2">
+                                    Start Date
+                                </div>
+                                <div class="col-md-2">
+                                    End Date
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row account-row" ng-repeat="match in form.matches">
+                                <!--<div class="col-md-1">-->
+                                <!--    {{account.id}}-->
+                                <!--</div>-->
+                                <!--<div class="col-md-2">-->
+                                <!--    {{account.username}}-->
+                                <!--</div>-->
+                                <!--<div class="col-md-2">-->
+                                <!--    {{account.role}}-->
+                                <!--</div>-->
+                                <!--<div class="col-md-2">-->
+                                <!--    {{$root.mapNumToAffiliate(account.branch)}}-->
+                                <!--</div>-->
+                                <!--<div class="col-md-5">-->
+                                <!--    <div class="col-md-12 command-row">-->
+                                <!--        <select ng-model="manageRoles[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">-->
+                                <!--            <option selected value="-1" disabled>User Role</option>-->
+                                <!--            <option ng-repeat="role in $root.roles" ng-value="role">{{role}}</option>-->
+                                <!--        </select>-->
+                                <!--        <span class="col-md-2"></span>-->
+                                <!--        <button ng-click="form.updateRole(account.username, $index)" class="btn btn-default col-md-5">Update Role</button>-->
+                                <!--    </div>-->
+                                <!--    <div class="col-md-12 command-row">-->
+                                <!--        <select ng-model="manageAffiliates[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">-->
+                                <!--            <option selected value="-1" disabled>Affiliate</option>-->
+                                <!--            <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>-->
+                                <!--        </select>-->
+                                <!--        <span class="col-md-2"></span>-->
+                                <!--        <button ng-click="form.updateAffiliate(account.username, $index)" class="btn btn-default col-md-5">Update Affiliate</button>-->
+                                <!--    </div>-->
+                                <!--    <div class="col-md-12 command-row">-->
+                                <!--        <button ng-click="form.updatePassword(account.username)" class="btn btn-default col-md-5">Update Password</button>-->
+                                <!--        <span class="col-md-2"></span>-->
+                                <!--        <button ng-click="form.deleteAccount(account.username)" class="btn btn-default col-md-5">Delete Account</button>-->
+                                <!--    </div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-12" ng-if="!$last"><hr/></div>-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
