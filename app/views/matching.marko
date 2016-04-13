@@ -65,7 +65,40 @@
                                         DOE Match ID
                                     </label>
                                     
-                                    <input type="text" required ng-model="doeMatchId" class="form-control" id="doeMatchId" ng-trim="true" maxlength="255" name="doeMatchId"/>
+                                    <input type="number" required ng-model="doeMatchId" class="form-control" id="doeMatchId" ng-trim="true" maxlength="255" name="doeMatchId"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="studentName">
+                                        Student Name
+                                    </label>
+                                    
+                                    <input type="text" required ng-model="studentName" class="form-control" id="studentName" ng-trim="true" maxlength="255" name="studentName"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="tutorName">
+                                        Tutor Name
+                                    </label>
+                                    
+                                    <input type="text" required ng-model="tutorName" class="form-control" id="tutorName" ng-trim="true" maxlength="255" name="tutorName"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="doeMatchId">
+                                        Match Status
+                                    </label>
+                                    
+                                    <select required ng-model="status" class="dropdown dropdown-full btn btn-default dropdown-toggle">
+                                        <option value="-1" disabled>Status</option>
+                                        <option ng-repeat="status in form.statuses" ng-value="status">{{status}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="doeMatchId">
+                                        On Hold
+                                    </label>
+                                    
+                                    <input type="checkbox" ng-model="onHold" class="form-control" id="onHold" name="onHold"/>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="studentName">
@@ -178,4 +211,10 @@
     </div>
 </div>
 </body>
+
+<script>
+    $(document).ready(function() {
+        $("[name='boolean-checkbox']").bootstrapSwitch({onText: 'Yes', offText: 'No'});
+    });
+</script>
 </html>

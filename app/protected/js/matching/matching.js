@@ -9,17 +9,31 @@ angular.module('lvmApp')
     .controller('MatchController', function($scope, $http) {
         var form = this;
         
-        // form.createMatch = function () {
-        //     $http({
-        //         method: 'POST',
-        //         url: '/api/matches'
-        //     }).then(function (response) {
-                
-        //     }, function (response) {
-        //         form.matchCreated = false;
-        //         form.matchErrorMessage = response.data;
-        //     });
-        // };
+        form.statuses = ['Current', 'Dissolved'];
+        
+        form.createMatch = function () {
+            $http({
+                method: 'POST',
+                url: '/api/matches'
+            }).then(function (response) {
+                form.matchCreated = true;
+            }, function (response) {
+                form.matchCreated = false;
+                form.matchErrorMessage = response.data;
+            });
+        };
+        
+        form.dissolveMatch = function (index) {
+            $http({
+                method: 'DELETE',
+                url: '/api/matches/' + form.matches[index].id
+            }).then(function (response) {
+                form.matchDissolved = true;
+            }, function (response) {
+                form.matchDissolved = false;
+                form.dissolveErrorMessage = response.data;
+            });
+        };
         
         form.fetchMatches = function () {
             $http({
