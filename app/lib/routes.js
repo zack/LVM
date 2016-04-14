@@ -131,7 +131,10 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
         .all(methodNotAllowed);
 
     router.route('/api/matches/:id?')
-        .get(MatchController.getMatches);
+        .get(MatchController.getMatches)
+        .post(MatchController.addOrUpdate)
+        .delete(MatchController.dissolveMatch)
+        .all(methodNotAllowed);
 
     // ADMIN
 
