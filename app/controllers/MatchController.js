@@ -18,9 +18,9 @@ module.exports = function (logging, database, statusCodes) {
     return {
         getMatches: function (req, res, next) {
             var status = req.query.status ? req.query.status : 'Current',
-                sql = 'SELECT m.*, p1.firstName as studentFirstName, p1.lastName as studentLastName ' + 
+                sql = 'SELECT m.*, p1.firstName as studentFirstName, p1.lastName as studentLastName, ' + 
                      '       p2.firstName as tutorFirstName, p2.lastName as tutorLastName, site.name as siteName ' +
-                     'FROM Matches m, Student s, Tutor t, Person p1, Person p2, Sites site' + 
+                     'FROM Matches m, Student s, Tutor t, Person p1, Person p2, Sites site ' + 
                      'WHERE m.student = s.id and ' +
                      '      m.tutor = t.id and ' +
                      '      m.site = site.id and ' +

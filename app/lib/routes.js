@@ -9,6 +9,7 @@ var express = require('express'),
     path = require('path');
 
 module.exports = function(statusCodes, HomeController, AuthenticationController,
+<<<<<<< 5e5bb17ab5affb1d50ec410e1348059806c13b4f
     TutorController, StudentController) {
     var router = express.Router();
 
@@ -128,6 +129,9 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
     router.route('/api/createstudent/:id')
         .get(StudentController.createStudent)
         .all(methodNotAllowed);
+
+    router.route('/api/matches/:id?')
+        .get(MatchController.getMatches);
 
     // ADMIN
 

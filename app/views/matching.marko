@@ -69,50 +69,50 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="studentName">
-                                        Student Name
+                                        Student
                                     </label>
                                     
-                                    <input type="text" required ng-model="studentName" class="form-control" id="studentName" ng-trim="true" maxlength="255" name="studentName"/>
+                                    <input type="text" required ng-model="student" class="form-control" id="studentName" ng-trim="true" maxlength="255" name="studentName"/>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="tutorName">
-                                        Tutor Name
+                                        Tutor
                                     </label>
                                     
-                                    <input type="text" required ng-model="tutorName" class="form-control" id="tutorName" ng-trim="true" maxlength="255" name="tutorName"/>
+                                    <input type="text" required ng-model="tutor" class="form-control" id="tutorName" ng-trim="true" maxlength="255" name="tutorName"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label for="doeMatchId">
+                                    <label for="status">
                                         Match Status
                                     </label>
                                     
-                                    <select required ng-model="status" class="dropdown dropdown-full btn btn-default dropdown-toggle">
+                                    <select required ng-model="status" name="status" id="status" class="dropdown dropdown-full btn btn-default dropdown-toggle">
                                         <option value="-1" disabled>Status</option>
                                         <option ng-repeat="status in form.statuses" ng-value="status">{{status}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-1">
-                                    <label for="doeMatchId">
+                                    <label for="onHold">
                                         On Hold
                                     </label>
                                     
                                     <input type="checkbox" ng-model="onHold" class="form-control" id="onHold" name="onHold"/>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="studentName">
-                                        Student Name
+                                    <label for="matchStart">
+                                        Match Start
                                     </label>
                                     
-                                    <input type="text" required ng-model="studentName" class="form-control" id="studentName" ng-trim="true" maxlength="255" name="studentName"/>
+                                    <input type="date" required ng-model="matchStart" class="form-control" id="matchStart" name="matchStart"/>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="tutorName">
-                                        Tutor Name
+                                    <label for="matchEnd">
+                                        Match End
                                     </label>
                                     
-                                    <input type="text" required ng-model="tutorName" class="form-control" id="tutorName" ng-trim="true" maxlength="255" name="tutorName"/>
+                                    <input type="date" required ng-model="matchEnd" class="form-control" id="matchEnd" name="matchEnd"/>
                                 </div>
                             </div>
                             

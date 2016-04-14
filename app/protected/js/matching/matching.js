@@ -10,6 +10,7 @@ angular.module('lvmApp')
         var form = this;
         
         form.statuses = ['Current', 'Dissolved'];
+        $scope.status = '-1';
         
         form.createMatch = function () {
             $http({
