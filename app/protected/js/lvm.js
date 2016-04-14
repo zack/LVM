@@ -58,6 +58,7 @@ function Run($rootScope, $http) {
     ];
     
     $rootScope.mapNumToAffiliate = function (affiliateNum) {
+        affiliateNum = _.isString(affiliateNum) ? parseInt(affiliateNum, 10) : affiliateNum;
         var affiliate = _.findWhere($rootScope.affiliates, {value: affiliateNum});
         return affiliate && affiliate.name;
     };    

@@ -21,6 +21,12 @@ angular.module('lvmApp')
             $scope.editing = null;
         };
         
+        form.mapFetchedMatches = function (match) {
+            match.onHoldValue = (match.onHold === 0 ? false : true);
+            match.site = match.site.toString();
+            return match;
+        }
+        
         form.createMatch = function () {
             $http({
                 method: 'POST',
@@ -46,6 +52,10 @@ angular.module('lvmApp')
         };
         
         form.updateMatch = function (index) {
+            var match = form.matches[index];
+            // Map this from a boolean to a bit for the database
+            match.onHold = (match.onHoldVal ? 1 : 0);
+            
             $http({
                 method: 'POST',
                 url: '/api/matches/' + form.matches[index].id
@@ -62,7 +72,7 @@ angular.module('lvmApp')
                 method: 'GET',
                 url: '/api/matches'
             }).then(function successCallback(response) {
-                form.matches = response.data;
+                form.matches = _.map(response.data, form.mapFetchedMatches);
               }, function errorCallback(response) {
                 form.fetchError = true;
               });
