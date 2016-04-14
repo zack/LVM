@@ -48,7 +48,7 @@
                                 <a href="#createMatching">Create a Match</a>
                             </li>
                             <li>
-                                <a href="#manageAccounts">Manage Matches</a>
+                                <a href="#manageMatches">Manage Matches</a>
                             </li>
                         </ul>
                     </div>
@@ -185,8 +185,8 @@
                                     <span ng-show="$index !== editing" ng-if="match.onHold === 0">No</span>
                                 </div>
                                 <div class="col-md-1">
-                                    <pre ng-show="$index === editing">{{match.site}}</pre>
-                                    <select ng-show="$index===editing" ng-model="form.matches[$index].site" ng-value="form.matches[$index].site" class="dropdown dropdown-full btn btn-default dropdown-toggle">
+                                    <pre ng-show="$index === editing">{{form.matches[$index].site}}</pre>
+                                    <select ng-show="$index===editing" ng-model="match.site" ng-value="match.site" class="dropdown dropdown-full btn btn-default dropdown-toggle">
                                         <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
                                     </select>
                                     <span ng-show="$index !== editing">{{$root.mapNumToAffiliate(match.site)}}</span>

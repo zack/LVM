@@ -15,6 +15,7 @@ angular.module('lvmApp')
         
         form.enableEditing = function (index) {
             $scope.editing = index;
+            console.log(form.matches[index].site, typeof form.matches[index].site)
         };
         
         form.cancelEdit = function () {
