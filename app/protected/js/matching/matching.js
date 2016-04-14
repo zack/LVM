@@ -11,6 +11,15 @@ angular.module('lvmApp')
         
         form.statuses = ['Current', 'Dissolved'];
         $scope.status = '-1';
+        $scope.editing = null;
+        
+        form.enableEditing = function (index) {
+            $scope.editing = index;
+        };
+        
+        form.cancelEdit = function () {
+            $scope.editing = null;
+        };
         
         form.createMatch = function () {
             $http({
@@ -27,6 +36,18 @@ angular.module('lvmApp')
         form.dissolveMatch = function (index) {
             $http({
                 method: 'DELETE',
+                url: '/api/matches/' + form.matches[index].id
+            }).then(function (response) {
+                form.matchDissolved = true;
+            }, function (response) {
+                form.matchDissolved = false;
+                form.dissolveErrorMessage = response.data;
+            });
+        };
+        
+        form.updateMatch = function (index) {
+            $http({
+                method: 'POST',
                 url: '/api/matches/' + form.matches[index].id
             }).then(function (response) {
                 form.matchDissolved = true;

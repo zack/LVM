@@ -33,14 +33,14 @@
             <div id="header-include" ng-include="'components/header.html'"></div>
 
             <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-9">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
                     <h2>Student-Tutor Matches</h2>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-3 sidebar-outer">
+                <div class="col-md-1 sidebar-outer">
                     <div class="sidebar">
                         <ul class="nav nav-stacked nav-pills">
                             <!-- Section Names -->
@@ -53,7 +53,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-11">
                     <form role="form" name="createMatching">
             
                         <div class="form-group" id="createMatching">
@@ -166,7 +166,7 @@
                                 <div class="col-md-1">
                                     End Date
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     Commands
                                 </div>
                             </div>
@@ -176,7 +176,8 @@
                                     {{match.id}}
                                 </div>
                                 <div class="col-md-1">
-                                    {{match.doeMatchID}}
+                                    <input class="form-control" ng-show="$index === editing" type="number" ng-model="form.matches[$index].doeMatchID"/>
+                                    <span ng-show="$index !== editing">{{match.doeMatchID}}</span>
                                 </div>
                                 <div class="col-md-1">
                                     <span ng-if="match.onHold === 1">Yes</span>
@@ -198,8 +199,10 @@
                                     <span ng-if="!_.isNull(match.matchEnd)">{{match.matchEnd | date:'MM/dd/yyyy'}}</span>
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn btn-default col-md-6" ng-click="form.updateMatch($index)">Update</button>
-                                    <button class="btn btn-default col-md-6" ng-click="form.dissolveMatch($index)">Dissolve</button>
+                                    <button class="btn btn-default col-md-3" ng-show="$index !== editing" ng-click="form.enableEditing($index)">Edit</button>
+                                    <button class="btn btn-default col-md-3" ng-show="$index == editing" ng-click="form.cancelEdit()">Cancel</button>
+                                    <button class="btn btn-default col-md-4" ng-show="$index == editing" ng-click="form.updateMatch($index)">Update</button>
+                                    <button class="btn btn-default col-md-5" ng-click="form.dissolveMatch($index)">Dissolve</button>
                                 </div>
                             </div>
                         </div>
@@ -210,10 +213,4 @@
     </div>
 </div>
 </body>
-
-<script>
-    $(document).ready(function() {
-        $("[name='boolean-checkbox']").bootstrapSwitch({onText: 'Yes', offText: 'No'});
-    });
-</script>
 </html>

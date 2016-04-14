@@ -15,7 +15,7 @@ module.exports = function (logging, database, statusCodes) {
         return data;
     };
     
-    return {
+    var controller = {
         getMatches: function (req, res, next) {
             var status = req.query.status ? req.query.status : 'Current',
                 sql = 'SELECT m.*, p1.firstName as studentFirstName, p1.lastName as studentLastName, ' + 
@@ -84,9 +84,9 @@ module.exports = function (logging, database, statusCodes) {
         
         addOrUpdate: function (req, res, next) {
             if (!req.params.id) {
-                return this.addMatch(req, res, next);
+                return controller.addMatch(req, res, next);
             }
-            return this.updateMatch(req, res, next);
+            return controller.updateMatch(req, res, next);
         },
         
         addMatch: function (req, res, next) {
@@ -130,4 +130,6 @@ module.exports = function (logging, database, statusCodes) {
             });
         }
     };
+    
+    return controller;
 };
