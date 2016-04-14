@@ -45,7 +45,7 @@
                         <ul class="nav nav-stacked nav-pills">
                             <!-- Section Names -->
                             <li>
-                                <a href="#createMatching">Create a Matching</a>
+                                <a href="#createMatching">Create a Match</a>
                             </li>
                             <li>
                                 <a href="#manageAccounts">Manage Matches</a>
@@ -180,23 +180,29 @@
                                     <span ng-show="$index !== editing">{{match.doeMatchID}}</span>
                                 </div>
                                 <div class="col-md-1">
-                                    <span ng-if="match.onHold === 1">Yes</span>
-                                    <span ng-if="match.onHold === 0">No</span>
+                                    <input class="form-control" ng-show="$index === editing" type="checkbox" ng-model="form.matches[$index].onHold"/>
+                                    <span ng-show="$index !== editing" ng-if="match.onHold === 1">Yes</span>
+                                    <span ng-show="$index !== editing" ng-if="match.onHold === 0">No</span>
                                 </div>
                                 <div class="col-md-1">
-                                    {{$root.mapNumToAffiliate(match.site)}}
+                                    <select ng-show="$index===editing" ng-model="form.matches[$index].site" class="dropdown dropdown-full btn btn-default dropdown-toggle">
+                                        <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
+                                    </select>
+                                    <span ng-show="$index !== editing">{{$root.mapNumToAffiliate(match.site)}}</span>
                                 </div>
                                 <div class="col-md-2">
-                                    {{match.studentFirstName + ' ' + match.studentLastName}}
+                                    <span ng-show="$index !== editing">{{match.studentFirstName + ' ' + match.studentLastName}}</span>
                                 </div>
                                 <div class="col-md-2">
                                     {{match.tutorFirstName + ' ' + match.tutorLastName}}
                                 </div>
                                 <div class="col-md-1">
-                                    {{match.matchStart | date:'MM/dd/yyyy'}}
+                                    <input ng-show="$index === editing" type="date" ng-model="form.matches[$index].matchStart" class="form-control"/>
+                                    <span ng-show="$index !== editing">{{match.matchStart | date:'MM/dd/yyyy'}}</span>
                                 </div>
                                 <div class="col-md-1">
-                                    <span ng-if="!_.isNull(match.matchEnd)">{{match.matchEnd | date:'MM/dd/yyyy'}}</span>
+                                    <input ng-show="$index === editing" type="date" ng-model="form.matches[$index].matchEnd" class="form-control"/>
+                                    <span ng-show="$index !== editing" ng-if="!_.isNull(match.matchEnd)">{{match.matchEnd | date:'MM/dd/yyyy'}}</span>
                                 </div>
                                 <div class="col-md-2">
                                     <button class="btn btn-default col-md-3" ng-show="$index !== editing" ng-click="form.enableEditing($index)">Edit</button>
