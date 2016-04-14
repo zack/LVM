@@ -32,7 +32,7 @@ function Config($locationProvider, $httpProvider) {
 function Run($rootScope, $http) {
     
     $rootScope.affiliates = [
-        { name: 'Administrator (Non-Affiliated)', value: 0 },
+        { name: 'All (Non-Affiliated)', value: 0 },
         { name: 'Boston', value: 5 },
         { name: 'Project Lighthouse', value: 10 },
         { name: 'Fitchburg', value: 15 },
@@ -46,12 +46,14 @@ function Run($rootScope, $http) {
         { name: 'Tri.Community', value: 60 },
         { name: 'Stoughton', value: 65 },
         { name: 'Worcester', value: 70 },
+        { name: 'Methuen', value: 75 }
     ];
     
     $rootScope.roles = [
         'Administrator',
         'Affiliate Coordinator',
         'Affiliate Staff',
+        'Data Entry',
         'Tutor'
     ];
     
