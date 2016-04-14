@@ -172,7 +172,6 @@
                             </div>
                             <hr/>
                             <div class="row account-row" ng-repeat="match in form.matches">
-                                <pre ng-show="$index === editing">{{match}}</pre>
                                 <div class="col-md-1">
                                     {{match.id}}
                                 </div>
@@ -181,12 +180,13 @@
                                     <span ng-show="$index !== editing">{{match.doeMatchID}}</span>
                                 </div>
                                 <div class="col-md-1">
-                                    <input class="form-control" ng-show="$index === editing" type="checkbox" ng-model="form.matches[$index].onHoldVal"/>
+                                    <input class="form-control" ng-show="$index === editing" type="checkbox" ng-model="form.matches[$index].onHoldValue"/>
                                     <span ng-show="$index !== editing" ng-if="match.onHold === 1">Yes</span>
                                     <span ng-show="$index !== editing" ng-if="match.onHold === 0">No</span>
                                 </div>
                                 <div class="col-md-1">
-                                    <select ng-show="$index===editing" ng-model="form.matches[$index].site" class="dropdown dropdown-full btn btn-default dropdown-toggle">
+                                    <pre ng-show="$index === editing">{{match.site}}</pre>
+                                    <select ng-show="$index===editing" ng-model="form.matches[$index].site" ng-value="form.matches[$index].site" class="dropdown dropdown-full btn btn-default dropdown-toggle">
                                         <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>
                                     </select>
                                     <span ng-show="$index !== editing">{{$root.mapNumToAffiliate(match.site)}}</span>

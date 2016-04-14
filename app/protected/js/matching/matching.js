@@ -25,7 +25,7 @@ angular.module('lvmApp')
             match.onHoldValue = (match.onHold === 0 ? false : true);
             match.site = match.site.toString();
             return match;
-        }
+        };
         
         form.createMatch = function () {
             $http({
