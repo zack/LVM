@@ -104,38 +104,6 @@ END IF ;
 		(9, 'White');
 END//
 
-
--- ------------------ ALTERING PublicAssistance TABLE -------------------------
-DELIMITER //
-DROP PROCEDURE IF EXISTS alterTablePublicAssistance; //
-
-DELIMITER //
-CREATE PROCEDURE alterTablePublicAssistance()
-
-BEGIN
-	DECLARE _count int;
-	SET _count = (SELECT COUNT(*) 
-				FROM information_schema.TABLE_CONSTRAINTS 
-                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
-					TABLE_NAME = 'PublicAssistance' AND
-                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
-                    
-	IF _count = 0 THEN
-		ALTER TABLE `PublicAssistance` ADD PRIMARY KEY (`id`),
-						 MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-   
-END IF ; 
-	INSERT IGNORE INTO `PublicAssistance` (`id`, `type`) VALUES
-		(1, 'TFADC'),
-		(2, 'EAEDC'),
-		(3, 'Food Stamps'),
-		(4, 'EA'),
-		(5, 'SSI'),
-		(6, 'None'),
-		(7, 'Other');
-END//
-
-
 -- ------------------ ALTERING Sites TABLE -------------------------
 DELIMITER // 
 DROP PROCEDURE IF EXISTS alterTableSites;//
@@ -169,7 +137,8 @@ END IF ;
 		(50, 'Quincy'),
 		(60, 'Tri.Community'),
 		(65, 'Stoughton'),
-		(70, 'Worcester');
+		(70, 'Worcester'),
+		(75, 'Methuen');
 END//
 
 
@@ -193,12 +162,82 @@ BEGIN
 					ADD UNIQUE KEY `person` (`person`),
 					MODIFY `id` int NOT NULL AUTO_INCREMENT,
 					ADD CONSTRAINT `FK_ConOrigin` FOREIGN KEY (`countryOfOrigin`) REFERENCES DOECountryOfOrigin (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-                    ADD CONSTRAINT `FK_PubAssiss` FOREIGN KEY (`publicAssistance`) REFERENCES PublicAssistance (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-					ADD CONSTRAINT `FK_PersonS` FOREIGN KEY (`person`) REFERENCES Person (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+					ADD CONSTRAINT `FK_PersonS` FOREIGN KEY (`person`) REFERENCES Person (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+					ADD CONSTRAINT `FK_ZipCode` FOREIGN KEY (`zipCodeID`) REFERENCES ZipCodes (`ZIP_CODE_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 END IF ; 
 END//
 
+-- ------------------ ALTERING StudentContactInfo TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableStudentContactInfo; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableStudentContactInfo()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'StudentContactInfo' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `StudentContactInfo` ADD PRIMARY KEY (`id`),
+					MODIFY `id` int NOT NULL AUTO_INCREMENT,
+					ADD CONSTRAINT `FK_StudentCI` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+END IF ; 
+END//
+
+-- ------------------ ALTERING PersonPreferences TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTablePersonPreferences; //
+
+DELIMITER //
+CREATE PROCEDURE alterTablePersonPreferences()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'PersonPreferences' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `PersonPreferences` ADD PRIMARY KEY (`id`),
+					MODIFY `id` int NOT NULL AUTO_INCREMENT,
+					ADD CONSTRAINT `FK_StudentP` FOREIGN KEY (`person`) REFERENCES Person (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+END IF ;
+END//
+
+-- ------------------ ALTERING StudentPublicAssistance TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableStudentPublicAssistance; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableStudentPublicAssistance()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'StudentPublicAssistance' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `StudentPublicAssistance` ADD PRIMARY KEY (`id`),
+					MODIFY `id` int NOT NULL AUTO_INCREMENT,
+					ADD CONSTRAINT `FK_StudentPA` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+END IF ;
+END//
 
 -- ------------------ ALTERING StudentAssessment TABLE -------------------------
 DELIMITER //
@@ -248,52 +287,189 @@ BEGIN
 END IF ; 
 END//
 
--- ------------------ ALTERING StudentPreferences TABLE -------------------------
+-- ------------------ ALTERING StudentGoals TABLE -------------------------
 DELIMITER //
-DROP PROCEDURE IF EXISTS alterTableStudentPreferences; //
+DROP PROCEDURE IF EXISTS alterTableStudentGoals; //
 
 DELIMITER //
-CREATE PROCEDURE alterTableStudentPreferences()
+CREATE PROCEDURE alterTableStudentGoals()
 
 BEGIN
 	DECLARE _count int;
 	SET _count = (SELECT COUNT(*) 
 				FROM information_schema.TABLE_CONSTRAINTS 
                 WHERE CONSTRAINT_SCHEMA = 'lvm' AND
-					TABLE_NAME = 'StudentPreferences' AND
+					TABLE_NAME = 'StudentGoals' AND
                     CONSTRAINT_TYPE   = 'PRIMARY KEY');
                     
 	IF _count = 0 THEN
-		ALTER TABLE `StudentPreferences` ADD PRIMARY KEY (`id`),
+		ALTER TABLE `StudentGoals` ADD PRIMARY KEY (`id`),
 					MODIFY `id` int NOT NULL AUTO_INCREMENT,
-					ADD CONSTRAINT `FK_StudentP` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+					ADD CONSTRAINT `FK_StudentG` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+					ADD CONSTRAINT `FK_Goal` FOREIGN KEY (`goal`) REFERENCES DOEGoals (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+END IF ; 
+END//
+
+-- ------------------ ALTERING StudentWorkExperience TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableStudentWorkExperience; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableStudentWorkExperience()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'StudentWorkExperience' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `StudentWorkExperience` ADD PRIMARY KEY (`id`),
+					MODIFY `id` int NOT NULL AUTO_INCREMENT,
+					ADD CONSTRAINT `FK_StudentW` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+					ADD CONSTRAINT `FK_StudentO` FOREIGN KEY (`occupation`) REFERENCES DOEOccupation (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+END IF ; 
+END//
+
+-- ------------------ ALTERING StudentComputerSkills TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableStudentComputerSkills; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableStudentComputerSkills()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'StudentComputerSkills' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `StudentComputerSkills` ADD PRIMARY KEY (`id`),
+					MODIFY `id` int NOT NULL AUTO_INCREMENT,
+					ADD CONSTRAINT `FK_StudentCS` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+END IF ; 
+END//
+
+-- ------------------ ALTERING StudentDisabiltyAccommodations TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableStudentDisabiltyAccommodations; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableStudentDisabiltyAccommodations()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'StudentDisabiltyAccommodations' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `StudentDisabiltyAccommodations` ADD PRIMARY KEY (`id`),
+					MODIFY `id` int NOT NULL AUTO_INCREMENT,
+					ADD CONSTRAINT `FK_StudentDA` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+END IF ; 
+END//
+
+-- ------------------ ALTERING StudentQuestions TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableStudentQuestions; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableStudentQuestions()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'StudentQuestions' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `StudentQuestions` ADD PRIMARY KEY (`id`),
+					MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+END IF ;
+	INSERT IGNORE INTO `StudentQuestions` (`id`, `question`) VALUES
+		(1, 'How did you hear about LVM?'),
+		(2, 'Why did you choose LVM?'),
+		(3, 'Do your parents read?'),
+		(3, 'Did they read to you?'),
+		(5, 'Last grade completed:'),
+		(6, 'Completion date:'),
+		(7, 'What was school like? When did you realize reading was difficult?'),
+		(8, 'Are you now/where you ever in a reading/tutoring program?(If yes, where and when, and what did you like or dislike about your experience?'),
+		(9, 'How will your life be different when your reading and writing improve?'),
+		(10, 'Tell me about your work experience(Job title(s) and duration of employment; What job skills do you have; What did you like or dislike about past jobs?)'),
+		(11, 'Have you attended any job-related training or earned any job-related certificates, licenses, etc?(If yes, what kind, where, when?)'),
+		(12, 'Is there a special reason you are seeking help now? What goals would you like to work towards(E.G., GED, Driver''s license, help kids with homework, get a better job)?'),
+		(13, 'Are there any factors that you think will make it especially challenging for you to reach your goals (housing, health, work, personal or family issues)?'),
+        (14, 'V A K T Learning Strengths:'),
+        (15, 'Hobbies (i.e. movies, exercise, gardening), interests and activities/community engagement:'),
+        (16, 'What are you good at? What do you enjoy doing?'),
+        (17, 'Things/topics interested in reading:'),
+        (18, 'Is there anyting els eyou would like us to know about you?'),
+        (19, 'Interviewer''s comments/other information');
+END//
+
+-- ------------------ ALTERING StudentAnswers TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableStudentAnswers; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableStudentAnswers()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'StudentAnswers' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `StudentAnswers` ADD PRIMARY KEY (`id`),
+					MODIFY `id` int NOT NULL AUTO_INCREMENT,
+					ADD CONSTRAINT `FK_StudentAns` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+					ADD CONSTRAINT `FK_Question` FOREIGN KEY (`question`) REFERENCES StudentQuestions (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 END IF ;
 END//
 
--- ------------------ ALTERING StudentPublicAssistance TABLE -------------------------
+-- ------------------ ALTERING Availability TABLE -------------------------
 DELIMITER //
-DROP PROCEDURE IF EXISTS alterTableStudentPublicAssistance; //
+DROP PROCEDURE IF EXISTS alterTableAvailability; //
 
 DELIMITER //
-CREATE PROCEDURE alterTableStudentPublicAssistance()
+CREATE PROCEDURE alterTableAvailability()
 
 BEGIN
 	DECLARE _count int;
 	SET _count = (SELECT COUNT(*) 
 				FROM information_schema.TABLE_CONSTRAINTS 
                 WHERE CONSTRAINT_SCHEMA = 'lvm' AND
-					TABLE_NAME = 'StudentPublicAssistance' AND
+					TABLE_NAME = 'PersonAvailability' AND
                     CONSTRAINT_TYPE   = 'PRIMARY KEY');
-                    
+
 	IF _count = 0 THEN
-		ALTER TABLE `StudentPublicAssistance` ADD PRIMARY KEY (`id`),
-					MODIFY `id` int NOT NULL AUTO_INCREMENT,
-					ADD CONSTRAINT `FK_StudentPA` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
-END IF ;
+		ALTER TABLE `PersonAvailability` ADD PRIMARY KEY (`id`),
+			MODIFY `id` int NOT NULL AUTO_INCREMENT,
+			ADD CONSTRAINT `FK_Availability` FOREIGN KEY (`person`) REFERENCES Person (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+	END IF ;
 END//
 
 -- ------------------ ALTERING DOEGoals TABLE -------------------------
@@ -385,31 +561,6 @@ END IF ;
 			(65,'Develop a personal and/or a family budget',NULL,NULL,'C','FINANCIAL LITERACY',0);
 END//
 
--- ------------------ ALTERING StudentGoals TABLE -------------------------
-DELIMITER //
-DROP PROCEDURE IF EXISTS alterTableStudentGoals; //
-
-DELIMITER //
-CREATE PROCEDURE alterTableStudentGoals()
-
-BEGIN
-	DECLARE _count int;
-	SET _count = (SELECT COUNT(*) 
-				FROM information_schema.TABLE_CONSTRAINTS 
-                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
-					TABLE_NAME = 'StudentGoals' AND
-                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
-                    
-	IF _count = 0 THEN
-		ALTER TABLE `StudentGoals` ADD PRIMARY KEY (`id`),
-					MODIFY `id` int NOT NULL AUTO_INCREMENT,
-					ADD CONSTRAINT `FK_StudentG` FOREIGN KEY (`student`) REFERENCES Student (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-					ADD CONSTRAINT `FK_Goal` FOREIGN KEY (`goal`) REFERENCES DOEGoals (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
-END IF ; 
-END//
-
 
 -- ------------------ ALTERING Tutor TABLE -------------------------
 DELIMITER //
@@ -428,10 +579,34 @@ BEGIN
                     
 	IF _count = 0 THEN
 		ALTER TABLE `Tutor` ADD PRIMARY KEY (`id`),
-				ADD UNIQUE KEY `person` (`person`),
+				ADD UNIQUE KEY `personT` (`person`),
                 MODIFY `id` int NOT NULL AUTO_INCREMENT,
 				ADD CONSTRAINT `FK_PersonT` FOREIGN KEY (`person`) REFERENCES Person (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				ADD CONSTRAINT `FK_OccupationT` FOREIGN KEY (`occupation`) REFERENCES DOEOccupation (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+END IF ; 
+END//
+
+-- ------------------ ALTERING Tutor Hours TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableTutorHours; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableTutorHours()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'TutorHours' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `TutorHours` ADD PRIMARY KEY (`id`),
+                MODIFY `id` int NOT NULL AUTO_INCREMENT,
+				ADD CONSTRAINT `FK_Tutor` FOREIGN KEY (`tutor`) REFERENCES Tutor (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 
 END IF ; 
 END//
@@ -1049,6 +1224,28 @@ BEGIN
 END IF ; 
 END//
 
+-- ------------------ ALTERING ZipCodes TABLE -------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS alterTableZipCodes; //
+
+DELIMITER //
+CREATE PROCEDURE alterTableZipCodes()
+
+BEGIN
+	DECLARE _count int;
+	SET _count = (SELECT COUNT(*) 
+				FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE CONSTRAINT_SCHEMA = 'lvm' AND
+					TABLE_NAME = 'ZipCodes' AND
+                    CONSTRAINT_TYPE   = 'PRIMARY KEY');
+                    
+	IF _count = 0 THEN
+		ALTER TABLE `ZipCodes`
+				ADD PRIMARY KEY (`ZIP_CODE_ID`),
+				MODIFY `ZIP_CODE_ID` int NOT NULL AUTO_INCREMENT;
+                
+END IF ; 
+END//
 
 -- ------------------ CALLING ALL ALTER TABLE SPROCS -------------------------
 DELIMITER //
@@ -1063,8 +1260,6 @@ BEGIN
 	CALL alterTableEmploymentStatus();
 
 	CALL alterTableEthnicity();
-
-	CALL alterTablePublicAssistance();
 
 	CALL alterTableSites();
     
@@ -1082,11 +1277,15 @@ BEGIN
 
 	CALL alterTableLVMReferral();
     
+    CALL alterTableZipCodes();
+    
 	CALL alterTablePerson();
     
 	CALL alterTableStudent();
     
-	CALL alterTableStudentPreferences();
+	CALL alterTablePersonPreferences();
+    
+    CALL alterTableAvailability();
     
     CALL alterTableStudentPublicAssistance();
 
@@ -1096,7 +1295,21 @@ BEGIN
 
 	CALL alterTableStudentGoals();
     
+	CALL alterTableStudentWorkExperience();
+
+	CALL alterTableStudentComputerSkills();
+
+	CALL alterTableStudentDisabiltyAccommodations();
+    
+    CALL alterTableStudentContactInfo();
+    
+	CALL alterTableStudentQuestions();
+
+	CALL alterTableStudentAnswers();
+    
 	CALL alterTableTutor();
+    
+    CALL alterTableTutorHours();
     
 	CALL alterTableMatches();
 

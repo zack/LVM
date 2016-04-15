@@ -14,7 +14,6 @@ DELIMITER //
 CREATE PROCEDURE updatePersonTable(
   `site` int, -- FK
   `doeID` int,
-  `newForFY` int,
   `lastName` varchar(255),
   `firstName` varchar(255),
   `intakeDate` date,
@@ -35,10 +34,9 @@ CREATE PROCEDURE updatePersonTable(
   `email` varchar(255), -- null
   `nativeLanguage` int, -- FK
   `ethnicity` int, -- FK
+  `hispanicOrLatino` boolean,
   `doeReferral` int,  -- FK
   `lvmReferral` int,  -- FK
-  `yearsUS` int,
-  `yearsForeign` int,
   `doeEmployStatus` int, -- FK
   `doeOccupation` int, -- FK??
   `dateAdded` datetime,
@@ -50,7 +48,6 @@ BEGIN
 INSERT INTO Person(
     site, -- FK
 	doeID,
-	newForFY,
 	lastName,
 	firstName,
 	intakeDate,
@@ -71,10 +68,9 @@ INSERT INTO Person(
 	email,
     nativeLanguage, -- FK
     ethnicity, -- FK
+    hispanicOrLatino,
     doeReferral,  -- FK
     lvmReferral,  -- FK
-    yearsUS,
-    yearsForeign,
     doeEmployStatus, -- FK
     doeOccupation, -- FK??
     dateAdded,
@@ -83,7 +79,6 @@ INSERT INTO Person(
 VALUES(
     `site`, -- FK
 	`doeID`,
-	`newForFY`,
 	`lastName`,
 	`firstName`,
 	`intakeDate`,
@@ -104,10 +99,9 @@ VALUES(
 	`email`,
     `nativeLanguage`, -- FK
     `ethnicity`, -- FK
+    `hispanicOrLatino`,
     `doeReferral`,  -- FK
     `lvmReferral`,  -- FK
-    `yearsUS`,
-    `yearsForeign`,
     `doeEmployStatus`, -- FK
     `doeOccupation`, -- FK??
     `dateAdded`,
