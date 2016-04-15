@@ -15,7 +15,7 @@ angular.module('lvmApp')
                         {name: 'firstName', class: 'col-md-3', value: '', type: 'text', trim: true, placeholder: 'First Name'},
                         {name: 'lastName', class: 'col-md-3', value: '', type: 'text', trim: true, placeholder: 'Last Name'},
                         {name: 'dateOfBirth', class: 'col-md-3', value: '', type: 'date', trim: true, placeholder: 'Date of Birth'},
-                        {name: 'gender', class: 'col-md-3', value: '', type: 'dropdown', options: ['Male', 'Female'], placeholder: 'Gender'}
+                        {name: 'gender', class: 'col-md-3', value: '', type: 'dropdown', options: [{name:'Male', value:1},{name:'Female',value: 2}], placeholder: 'Gender'}
                     ],
 
                 ]
@@ -252,10 +252,24 @@ angular.module('lvmApp')
                 name: 'Branch Information',
                 fields: [
                 [
-				{name: 'affiliate', class: 'col-md-12', value: '', type: 'dropdown', options: ['Boston', 'Project Lighthouse', 'Fitchburg', 'Framingham', 'Lowell', 'Norwood', 'Orange-Athol', 'Pittsfield', 'Quaboag Valley', 'Quincy', 'Tri Community', 'Soughton', 'Worcester'], placeholder:'Affiliate Site'}
+				{name: 'affiliate', class: 'col-md-12', value: '', type: 'dropdown', options: [{name:'Boston', value:5},{name:'Project Lighthouse', value:10},{name:'Fitchburg',value:15},{name:'Framingham', value:20},{name:'Lowell', value:25},{name:'Norwood', value:30},{name:'Orange-Athol',value:35},{name:'Pittsfield',value:40},{name:'Quaboag Valley',value:45},{name:'Quincy',value:50},{name:'Tri Community',value:60},{name:'Soughton',value:65},{name:'Worcester', value:70}], placeholder:'Affiliate Site'}
                 ],
                 ]
-            }
+            },
+            {
+				id: 'referal',
+				name: 'Referal Information',
+				fields: [
+				[
+				{name: 'doereferal', class: 'col-md-12', value: '', type: 'dropdown', options: [{name: 'Career Center', value: 1},{name: 'Community Organization', value: 2}, {name: 'Counselor', value: 3},{name: 'Court', value: 4},{name: 'Flier/Brochure/Poster', value:5},{name: 'Head Start', value: 6},{name: 'JOBS', value:7},{name: 'Job', value:8},
+					{name: 'Library', value: 9},{name: 'Literacy Hotline', value: 10},{name: 'Probation/parole officer', value: 11},{name: 'Recruiter', value: 12},{name: 'Social Service/MA rehab', value:13},{name:'Student (Current/Previous)', value:14},{name: 'Unemployment Office', value:15},{name: 'Waiting list', value: 16},{name: 'Walk-in (friend/relative)', 17},
+					{name: 'Walk-in (newspaper)', value:18},{name: 'Walk-in (radio)', value:19},{name: 'Walk-in (school)', value:20},{name: 'Walk-in(self)', value:21},{name: 'welfare', value:23},{name: 'Word of Mouth', value:24}], placeholder:'Department of Education Referal:'},
+				{name: 'LVM Referal', class: 'col-md-12', value: '', type: 'dropdown', options: [{name: 'ABE Center', value: 1},{name: 'Brochure, Flyer, Poster', value: 2},{name: 'church', value: 3},{name: 'Community Center / Meeting', value: 4},{name: 'Coordinator', value: 5},{name: 'Employer', value: 6},{name: 'Family', value: 7},{name: 'Friend', value: 8},{name: 'Hospital', value: 9},
+					{name: 'Internet', value: 10},{name: 'Library', value: 11},{name: 'Magazine', value: 12},{name: 'Newspaper', value: 13},{name: 'Other Tutor', value: 14},{name: 'Phone Book', value: 15},{name: 'Presentation', value: 16},{name: 'Radio', value: 17},{name: 'School', value: 18},{name: 'Senior Center', value: 19},{name: 'State Agency', value: 20},{name: 'TV', value: 21},
+					{name: 'United Way', value: 22},{name: 'Voluneer Fair', value: 23},{name: 'Other', value: 24}], placeholder: 'Literacy Volunteers Referal'}
+				],
+				]
+			}
         ];
 
 		//Post the Form
