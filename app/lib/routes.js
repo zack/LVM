@@ -112,9 +112,13 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
         .delete(AuthenticationController.deleteAccount)
         .all(methodNotAllowed);
 
-    router.route('/api/tutor/:pid?')
+    router.route('/api/tutor/:id?')
         .get(TutorController.getTutor)
         .delete(TutorController.exitTutor)
+        .all(methodNotAllowed);
+
+    router.route('/api/student/:id?')
+        .get(StudentController.getStudent)
         .all(methodNotAllowed);
 
     router.route('/api/autocomplete/tutor/:name')
@@ -142,6 +146,10 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
 
     router.route('/student-form')
         .get(HomeController.studentForm)
+        .all(methodNotAllowed);
+
+    router.route('/students/:id?')
+        .get(HomeController.students)
         .all(methodNotAllowed);
 
     router.route('/tutors/:id?')

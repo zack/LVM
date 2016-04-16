@@ -49,9 +49,9 @@ module.exports = function(logging, database, statusCodes) {
                 '         AND p.doeOccupation = o.id';
             var queryVals = [];
 
-            if (req.params.pid) {
+            if (req.params.id) {
                 query += '      and p.id = ?';
-                queryVals.push(req.params.pid);
+                queryVals.push(req.params.id);
             }
 
             // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results

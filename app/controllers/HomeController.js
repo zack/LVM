@@ -47,6 +47,14 @@ module.exports = function(envConfig, constants, statusCodes) {
             res.render('student-form', config);
         },
 
+        students: function(req, res, next) {
+          if (req.params.id) {
+            res.render('single-student-view', config);
+          } else {
+            res.render('students-view', config);
+          }
+        },
+
         tutors: function(req, res, next) {
             if (req.params.id) {
                 res.render('single-tutor-view', config);
