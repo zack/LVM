@@ -6,16 +6,18 @@
  */
 'use strict';
 angular.module('lvmApp')
-    .controller('MatchController', function($scope, $http) {
+    .controller('MatchController', function($scope, $http, $rootScope) {
         var form = this;
         
         form.statuses = ['Current', 'Dissolved'];
         $scope.status = '-1';
         $scope.editing = null;
+        $scope.sites = _.filter($rootScope.affiliates, function (affiliate) { return affiliate.value; });
         
         form.enableEditing = function (index) {
             $scope.editing = index;
-            console.log(form.matches[index].site, typeof form.matches[index].site)
+            $scope.matchStart = form.matches[index].matchStart;
+            
         };
         
         form.cancelEdit = function () {
