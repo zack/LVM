@@ -1,7 +1,7 @@
 <html ng-app="lvmApp">
 
 <head>
-    <title>LVM App - All Tutors View</title>
+    <title>LVM App - Tutor View</title>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
     <!-- Latest compiled and minified CSS -->
@@ -28,7 +28,7 @@
 </head>
 
 <body ng-controller="TutorController as form">
-    <div class="container-fluid">
+    <div class="container-fluid" ng-init="getAllTutors()">
         <div class="row">
             <div class="col-md-12">
                 <div id="header-include" ng-include="'/components/header.html'"></div>
@@ -37,7 +37,7 @@
                     <!-- Row for title -->
                     <div class="col-md-3"></div>
                     <div class="col-md-9">
-                        <h2>View All Tutors</h2>
+                        <h2> {{ selectedTutor.firstName + ' ' + selectedTutor.lastName}}</h2>
                     </div>
                 </div>
 
@@ -49,33 +49,44 @@
                         </div>
                     </div>
 
-                    <div class="col-md-9" id="AllTutors" ng-init="getAllTutors()">
+                    <div class="col-md-9" id="Tutor">
                         <table class="table">
-                            <thead>
-                                <tr>
-                                    <th><span>Tutor</span></th>
-                                    <th><span>Created</span></th>
-                                    <th class="text-center"><span>Status</span></th>
-                                    <th><span>Email</span></th>
-                                    <th><span>Phone</span></th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
                             <tbody>
-                                <tr ng-repeat="tutor in tutors">
-                                    <td>
-                                        <a href="/tutors/{{ tutor.id }}"> {{ tutor.lastName }}, {{tutor.firstName}}</a>
-                                    </td>
-                                    <td>{{ tutor.intakeDate | date:'MM/dd/yyyy' }}</td>
-                                    <td class="text-center">
-                                        <span class="label label-default">{{ tutor.status}}</span>
-                                    </td>
-                                    <td>
-                                        <a href="mailto:{{ tutor.email }}">{{ tutor.email }}</a>
-                                    </td>
-                                    <td>
-                                        <span>{{ tutor.homePhone || tutor.mobilePhone || tutor.mobilePhone || "Unknown" }}</span>
-                                    </td>
+                                <tr>
+                                    <td> ID: </td>
+                                    <td> {{selectedTutor.id}} </td>
+                                </tr>
+                                <tr>
+                                    <td> Intake Date: </td>
+                                    <td> {{selectedTutor.intakeDate | date:'MM/dd/yyyy'}} </td>
+                                </tr>
+                                <tr>
+                                    <td> Site: </td>
+                                    <td> {{selectedTutor.siteName}} </td>
+                                </tr>
+                                <tr>
+                                    <td> Occupation: </td>
+                                    <td> {{selectedTutor.doeOccupationName}} </td>
+                                </tr>
+                                <tr>
+                                    <td> Language: </td>
+                                    <td> {{selectedTutor.languageName}} </td>
+                                </tr>
+                                <tr>
+                                    <td> DOE Referral: </td>
+                                    <td> {{selectedTutor.doeReferralName}} </td>
+                                </tr>
+                                <tr>
+                                    <td> LVM Referral: </td>
+                                    <td> {{selectedTutor.lvmReferralName}} </td>
+                                </tr>
+                                <tr>
+                                    <td> Employment Status: </td>
+                                    <td> {{selectedTutor.employmentStatusName}} </td>
+                                </tr>
+                                <tr>
+                                    <td> Occupation: </td>
+                                    <td> {{selectedTutor.doeOccupationName}} </td>
                                 </tr>
                             </tbody>
                         </table>

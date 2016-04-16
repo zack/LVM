@@ -144,7 +144,7 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
         .get(HomeController.studentForm)
         .all(methodNotAllowed);
 
-    router.route('/tutors')
+    router.route('/tutors/:id?')
         .get(HomeController.tutors)
         .all(methodNotAllowed);
 
