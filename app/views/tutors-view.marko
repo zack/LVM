@@ -1,0 +1,91 @@
+<html ng-app="lvmApp">
+
+<head>
+    <title>LVM App - All Tutors View</title>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.css">
+
+    <link rel="stylesheet" href="/css/form-style.css">
+
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="/js/lvm.js"></script>
+    <script src="/js/tutor/tutors-view.js"></script>
+</head>
+
+<body ng-controller="TutorController as form">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="header-include" ng-include="'/components/header.html'"></div>
+
+                <div class="row">
+                    <!-- Row for title -->
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9">
+                        <h2>View All Tutors</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Row for content -->
+                    <div class="col-md-3 sidebar-outer">
+                        <div class="sidebar">
+                            <div id="sidebar-include" ng-include="'/components/dashboard-sidebar.html'"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9" id="AllTutors" ng-init="getAllTutors()">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><span>Tutor</span></th>
+                                    <th><span>Created</span></th>
+                                    <th class="text-center"><span>Status</span></th>
+                                    <th><span>Email</span></th>
+                                    <th><span>Phone</span></th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="tutor in tutors">
+                                    <td>
+                                        <a href="/tutors/{{ tutor.id }}"> {{ tutor.lastName }}, {{tutor.firstName}}</a>
+                                    </td>
+                                    <td>{{ tutor.intakeDate | date:'MM/dd/yyyy' }}</td>
+                                    <td class="text-center">
+                                        <span class="label label-default">{{ tutor.status}}</span>
+                                    </td>
+                                    <td>
+                                        <a href="mailto:{{ tutor.email }}">{{ tutor.email }}</a>
+                                    </td>
+                                    <td>
+                                        <span>{{ tutor.homePhone || tutor.mobilePhone || tutor.mobilePhone || "Unknown" }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
