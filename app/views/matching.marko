@@ -120,11 +120,27 @@
                     <form role="form" name="manageMatches">
             
                         <div class="form-group" id="manageMatches">
-                            <h4>Manage Current Matches</h4>
+                            <h4>Manage Matches</h4>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="manageMatchStatus">
+                                        Display all matches with status...
+                                    </label>
+                                    
+                                    <select ng-model="fetchStatus" ng-change="form.fetchMatches()" name="fetchStatus" id="fetchStatus" class="dropdown dropdown-full btn btn-default dropdown-toggle" ng-options="status as status for status in form.statuses"></select>
+                                </div>
+                            </div>
                             <hr/>
                             <div class="row">
                                 <div class="col-md-12">
                                     <p class="alert alert-danger" ng-if="form.fetchError === true">An error occurred while retrieving the current matches.</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="alert alert-success" ng-if="form.manageMatchResponse === true">{{form.manageSuccessMessage}}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="alert alert-danger" ng-if="form.manageMatchResponse === false">{{form.manageErrorMessage}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -182,12 +198,11 @@
                                     <span>{{match.tutorFirstName + ' ' + match.tutorLastName}}</span>
                                 </div>
                                 <div class="col-md-2">
-                                    <pre>{{match.matchStart}}</pre>
-                                    <input ng-show="$index === editing" type="date" ng-model="matchStart" class="form-control"/>
+                                    <input ng-show="$index === editing" type="date" ng-model="form.matches[$index].matchStart" class="form-control"/>
                                     <span ng-show="$index !== editing">{{match.matchStart | date:'MM/dd/yyyy'}}</span>
                                 </div>
                                 <div class="col-md-2">
-                                    <input ng-show="$index === editing" type="date" ng-model="form.matches[$index].matchEnd" class="form-control"/>
+                                    <input ng-show="$index === editing && match.status === 'Dissolved'" type="date" ng-model="form.matches[$index].matchEnd" class="form-control"/>
                                     <span ng-show="$index !== editing" ng-if="!_.isNull(match.matchEnd)">{{match.matchEnd | date:'MM/dd/yyyy'}}</span>
                                 </div>
                                 <div class="col-md-2">

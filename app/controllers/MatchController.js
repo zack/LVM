@@ -96,11 +96,38 @@ module.exports = function (logging, database, statusCodes) {
         },
         
         updateMatch: function (req, res, next) {
+            if (!req.params.id || !_.isString(req.params.id)) {
+                return res.status(statusCodes.BAD_REQUEST_STATUS).send('Not all required fields are present.');
+            }
             
+            var sql = 'UPDATE Matches ' +
+                      "SET site=?, doeMatchID=?, status=?, matchStart=?, matchEnd=?, onHold=?, dateModified=?" +
+                      'WHERE id=? ' +
+                      (req.session.user.branch ? ' and m.site = ?;' : ';'),
+                endDate = new Date();
+                
+            database.query({
+                sql: sql,
+                values: [endDate, endDate, req.params.id, req.session.user.branch]
+            }, function (error, results, fields) {
+                if (error) { 
+                    logging.error('error dissolving match by id', {
+                        id: req.params.id,
+                        user: req.session.user.username,
+                        error: error
+                    });
+                    return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred dissolving the match.');
+                }
+                results = _.map(results, cleanseData);
+                if (results.length === 1) {
+                    results = results[0];
+                }
+                res.json(results);
+            });
         },
         
         dissolveMatch: function (req, res, next) {
-            if (!req.params.id || !_.isNumber(req.params.id)) {
+            if (!req.params.id || !_.isString(req.params.id)) {
                 return res.status(statusCodes.BAD_REQUEST_STATUS).send('Not all required fields are present.');
             }
             

@@ -11,22 +11,30 @@ angular.module('lvmApp')
         
         form.statuses = ['Current', 'Dissolved'];
         $scope.status = '-1';
+        $scope.fetchStatus = 'Current';
         $scope.editing = null;
         $scope.sites = _.filter($rootScope.affiliates, function (affiliate) { return affiliate.value; });
         
         form.enableEditing = function (index) {
             $scope.editing = index;
-            $scope.matchStart = form.matches[index].matchStart;
-            
         };
         
         form.cancelEdit = function () {
             $scope.editing = null;
         };
         
+        $scope.resetStateManage = function () {
+            form.manageMatchResponse = null;
+            form.manageSuccessMessage = '';
+            form.manageErrorMessage = '';
+            $scope.$apply();
+        };
+        
         form.mapFetchedMatches = function (match) {
             match.onHoldValue = (match.onHold === 0 ? false : true);
             match.site = match.site.toString();
+            match.matchStart = new Date(match.matchStart);
+            match.matchEnd = (!_.isNull(match.matchEnd) ? new Date(match.matchEnd) : match.matchEnd);
             return match;
         };
         
@@ -47,10 +55,14 @@ angular.module('lvmApp')
                 method: 'DELETE',
                 url: '/api/matches/' + form.matches[index].id
             }).then(function (response) {
-                form.matchDissolved = true;
+                form.manageMatchResponse = true;
+                form.manageSuccessMessage = 'Match dissolved successfully.';
+                form.fetchMatches();
+                setTimeout($scope.resetStateManage, 5 * 1000);
             }, function (response) {
-                form.matchDissolved = false;
-                form.dissolveErrorMessage = response.data;
+                form.manageMatchResponse = false;
+                form.manageErrorMessage = 'Match dissolved successfully.';
+                setTimeout($scope.resetStateManage, 5 * 1000);
             });
         };
         
@@ -61,19 +73,22 @@ angular.module('lvmApp')
             
             $http({
                 method: 'POST',
-                url: '/api/matches/' + form.matches[index].id
+                url: '/api/matches/' + match.id
             }).then(function (response) {
-                form.matchDissolved = true;
+                form.manageMatchResponse = true;
+                form.manageSuccessMessage = 'Match updated successfully.';
+                form.fetchMatches();
+                setTimeout($scope.resetStateManage, 5 * 1000);
             }, function (response) {
                 form.matchDissolved = false;
                 form.dissolveErrorMessage = response.data;
             });
         };
         
-        form.fetchMatches = function () {
+        form.fetchMatches = function (val) {
             $http({
                 method: 'GET',
-                url: '/api/matches'
+                url: '/api/matches?status={{status}}'.replace('{{status}}', $scope.fetchStatus)
             }).then(function successCallback(response) {
                 form.matches = _.map(response.data, form.mapFetchedMatches);
               }, function errorCallback(response) {
