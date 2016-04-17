@@ -61,7 +61,7 @@ angular.module('lvmApp')
                 setTimeout($scope.resetStateManage, 5 * 1000);
             }, function (response) {
                 form.manageMatchResponse = false;
-                form.manageErrorMessage = 'Match dissolved successfully.';
+                form.manageErrorMessage = response.data;
                 setTimeout($scope.resetStateManage, 5 * 1000);
             });
         };

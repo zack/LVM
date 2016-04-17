@@ -82,7 +82,7 @@ describe('matching', function () {
           var controller = $controller('MatchController', { $scope: $scope, $http: $http });
           controller.matches = [{id: 0}];
           controller.dissolveMatch(0);
-          expect(controller.matchDissolved).toEqual(true);
+          expect(controller.manageMatchResponse).toEqual(true);
         });
         
         it('should report an error if one occurs', function () {
@@ -96,8 +96,8 @@ describe('matching', function () {
           var controller = $controller('MatchController', { $scope: $scope, $http: $http });
           controller.matches = [{id: 0}];
           controller.dissolveMatch(0);
-          expect(controller.matchDissolved).toEqual(false);
-          expect(controller.dissolveErrorMessage).toEqual('Already dissolved.');
+          expect(controller.manageMatchResponse).toEqual(false);
+          expect(controller.manageErrorMessage).toEqual('Already dissolved.');
         });
     });
   });
