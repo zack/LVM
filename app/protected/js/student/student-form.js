@@ -277,7 +277,7 @@ angular.module('lvmApp')
 		//Post the Form
         $scope.submitForm=function(){
 			var data=$scope.fields;
-			var url="app/controllers/StudentController.js"
+			var url="app/controllers/StudentController.js";
 
 			$http.post(url,data);
         };
