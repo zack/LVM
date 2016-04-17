@@ -66,18 +66,27 @@ angular.module('lvmApp')
             });
         };
         
+        form.reinstateMatch = function (index) {
+            var match = form.matches[index];
+            match.status = 'Current';
+            match.matchEnd = null;
+            form.updateMatch(index);
+        };
+        
         form.updateMatch = function (index) {
             var match = form.matches[index];
             // Map this from a boolean to a bit for the database
-            match.onHold = (match.onHoldVal ? 1 : 0);
+            match.onHold = (match.onHoldValue ? 1 : 0);
+            console.log(match);
             
             $http({
                 method: 'POST',
-                url: '/api/matches/' + match.id
+                url: '/api/matches/' + match.id,
+                data: match
             }).then(function (response) {
                 form.manageMatchResponse = true;
                 form.manageSuccessMessage = 'Match updated successfully.';
-                form.fetchMatches();
+                form.cancelEdit();
                 setTimeout($scope.resetStateManage, 5 * 1000);
             }, function (response) {
                 form.matchDissolved = false;

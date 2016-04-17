@@ -125,7 +125,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="manageMatchStatus">
-                                        Display all matches with status...
+                                        Display all matches with status:
                                     </label>
                                     
                                     <select ng-model="fetchStatus" ng-change="form.fetchMatches()" name="fetchStatus" id="fetchStatus" class="dropdown dropdown-full btn btn-default dropdown-toggle" ng-options="status as status for status in form.statuses"></select>
@@ -209,7 +209,8 @@
                                     <button class="btn btn-default col-md-12" ng-show="$index !== editing" ng-click="form.enableEditing($index)">Edit</button>
                                     <button class="btn btn-default col-md-6" ng-show="$index == editing" ng-click="form.cancelEdit()">Cancel</button>
                                     <button class="btn btn-default col-md-6" ng-show="$index == editing" ng-click="form.updateMatch($index)">Update</button>
-                                    <button class="btn btn-default col-md-12" ng-click="form.dissolveMatch($index)">Dissolve</button>
+                                    <button class="btn btn-default col-md-12" ng-show="match.status === 'Current'" ng-click="form.dissolveMatch($index)">Dissolve</button>
+                                    <button class="btn btn-default col-md-12" ng-show="match.status === 'Dissolved'" ng-click="form.reinstateMatch($index)">Reinstate</button>
                                 </div>
                                 <div class="col-md-12" ng-if="!$last"><hr/></div>
                             </div>
