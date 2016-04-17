@@ -54,9 +54,36 @@ module.exports = function (logging, database, statusCodes) {
         },
         
         addMatch: function (req, res, next) {
-            // Validation
+            var match = req.body;
+            if (!req.session.user.branch || !match.doeMatchID || !match.status || !match.tutor 
+                || !match.student || !match.matchStart || !_.isDefined(match.onHold)) {
+                return res.status(statusCodes.BAD_REQUEST_STATUS).send('Not all required fields are present.');
+            }
             
-            // Database Query
+            var sql = 'INSERT INTO Matches ' +
+                      'VALUES (?,?,?,?,?,?,?,?,?,?,0);',
+                d = new Date();
+                
+            match.matchEnd = !_.isDefined(match.matchEnd) ? null : match.matchEnd;
+            
+            database.query({
+                sql: sql,
+                values: [match.site, match.doeMatchID, match.status, match.tutor, match.student, match.matchStart, match.matchEnd, match.onHold, d, d]
+            }, function (error, results, fields) {
+                if (error) { 
+                    logging.error('error adding match', {
+                        id: req.params.id,
+                        user: req.session.user.username,
+                        error: error
+                    });
+                    return res.status(statusCodes.INTERNAL_SERVER_ERROR).send('An error occurred creating the match.');
+                }
+                results = _.map(results, cleanseData);
+                if (results.length === 1) {
+                    results = results[0];
+                }
+                res.json(results);
+            });
         },
         
         updateMatch: function (req, res, next) {
