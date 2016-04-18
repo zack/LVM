@@ -39,14 +39,31 @@ angular.module('lvmApp')
         };
         
         form.createMatch = function () {
+            var resetMessages = function () {
+                form.matchCreated = null;
+                form.matchErrorMessage = '';
+            };
+            
             $http({
                 method: 'POST',
-                url: '/api/matches'
+                url: '/api/matches',
+                data: {
+                    doeMatchID: $scope.doeMatchID,
+                    student: $scope.student,
+                    tutor: $scope.tutor,
+                    status: $scope.status,
+                    onHold: $scope.onHold,
+                    matchStart: $scope.matchStart,
+                    matchEnd: $scope.matchEnd || null
+                }
             }).then(function (response) {
                 form.matchCreated = true;
+                form.fetchMatches();
+                setTimeout(resetMessages, 5 * 1000);
             }, function (response) {
                 form.matchCreated = false;
                 form.matchErrorMessage = response.data;
+                setTimeout(resetMessages, 5 * 1000);
             });
         };
         
@@ -77,7 +94,6 @@ angular.module('lvmApp')
             var match = form.matches[index];
             // Map this from a boolean to a bit for the database
             match.onHold = (match.onHoldValue ? 1 : 0);
-            console.log(match);
             
             $http({
                 method: 'POST',
@@ -94,7 +110,7 @@ angular.module('lvmApp')
             });
         };
         
-        form.fetchMatches = function (val) {
+        form.fetchMatches = function () {
             $http({
                 method: 'GET',
                 url: '/api/matches?status={{status}}'.replace('{{status}}', $scope.fetchStatus)

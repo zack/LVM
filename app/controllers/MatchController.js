@@ -55,24 +55,23 @@ module.exports = function (logging, database, statusCodes) {
         
         addMatch: function (req, res, next) {
             var match = req.body;
-            if (!req.session.user.branch || !match.doeMatchID || !match.status || !match.tutor 
-                || !match.student || !match.matchStart || !_.isDefined(match.onHold)) {
+            if (_.isUndefined(req.session.user.branch) || !match.doeMatchID || !match.status || !match.tutor 
+                || !match.student || !match.matchStart || _.isUndefined(match.onHold)) {
                 return res.status(statusCodes.BAD_REQUEST_STATUS).send('Not all required fields are present.');
             }
             
-            var sql = 'INSERT INTO Matches ' +
-                      'VALUES (?,?,?,?,?,?,?,?,?,?,0);',
+            var sql = 'CALL updateMatchesTable(?,?,?,?,?,?,?,?,?,?,?);',
                 d = new Date();
                 
-            match.matchEnd = !_.isDefined(match.matchEnd) ? null : match.matchEnd;
+            match.matchEnd = _.isUndefined(match.matchEnd) ? null : match.matchEnd;
             
             database.query({
                 sql: sql,
-                values: [match.site, match.doeMatchID, match.status, match.tutor, match.student, match.matchStart, match.matchEnd, match.onHold, d, d]
+                values: [req.session.user.branch || 5, match.doeMatchID, match.status, match.tutor, match.student, match.matchStart, match.matchEnd, match.onHold, d, d, 0]
             }, function (error, results, fields) {
-                if (error) { 
+                if (error) {
+                    console.log(error, error.stack);
                     logging.error('error adding match', {
-                        id: req.params.id,
                         user: req.session.user.username,
                         error: error
                     });
@@ -97,7 +96,7 @@ module.exports = function (logging, database, statusCodes) {
                       (req.session.user.branch ? ' and m.site = ?;' : ';'),
                 match = req.body,
                 d = new Date();
-                
+            console.log(sql);
             database.query({
                 sql: sql,
                 values: [match.site, match.doeMatchID, match.status, match.matchStart, match.matchEnd, match.onHold, d, match.id, req.session.user.branch]
