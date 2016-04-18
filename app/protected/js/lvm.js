@@ -53,7 +53,7 @@ function Run($rootScope, $http) {
         'Administrator',
         'Affiliate Coordinator',
         'Affiliate Staff',
-        'Data Entry',
+        'Data Entry Contractor',
         'Tutor'
     ];
     
@@ -79,6 +79,6 @@ function Run($rootScope, $http) {
 }
 
 //declare app level module and hook in config and run blocks
-angular.module('lvmApp', [])
+angular.module('lvmApp', ["angucomplete-alt"])
     .config(Config)
     .run(Run);

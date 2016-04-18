@@ -149,17 +149,15 @@ module.exports = function(logging, database, statusCodes) {
             var queryValue = req.params.name + '%'; // add wildcard on end
 
             database.query({
-                sql: 'SELECT p.id as pid, t.id as tid, p.firstName, p.lastName, ' +
-                    '       p.primaryServiceType, s.name as site ' +
-                    'FROM Tutor t, Person p, Sites s ' +
-                    'WHERE t.person = p.id and ' +
-                    '      p.site = s.id and ' +
-                    '      (p.firstName like ? or ' +
-                    '        p.lastName like ? or ' +
-                    '        p.email like ?) ' +
-                    // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results
-                    (req.session.user.branch ? ' and p.site = ? ' : '') +
-                    'LIMIT 10;',
+                sql: 'SELECT p.id as pid, t.id as tid, CONCAT(p.firstName, \' \', p.lastName) as name, ' +
+                     '       p.primaryServiceType, s.name as site ' +
+                     'FROM Tutor t, Person p, Sites s ' +
+                     'WHERE t.person = p.id and ' +
+                     '      p.site = s.id and ' +
+                     '      CONCAT(firstName, \' \', lastName) like ? ' +
+                     // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results
+                     (req.session.user.branch ? ' and p.site = ? ' : ' ') +
+                     'LIMIT 10;',
                 values: [queryValue, queryValue, queryValue, req.session.user.branch]
             }, function(error, results, fields) {
                 if (error) {

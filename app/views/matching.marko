@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.css">
 
+    <link rel="stylesheet" href="css/angucomplete-alt.css">
     <link rel="stylesheet" href="css/form-style.css">
     
     <link rel="icon" type="image/png" href="images/favicon.png">
@@ -23,6 +24,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angucomplete-alt/2.4.0/angucomplete-alt.min.js"></script>
     <script src="js/lvm.js"></script>
     <script src="js/matching/matching.js"></script>
 </head>
@@ -64,8 +66,20 @@
                                     <label for="tutorName">
                                         Tutor
                                     </label>
-                                    
-                                    <input type="number" required ng-model="tutor" class="form-control" id="tutorName" ng-trim="true" maxlength="255" name="tutorName"/>
+                                    <pre>{{tutor}}</pre>
+                                    <div angucomplete-alt
+                                      id="tutorName"
+                                      ng-model="tutor"
+                                      placeholder="Tutor"
+                                      pause="300"
+                                      selected-object="tutor"
+                                      remote-url="/api/autocomplete/tutor/"
+                                      title-field="name"
+                                      description-field="primaryServiceType,site"
+                                      minlength="3"
+                                      input-class="form-control"
+                                      match-class="highlight">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

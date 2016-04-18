@@ -50,7 +50,7 @@ angular.module('lvmApp')
                 data: {
                     doeMatchID: $scope.doeMatchID,
                     student: $scope.student,
-                    tutor: $scope.tutor,
+                    tutor: $scope.tutor.originalObject.tid,
                     status: $scope.status,
                     onHold: $scope.onHold,
                     matchStart: $scope.matchStart,

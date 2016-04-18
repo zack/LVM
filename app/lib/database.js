@@ -38,7 +38,7 @@ module.exports = function(logging, config) {
     function handleDisconnect() {
         connection.on('error', function(err) {
             if (!err.fatal) {
-                return;
+                return logging.debug('Non-fatal database error', err);
             }
             if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
                 return logging.error(err);
