@@ -7,10 +7,81 @@
 
 'use strict';
 
-module.exports = function (database, statusCodes) {
+var _ = require('underscore');
+
+module.exports = function (database, logging, statusCodes) {
+    var cleanseData = function(data) {
+        delete data.isTestData;
+        return data;
+    };
+
     return {
+        getStudent: function(req, res, next) {
+            var query = 'SELECT ' +
+                '     st.*,' +
+                '     p.*,' +
+                '     p.id AS pid,' +
+                '     st.id AS stid,' +
+                '     s.name AS siteName,' +
+                '     nl.language AS languageName,' +
+                '     e.ethnicity AS ethnicity,' +
+                '     r.referral AS doeReferralName,' +
+                '     l.referral AS lvmReferralName,' +
+                '     es.estatus AS employmentStatusName,' +
+                '     o.occupation AS doeOccupationName' +
+                ' FROM ' +
+                '     Person p,' +
+                '     Student st,' +
+                '     Sites s,' +
+                '     DOENativeLanguage nl,' +
+                '     Ethnicity e,' +
+                '     DOEReferral r,' +
+                '     LVMReferral l,' +
+                '     DOEOccupation o,' +
+                '     EmploymentStatus es' +
+                ' WHERE ' +
+                '     p.id = st.person AND p.site = s.id' +
+                '         AND p.nativeLanguage = nl.id' +
+                '         AND p.ethnicity = e.id' +
+                '         AND p.doeReferral = r.id' +
+                '         AND p.lvmReferral = l.id' +
+                '         AND p.doeEmployStatus = es.id' +
+                '         AND p.doeOccupation = o.id';
+            var queryVals = [];
+
+            if (req.params.id) {
+                query += '      and p.id = ?';
+                queryVals.push(req.params.id);
+            }
+
+            // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results
+            if (req.session.user.branch) {
+                query += ' and p.site = ? ';
+                queryVals.push(req.session.user.branch);
+            }
+
+            database.query({
+                sql: query,
+                values: queryVals
+            }, function(error, results, fields) {
+                if (error) {
+                    logging.error('error fetching tutor', {
+                        name: req.params.name,
+                        user: req.session.user.username,
+                        error: error
+                    });
+                    return res.status(statusCodes.INTERNAL_SERVER_ERROR).json([null]);
+                }
+                results = _.map(results, cleanseData);
+                if (results.length === 1) {
+                    results = results[0];
+                }
+                res.json(results);
+            });
+        },
+
         // Requires: a lot
-        createStudent : function (req, res, next) {
+        createStudent: function(req, res, next) {
 
             var today = new Date();
 
@@ -82,37 +153,66 @@ module.exports = function (database, statusCodes) {
             var isTestData = 1;
 
             var params = [affiliate, doeID, newForFY, lastName, firstName,
-                            intakeDate, dob, gender, primaryServiceType, status,
-                            address1, address2, city, state, zip, zip4, homePhone,
-                            workPhone, extension, cellPhone, email, nativeLanguage,
-                            ethnicity, doeReferral, lvmReferral, yearsUS, yearsForeign,
-                            doeEmployStatus, doeOccupation, dateAdded, dateModified,
-                            smarttID, okayToCall, okayToMail, okayToEmail, zipCodeID,
-                            countryOfOrigin, timeInJobMonths, timeInJobYears, publicAssistance,
-                            singleParent, learningDisability, physicalDisability,
-                            mTeen, fTeen, m20, f20, m26, f26, m36, f36, m46, f46,
-                            m66, f66, studentGoal, dateGoalSet, dateGoalMet, mainGoal,
-                            testDate, testType, testResult, fedLevel, fedType, inSchool,
-                            isTestData];
+                intakeDate, dob, gender, primaryServiceType, status,
+                address1, address2, city, state, zip, zip4, homePhone,
+                workPhone, extension, cellPhone, email, nativeLanguage,
+                ethnicity, doeReferral, lvmReferral, yearsUS, yearsForeign,
+                doeEmployStatus, doeOccupation, dateAdded, dateModified,
+                smarttID, okayToCall, okayToMail, okayToEmail, zipCodeID,
+                countryOfOrigin, timeInJobMonths, timeInJobYears, publicAssistance,
+                singleParent, learningDisability, physicalDisability,
+                mTeen, fTeen, m20, f20, m26, f26, m36, f36, m46, f46,
+                m66, f66, studentGoal, dateGoalSet, dateGoalMet, mainGoal,
+                testDate, testType, testResult, fedLevel, fedType, inSchool,
+                isTestData
+            ];
 
 
 
             var sql = "CALL addStudent(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-                                        "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-                                        "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-                                        "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-                                        "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-                                        "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-                                        "?, ?, ?, ?, ?, ?)";
+                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+                "?, ?, ?, ?, ?, ?)";
 
-                
-                
+
+
+
+
+            database.connection.query(sql, params, function() {});
+
+        },
+        
+        autocomplete: function (req, res, next) {
+            if (req.params.name.length < 3) { return res.json([]); }
             
-
-            database.connection.query(sql, params, function (){});
-
+            var queryValue = req.params.name + '%'; // add wildcard on end
+            
+            database.query({
+                sql: 'SELECT p.id as pid, st.id as sid, CONCAT(p.firstName, \' \', p.lastName) as name, ' +
+                     '       p.primaryServiceType, s.name as site ' +
+                     'FROM Student st, Person p, Sites s ' +
+                     'WHERE st.person = p.id and ' +
+                     '      p.site = s.id and ' +
+                     '      CONCAT(firstName, \' \', lastName) like ? ' +
+                     // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results
+                     (req.session.user.branch ? ' and p.site = ? ' : ' ') +
+                     'LIMIT 10;',
+                values: ['%' + queryValue + '%', req.session.user.branch]
+            }, function (error, results, fields) {
+                if (error) { 
+                    logging.error('student autocomplete failed', {
+                        name: req.params.name,
+                        user: req.session.user.username,
+                        error: error
+                    });
+                    return res.status(statusCodes.INTERNAL_SERVER_ERROR).json([]);
+                }
+                return res.json(results);
+            });
         }
-
     };
 
 };

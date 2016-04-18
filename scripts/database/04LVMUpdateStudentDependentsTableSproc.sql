@@ -15,6 +15,8 @@ CREATE PROCEDURE updateStudentDependentsTable(
   `student` int, -- FK
   `yearOfBirth` int,
   `inSchool` boolean,
+  `sameHouse` boolean,
+  `comment` varchar(2000),
   `dateAdded` datetime,
   `dateModified` datetime,
   `isTestData` bit)
@@ -25,6 +27,8 @@ INSERT INTO StudentDependents(
 	student, 
     yearOfBirth,
     inSchool,
+    sameHouse,
+    comment,
     dateAdded,
     dateModified,
     isTestData)
@@ -32,6 +36,8 @@ VALUES(
 	`student`, 
     `yearOfBirth`,
     `inSchool`,
+    `sameHouse`,
+    `comment`,
     `dateAdded`,
     `dateModified`,
     `isTestData`);

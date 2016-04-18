@@ -1,18 +1,18 @@
 -- --------------------------------------------
--- 04LVMUpdateStudentPreferencesTableSproc
+-- 04LVMUpdatePersonPreferencesTableSproc
 -- Date: MAR 24 2016
 -- 
--- Creates sproc to insert data into the StudentPreferences table
+-- Creates sproc to insert data into the PersonPreferences table
 -- --------------------------------------------
 
 USE lvm;
 
-DROP PROCEDURE IF EXISTS updateStudentPreferencesTable;
+DROP PROCEDURE IF EXISTS updatePersonPreferencesTable;
 
 DELIMITER //
 
-CREATE PROCEDURE updateStudentPreferencesTable(
-  `student` int,
+CREATE PROCEDURE updatePersonPreferencesTable(
+  `person` int,
   `maleTeen` bit,
   `femaleTeen` bit,
   `male20-25` bit,
@@ -25,14 +25,17 @@ CREATE PROCEDURE updateStudentPreferencesTable(
   `female46-65` bit,
   `male66+` bit,
   `female66+` bit,
+  `comments` varchar(2000), 
+  `publicLibrary` boolean,
+  `otherLocation` varchar(255),
   `dateAdded` datetime,
   `dateModified` datetime,
   `isTestData` bit)
 
 BEGIN
 
-INSERT INTO StudentPreferences(
-  `student`,
+INSERT INTO PersonPreferences(
+  `person`,
   `maleTeen`,
   `femaleTeen`,
   `male20-25`,
@@ -45,11 +48,14 @@ INSERT INTO StudentPreferences(
   `female46-65`,
   `male66+`,
   `female66+`,
+  `comments`, 
+  `publicLibrary`,
+  `otherLocation`,
   `dateAdded`,
   `dateModified`,
   `isTestData`)
 VALUES(
-	`student`,
+	`person`,
     `maleTeen`,
     `femaleTeen`,
     `male20-25`,
@@ -62,6 +68,9 @@ VALUES(
     `female46-65`,
     `male66+`,
     `female66+`,
+    `comments`, 
+    `publicLibrary`,
+    `otherLocation`,
     `dateAdded`,
     `dateModified`,
     `isTestData`);

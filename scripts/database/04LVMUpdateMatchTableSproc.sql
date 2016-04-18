@@ -19,7 +19,7 @@ CREATE PROCEDURE updateMatchesTable(
   `student` int, -- FK
   `matchStart` date,
   `matchEnd` date,
-  `onHold` boolean,
+  `primaryServiceType` enum('ABE','ESOL'),
   `dateAdded` datetime,
   `dateModified` datetime,
   `isTestData` bit)
@@ -34,7 +34,7 @@ INSERT INTO Matches(
     student,
     matchStart,
     matchEnd,
-    onHold,
+    primaryServiceType,
     dateAdded,
 	dateModified,
     isTestData)
@@ -46,7 +46,7 @@ VALUES(
     `student`,
     `matchStart`,
     `matchEnd`,
-    `onHold`,
+    `primaryServiceType`,
     `dateAdded`,
     `dateModified`,
     `isTestData`);

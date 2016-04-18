@@ -6,10 +6,9 @@
 'use strict';
 
 var express = require('express'),
-  path = require('path');
+    path = require('path');
 
-module.exports = function(statusCodes, HomeController, AuthenticationController,
-  TutorController, StudentController) {
+module.exports = function(statusCodes, HomeController, AuthenticationController, TutorController, StudentController, MatchController) {
   var router = express.Router();
 
   /**
@@ -33,6 +32,10 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
     return res.json({
       user: req.session.user
     });
+  };
+  
+  var redirectToLogin = function (res) {
+    res.redirect('/login');
   };
 
   /**
@@ -84,72 +87,94 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
 
   // API
   router.route('/logout')
-    .get(AuthenticationController.logout)
-    .all(methodNotAllowed);
+      .get(AuthenticationController.logout)
+      .all(methodNotAllowed);
 
   router.route('/user')
-    .get(returnUserObject)
-    .all(methodNotAllowed);
+      .get(returnUserObject)
+      .all(methodNotAllowed);
 
   router.route('/api/account/password')
-    .post(AuthenticationController.updatePassword)
-    .all(methodNotAllowed);
+      .post(AuthenticationController.updatePassword)
+      .all(methodNotAllowed);
 
   router.route('/api/accounts')
-    .get(AuthenticationController.listUsers)
-    .all(methodNotAllowed);
+      .get(AuthenticationController.listUsers)
+      .all(methodNotAllowed);
 
   router.route('/api/account/role')
-    .post(AuthenticationController.updateRole)
-    .all(methodNotAllowed);
+      .post(AuthenticationController.updateRole)
+      .all(methodNotAllowed);
 
   router.route('/api/account/branch')
-    .post(AuthenticationController.updateBranch)
-    .all(methodNotAllowed);
+      .post(AuthenticationController.updateBranch)
+      .all(methodNotAllowed);
 
   router.route('/api/account/:username?')
-    .post(AuthenticationController.createAccount)
-    .delete(AuthenticationController.deleteAccount)
-    .all(methodNotAllowed);
+      .post(AuthenticationController.createAccount)
+      .delete(AuthenticationController.deleteAccount)
+      .all(methodNotAllowed);
 
-  router.route('/person/tutor/:pid?')
-    .get(TutorController.getTutor)
-    .delete(TutorController.exitTutor)
-    .all(methodNotAllowed);
+  router.route('/api/tutor/:id?')
+      .get(TutorController.getTutor)
+      .delete(TutorController.exitTutor)
+      .all(methodNotAllowed);
+
+  router.route('/api/student/:id?')
+      .get(StudentController.getStudent)
+      .all(methodNotAllowed);
 
   router.route('/api/autocomplete/tutor/:name')
-    .get(TutorController.autocomplete)
-    .all(methodNotAllowed);
+      .get(TutorController.autocomplete)
+      .all(methodNotAllowed);
+
+  router.route('/api/autocomplete/student/:name')
+      .get(StudentController.autocomplete)
+      .all(methodNotAllowed);
 
   router.route('/api/createstudent/:id')
-    .get(StudentController.createStudent)
-    .all(methodNotAllowed);
+      .get(StudentController.createStudent)
+      .all(methodNotAllowed);
+
+  router.route('/api/matches/:id?')
+      .get(MatchController.getMatches)
+      .post(MatchController.addOrUpdate)
+      .delete(MatchController.dissolveMatch)
+      .all(methodNotAllowed);
 
   // ADMIN
 
   // FRONT-END
   router.route('/dashboard')
-    .get(HomeController.dashboard)
-    .all(methodNotAllowed);
-    
+      .get(HomeController.dashboard)
+      .all(methodNotAllowed);
+
   router.route('/account')
-    .get(HomeController.account)
-    .all(methodNotAllowed);
-    
+      .get(HomeController.account)
+      .all(methodNotAllowed);
+
   router.route('/administration')
-    .get(HomeController.admin)
-    .all(methodNotAllowed);
-    
+      .get(HomeController.admin)
+      .all(methodNotAllowed);
+
   router.route('/student-form')
-    .get(HomeController.studentForm)
-    .all(methodNotAllowed);
-    
+      .get(HomeController.studentForm)
+      .all(methodNotAllowed);
+
+  router.route('/students/:id?')
+      .get(HomeController.students)
+      .all(methodNotAllowed);
+
+  router.route('/tutors/:id?')
+      .get(HomeController.tutors)
+      .all(methodNotAllowed);
+
   router.route('/matching')
-    .get(HomeController.matching)
-    .all(methodNotAllowed);
+      .get(HomeController.matching)
+      .all(methodNotAllowed);
 
   // Static Content for Protected content - prevents non-authenticated users from accessing these files
   router.all('*', express.static(path.resolve(__dirname + '/../protected'))); // static protected files in /protected
-
+  
   return router;
 };
