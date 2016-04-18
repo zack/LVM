@@ -43,7 +43,7 @@ describe('matching', function () {
     
     describe('controller.createMatch()', function() {
         it('should fetch the list of all matches for the user', function () {
-          var $scope = {};
+          var $scope = {student : {originalObject : {}}, tutor: {originalObject: {}}};
           var thenObj = jasmine.createSpyObj('then', ['then']);
           thenObj.then.and.callFake(function (success, error) {
             var response = {data: true};
@@ -56,7 +56,7 @@ describe('matching', function () {
         });
         
         it('should report an error if one occurs', function () {
-          var $scope = {};
+          var $scope = {student : {originalObject : {}}, tutor: {originalObject: {}}};
           var thenObj = jasmine.createSpyObj('then', ['then']);
           thenObj.then.and.callFake(function (success, error) {
             var response = {data: 'No student provided.'};
