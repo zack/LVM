@@ -47,7 +47,7 @@
     "marko": "~3.1.x",
     "method-override": "~2.3.0",
     "mysql": "~2.10.x",
-    "request": "~2.70.x",
+    "request": "~2.71.x",
     "underscore": "~1.8.x",
     "winston": "~2.2.x"
   },
