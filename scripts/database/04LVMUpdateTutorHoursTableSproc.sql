@@ -7,38 +7,41 @@
 
 USE lvm;
 
-DROP PROCEDURE IF EXISTS updateTutorTable;
+DROP PROCEDURE IF EXISTS updateTutorHoursTable;
 
 
 DELIMITER //
 
-CREATE PROCEDURE updateTutorTable(
-  `person` int,
-  `occupation` varchar(255),
-  `orientation` date,
-  `training` date,
-  `trainingType`enum('ABE', 'ESOL'),
+CREATE PROCEDURE updateTutorHoursTable(
+  `matchID` int,
+  `student` int,
+  `tutor` int,
+  `month` int,
+  `year` int,
+  `hours` int,
   `dateAdded` datetime,
   `dateModified` datetime,
   `isTestData` bit)
 
 BEGIN
 
-INSERT INTO Tutor(
-	person,
-	occupation,
-    orientation,
-    training,
-    trainingType,
+INSERT INTO TutorHours(
+	matchID,
+	student,
+	tutor,
+	`month`,
+	`year`,
+	hours,
 	dateAdded,
 	dateModified,
     isTestData)
 VALUES(
-    `person`,
-    `occupation`,
-    `orientation`,
-    `training`,
-    `trainingType`,
+    `matchID`,
+	`student`,
+	`tutor`,
+	`month`,
+	`year`,
+	`hours`,
     `dateAdded`,
     `dateModified`,
     `isTestData`);

@@ -9,7 +9,7 @@
 
 var _ = require('underscore');
 
-module.exports = function(database, statusCodes) {
+module.exports = function (database, logging, statusCodes) {
     var cleanseData = function(data) {
         delete data.isTestData;
         return data;
@@ -187,9 +187,36 @@ module.exports = function(database, statusCodes) {
 
         updateStudent: function(req, res, next) {
 
+        },
 
+        autocomplete: function (req, res, next) {
+            if (req.params.name.length < 3) { return res.json([]); }
+            
+            var queryValue = req.params.name + '%'; // add wildcard on end
+            
+            database.query({
+                sql: 'SELECT p.id as pid, st.id as sid, CONCAT(p.firstName, \' \', p.lastName) as name, ' +
+                     '       p.primaryServiceType, s.name as site ' +
+                     'FROM Student st, Person p, Sites s ' +
+                     'WHERE st.person = p.id and ' +
+                     '      p.site = s.id and ' +
+                     '      CONCAT(firstName, \' \', lastName) like ? ' +
+                     // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results
+                     (req.session.user.branch ? ' and p.site = ? ' : ' ') +
+                     'LIMIT 10;',
+                values: ['%' + queryValue + '%', req.session.user.branch]
+            }, function (error, results, fields) {
+                if (error) { 
+                    logging.error('student autocomplete failed', {
+                        name: req.params.name,
+                        user: req.session.user.username,
+                        error: error
+                    });
+                    return res.status(statusCodes.INTERNAL_SERVER_ERROR).json([]);
+                }
+                return res.json(results);
+            });
         }
-
     };
 
 };
