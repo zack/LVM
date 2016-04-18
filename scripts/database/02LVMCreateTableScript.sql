@@ -35,13 +35,7 @@ CREATE TABLE IF NOT EXISTS Meeting (
   `couldNotContact` boolean NOT NULL,
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
-  `isTestData` bit default 0 NULL
-);
-
--- -------------------------------------------
-CREATE TABLE IF NOT EXISTS PublicAssistance (
-  `id` int NOT NULL,
-  `type` varchar(255) NOT NULL
+  `isTestData` bit default 0
 );
 
 -- -------------------------------------------
@@ -55,26 +49,40 @@ CREATE TABLE IF NOT EXISTS Student (
   `id` int NOT NULL,
   `person` int NOT NULL, -- FK
   `smarttID` int NOT NULL,
-  `okayToCall` boolean NOT NULL,
-  `okayToMail` boolean NOT NULL,
-  `okayToEmail` boolean NOT NULL,
   `zipCodeID` int NOT NULL,
   `countryOfOrigin` int NOT NULL, -- FK
-  `timeInJobMonths` int DEFAULT NULL,
-  `timeInJobYears` int DEFAULT NULL,
-  `publicAssistance` int NOT NULL, -- FK
   `singleParent` boolean NOT NULL,
   `learningDisability` boolean NOT NULL,
   `physicalDisability` boolean NOT NULL,
+  `emergencyContactName` varchar(50) DEFAULT NULL,
+  `emergencyContactNumber` varchar(10) DEFAULT NULL, 
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
-  `isTestData` bit default 0 NULL
+  `isTestData` bit default 0
+);
+
+CREATE TABLE IF NOT EXISTS StudentContactInfo (
+  `id` int NOT NULL,
+  `student` int NOT NULL, -- FK
+  `okayToMail` boolean NOT NULL,
+  `okayToEmail` boolean NOT NULL,
+  `cellMsgOk` boolean DEFAULT NULL,
+  `homeMsgOk` boolean DEFAULT NULL,
+  `workMsgOk` boolean DEFAULT NULL,
+  `altMsgOk` boolean DEFAULT NULL,
+  `cellLVMOk` boolean DEFAULT NULL,
+  `homeLVMOk` boolean DEFAULT NULL,
+  `workLVMOk` boolean DEFAULT NULL,
+  `altLVMOk` boolean DEFAULT NULL,
+  `dateAdded` datetime NOT NULL,
+  `dateModified` datetime NOT NULL,
+  `isTestData` bit default 0
 );
 
 -- -------------------------------------------
-CREATE TABLE IF NOT EXISTS StudentPreferences (
+CREATE TABLE IF NOT EXISTS PersonPreferences (
   `id` int NOT NULL,
-  `student` int NOT NULL, -- FK
+  `person` int NOT NULL, -- FK
   `maleTeen` bit DEFAULT 0,
   `femaleTeen` bit DEFAULT 0,
   `male20-25` bit DEFAULT 0,
@@ -87,6 +95,9 @@ CREATE TABLE IF NOT EXISTS StudentPreferences (
   `female46-65` bit DEFAULT 0,
   `male66+` bit DEFAULT 0,
   `female66+` bit DEFAULT 0,
+  `comments` varchar(2000) DEFAULT NULL, 
+  `publicLibrary` boolean NOT NULL,
+  `otherLocation` varchar(255) DEFAULT NULL,
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
   `isTestData` bit DEFAULT 0
@@ -102,7 +113,7 @@ CREATE TABLE IF NOT EXISTS StudentPublicAssistance (
   `EA` bit DEFAULT 0,
   `SSI` bit DEFAULT 0,
   `None` bit DEFAULT 0,
-  `Other` bit DEFAULT 0,
+  `Other` varchar(255) DEFAULT NULL,
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
   `isTestData` bit DEFAULT 0
@@ -114,12 +125,12 @@ CREATE TABLE IF NOT EXISTS StudentAssessment (
   `student` int NOT NULL, -- FK
   `date` date NOT NULL,
   `test` int NOT NULL, -- FK
-  `result` varchar(255) NOT NULL,
-  `fedLevel` int NOT NULL, -- FK??
-  `fedType` int NOT NULL, -- FK??
+  `result` varchar(10) NOT NULL,
+  `fedLevel` int DEFAULT NULL, -- FK??
+  `fedType` int DEFAULT NULL, -- FK??
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
-  `isTestData` bit default 0 NULL
+  `isTestData` bit default 0
 );
 
 -- -------------------------------------------
@@ -128,9 +139,11 @@ CREATE TABLE IF NOT EXISTS StudentDependents (
   `student` int NOT NULL, -- FK
   `yearOfBirth` int NOT NULL,
   `inSchool` boolean NOT NULL,
+  `sameHouse` boolean NOT NULL,
+  `comment` varchar(2000) DEFAULT NULL,
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
-  `isTestData` bit default 0 NULL
+  `isTestData` bit default 0
 );
 
 -- -------------------------------------------
@@ -143,7 +156,83 @@ CREATE TABLE IF NOT EXISTS StudentGoals (
   `main` boolean NOT NULL,
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
-  `isTestData` bit default 0 NULL
+  `isTestData` bit default 0
+);
+
+CREATE TABLE IF NOT EXISTS StudentWorkExperience (
+  `id` int NOT NULL,
+  `student` int NOT NULL, -- FK
+  `occupation` int NOT NULL, -- FK
+  `employer` varchar(255) DEFAULT NULL,
+  `cityTown` varchar(255) DEFAULT NULL,
+  `fullTime` boolean NOT NULL,
+  `partTime` boolean NOT NULL,
+  `multipleJobs` boolean NOT NULL,
+  `tempJobs` boolean NOT NULL,
+  `recentLayoff` boolean DEFAULT NULL,
+  `concernReLayoff` boolean DEFAULT NULL,
+  `dateAdded` datetime NOT NULL,
+  `dateModified` datetime NOT NULL,
+  `isTestData` bit default 0
+);
+
+CREATE TABLE IF NOT EXISTS StudentComputerSkills (
+  `id` int NOT NULL,
+  `student` int NOT NULL, -- FK
+  `haveComputerAtHome` boolean DEFAULT NULL,
+  `useComputerAtHome` boolean DEFAULT NULL,
+  `useComputerAtLibrary` boolean DEFAULT NULL,
+  `useComputerAtWork` boolean DEFAULT NULL,
+  `useSmartphone` boolean DEFAULT NULL,
+  `useEmail` boolean DEFAULT NULL,
+  `useInternet` boolean DEFAULT NULL,
+  `dateAdded` datetime NOT NULL,
+  `dateModified` datetime NOT NULL,
+  `isTestData` bit default 0
+);
+
+CREATE TABLE IF NOT EXISTS StudentDisabiltyAccommodations (
+  `id` int NOT NULL,
+  `student` int NOT NULL, -- FK
+  `notRequiredToDisclose` boolean NOT NULL,
+  `wishToDisclose` boolean NOT NULL,
+  `understandEligibleForAccommodations` boolean NOT NULL,
+  `wishToRequestAccommodations` boolean NOT NULL,
+  `notes` varchar(2000) DEFAULT NULL,
+  `dateAdded` datetime NOT NULL,
+  `dateModified` datetime NOT NULL,
+  `isTestData` bit default 0
+);
+
+-- -------------------------------------------
+CREATE TABLE IF NOT EXISTS StudentQuestions (
+  `id` int NOT NULL,
+  `question` varchar(255)
+);
+
+-- -------------------------------------------
+CREATE TABLE IF NOT EXISTS StudentAnswers (
+  `id` int NOT NULL,
+  `student` int NOT NULL, -- FK
+  `question` int NOT NULL, -- FK
+  `answer` varchar(2000) NOT NULL,
+  `dateAdded` datetime NOT NULL,
+  `dateModified` datetime NOT NULL,
+  `isTestData` bit default 0
+);
+
+-- -------------------------------------------
+-- STUDENT/TUTOR AVAILABILITY INFORMATION
+-- -------------------------------------------
+CREATE TABLE IF NOT EXISTS PersonAvailability (
+  `id` int NOT NULL,
+  `person` int NOT NULL, -- FK
+  `day` int NOT NULL,
+  `startTime` int NOT NULL,
+  `endTime` int NOT NULL,
+  `dateAdded` datetime NOT NULL,
+  `dateModified` datetime NOT NULL,
+  `isTestData` bit default 0
 );
 
 -- -------------------------------------------
@@ -170,9 +259,26 @@ CREATE TABLE IF NOT EXISTS Tutor (
   `id` int NOT NULL,
   `person` int NOT NULL, -- FK
   `occupation` int NOT NULL, -- FK
+  `orientation` date DEFAULT NULL,
+  `training` date DEFAULT NULL,
+  `trainingtype` enum('ABE', 'ESOL') DEFAULT NULL,
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
-  `isTestData` bit default 0 NULL
+  `isTestData` bit default 0
+);
+
+-- -------------------------------------------
+CREATE TABLE IF NOT EXISTS TutorHours (
+  `id` int NOT NULL,
+  `matchID` int NOT NULL,
+  `student` int NOT NULL,
+  `tutor` int NOT NULL,
+  `month` int NOT NULL,
+  `year` int NOT NULL,
+  `hours` int NOT NULL,
+  `dateAdded` datetime NOT NULL,
+  `dateModified` datetime NOT NULL,
+  `isTestData` bit default 0
 );
 
 -- -------------------------------------------
@@ -185,10 +291,10 @@ CREATE TABLE IF NOT EXISTS Matches (
   `student` int NOT NULL, -- FK
   `matchStart` date NOT NULL,
   `matchEnd` date DEFAULT NULL,
-  `onHold` boolean NOT NULL,
+  `primaryServiceType` enum('ABE','ESOL') DEFAULT NULL,
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
-  `isTestData` bit default 0 NULL
+  `isTestData` bit default 0
 );
 
 -- -------------------------------------------
@@ -233,7 +339,6 @@ CREATE TABLE IF NOT EXISTS Person (
   `id` int NOT NULL,
   `site` int NOT NULL, -- FK
   `doeID` int NOT NULL,
-  `newForFY` int NOT NULL,
   `lastName` varchar(255) NOT NULL,
   `firstName` varchar(255) NOT NULL,
   `intakeDate` date NOT NULL,
@@ -254,15 +359,14 @@ CREATE TABLE IF NOT EXISTS Person (
   `email` varchar(255) DEFAULT NULL,
   `nativeLanguage` int NOT NULL, -- FK
   `ethnicity` int NOT NULL, -- FK
+  `hispanicOrLatino` boolean NOT NULL,
   `doeReferral` int NOT NULL,  -- FK
   `lvmReferral` int NOT NULL,  -- FK
-  `yearsUS` int NOT NULL,
-  `yearsForeign` int NOT NULL,
   `doeEmployStatus` int NOT NULL, -- FK
   `doeOccupation` int NOT NULL, -- FK??
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
-  `isTestData` bit default 0 NULL
+  `isTestData` bit default 0
 );
 
 -- -------------------------------------------
@@ -274,5 +378,5 @@ CREATE TABLE IF NOT EXISTS `Exit` (
   `lvmReason` int NOT NULL, -- FK
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
-  `isTestData` bit default 0 NULL
+  `isTestData` bit default 0
 );

@@ -10,16 +10,17 @@
 -- EmploymentStatus = 7
 -- Ethnicity = 9
 -- PublicAssistance = 7
--- Sites = 13
+-- Sites = 14
 -- LVMExitReasons = 21
 -- LVMReferral = 24
 -- DOECountryOfOrigin = 210
--- DOEExitReasons = 18
+-- DOEExitReasons = 43
 -- DOENativeLanguage = 29
 -- DOEReferral = 25
 -- DOEGoals = 65
 -- DOEOccupation = 1094
--- 
+-- StudentQuestions = 18
+--
 -- --------------------------------------------
 
 USE lvm;
@@ -38,3 +39,5 @@ SELECT COUNT(*) FROM DOENativeLanguage;
 SELECT COUNT(*) FROM DOEReferral;
 SELECT COUNT(*) FROM DOEGoals;
 SELECT COUNT(*) FROM DOEOccupation;
+
+SELECT COUNT(*) FROM StudentQuestions;

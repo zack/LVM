@@ -28,6 +28,7 @@ SELECT COUNT(*) FROM StudentPublicAssistance WHERE isTestData = 1;
 SELECT COUNT(*) FROM StudentAssessment WHERE isTestData = 1;
 SELECT COUNT(*) FROM StudentDependents WHERE isTestData = 1;
 SELECT COUNT(*) FROM StudentGoals WHERE isTestData = 1;
+
 SELECT COUNT(*) FROM Tutor WHERE isTestData = 1;
 SELECT COUNT(*) FROM Matches WHERE isTestData = 1;
 SELECT COUNT(*) FROM Meeting WHERE isTestData = 1;
