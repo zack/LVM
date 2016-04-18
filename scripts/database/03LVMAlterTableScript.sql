@@ -170,7 +170,8 @@ END IF ;
 		(50, 'Quincy'),
 		(60, 'Tri.Community'),
 		(65, 'Stoughton'),
-		(70, 'Worcester');
+		(70, 'Worcester'),
+		(75, 'Methuen');
 END//
 
 

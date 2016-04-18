@@ -121,12 +121,22 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
         .get(StudentController.getStudent)
         .all(methodNotAllowed);
 
-    router.route('/api/autocomplete/tutor/:name')
+    rrouter.route('/api/autocomplete/tutor/:name')
         .get(TutorController.autocomplete)
+        .all(methodNotAllowed);
+
+    router.route('/api/autocomplete/student/:name')
+        .get(StudentController.autocomplete)
         .all(methodNotAllowed);
 
     router.route('/api/createstudent/:id')
         .get(StudentController.createStudent)
+        .all(methodNotAllowed);
+
+    router.route('/api/matches/:id?')
+        .get(MatchController.getMatches)
+        .post(MatchController.addOrUpdate)
+        .delete(MatchController.dissolveMatch)
         .all(methodNotAllowed);
 
     // ADMIN
