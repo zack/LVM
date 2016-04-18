@@ -42,6 +42,7 @@ angular.module('lvmApp')
             var resetMessages = function () {
                 form.matchCreated = null;
                 form.matchErrorMessage = '';
+                $scope.$apply();
             };
             
             $http({
@@ -49,7 +50,7 @@ angular.module('lvmApp')
                 url: '/api/matches',
                 data: {
                     doeMatchID: $scope.doeMatchID,
-                    student: $scope.student,
+                    student: $scope.student.originalObject.sid,
                     tutor: $scope.tutor.originalObject.tid,
                     status: $scope.status,
                     onHold: $scope.onHold,

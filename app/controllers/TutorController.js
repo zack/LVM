@@ -158,9 +158,9 @@ module.exports = function(logging, database, statusCodes) {
                      // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results
                      (req.session.user.branch ? ' and p.site = ? ' : ' ') +
                      'LIMIT 10;',
-                values: [queryValue, queryValue, queryValue, req.session.user.branch]
-            }, function(error, results, fields) {
-                if (error) {
+                values: ['%' + queryValue + '%', req.session.user.branch]
+            }, function (error, results, fields) {
+                if (error) { 
                     logging.error('tutor autocomplete failed', {
                         name: req.params.name,
                         user: req.session.user.username,

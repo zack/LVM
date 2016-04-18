@@ -60,22 +60,34 @@
                                         Student
                                     </label>
                                     
-                                    <input type="number" required ng-model="student" class="form-control" id="studentName" ng-trim="true" maxlength="255" name="studentName"/>
+                                    <div angucomplete-alt
+                                      id="studentName"
+                                      input-name="student"
+                                      field-required="true"
+                                      placeholder="Search students.."
+                                      pause="300"
+                                      selected-object="student"
+                                      remote-url="/api/autocomplete/student/"
+                                      title-field="name"
+                                      minlength="3"
+                                      input-class="form-control"
+                                      match-class="highlight">
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="tutorName">
                                         Tutor
                                     </label>
-                                    <pre>{{tutor}}</pre>
+                                    
                                     <div angucomplete-alt
                                       id="tutorName"
-                                      ng-model="tutor"
-                                      placeholder="Tutor"
+                                      input-name="tutor"
+                                      field-required="true"
+                                      placeholder="Search tutors.."
                                       pause="300"
                                       selected-object="tutor"
                                       remote-url="/api/autocomplete/tutor/"
                                       title-field="name"
-                                      description-field="primaryServiceType,site"
                                       minlength="3"
                                       input-class="form-control"
                                       match-class="highlight">

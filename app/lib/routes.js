@@ -9,7 +9,6 @@ var express = require('express'),
     path = require('path');
 
 module.exports = function(statusCodes, HomeController, AuthenticationController,
-<<<<<<< 5e5bb17ab5affb1d50ec410e1348059806c13b4f
     TutorController, StudentController) {
     var router = express.Router();
 
@@ -122,8 +121,12 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
         .get(StudentController.getStudent)
         .all(methodNotAllowed);
 
-    router.route('/api/autocomplete/tutor/:name')
+    rrouter.route('/api/autocomplete/tutor/:name')
         .get(TutorController.autocomplete)
+        .all(methodNotAllowed);
+
+    router.route('/api/autocomplete/student/:name')
+        .get(StudentController.autocomplete)
         .all(methodNotAllowed);
 
     router.route('/api/createstudent/:id')
