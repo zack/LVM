@@ -33,7 +33,8 @@ module.exports = function() {
         var scopedConfig = new BaseEnvConfig();
 
         scopedConfig.name = 'development';
-        scopedConfig.express_train_config_file_location = '../config';
+        //scopedConfig.express_train_config_file_location = '../config';
+        scopedConfig.express_train_config_file_location = '/Users/evannoyes/server/config';
 
         return scopedConfig;
     }

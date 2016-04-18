@@ -3,10 +3,10 @@
  *   explicit written consent of all authors of this project.
  */
 'use strict';
-angular.module('lvmApp')
+angular.module('lvmApp', ['frapontillo.bootstrap-switch'])
     .controller('FormController', function($scope, $http) {
         var form = this;
-        form.formDefinition = [
+        $scope.formDefinition = [
             {
                 id: 'studentinfo',
                 name: 'Student Information',
@@ -119,7 +119,7 @@ angular.module('lvmApp')
 					{name: 'preference', type: 'preferenceTable'},
 					{name: 'preferencecomments', type: 'text', placeholder:'Comments:'},
 					{name: 'meetatpl', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Can you meet at the Public Library?'},
-					{name: 'if not, where?', class: 'col-md-9', value: '', type: 'text', trim:true, placeholder: 'If not, where?'}
+					{name: 'alt_meeting_location', class: 'col-md-9', value: '', type: 'text', trim:true, placeholder: 'If not, where?'}
 				],
 				]
 			},
@@ -129,7 +129,9 @@ angular.module('lvmApp')
 				fields: [
 				[
 					{name: 'haschildren', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Do you have any Children?'},
-					{name: 'dependantTable', type: 'dependantTable'},
+					{name: 'dependantTable', type: 'dependantTableNew', dependents: [
+                        //{birthyear: '', inhouse: false, inschool: false}
+                    ]},
 					{name: 'singleparent', class: 'col-md-3', value: '', type: 'boolean', trim: true, placeholder: 'Are you a single parent?'},
 					{name: 'familycomments', type: 'text', placeholder:'Comments:'}
 				],
@@ -274,11 +276,44 @@ angular.module('lvmApp')
 			}
         ];
 
+        $scope.availabilityTimes = {
+
+        };
+
+        $scope.tutorPreferences = {
+
+        };
+
+        $scope.removeDependent = function (dependent) {
+            var dependentsRows = $scope.formDefinition[5].fields[0][1].dependents;
+            var index = dependentsRows.indexOf(dependent);
+            dependentsRows.splice(index, 1);
+        }
+        
+        $scope.addDependent = function () {
+            var dependentsRows = $scope.formDefinition[5].fields[0][1].dependents;
+            dependentsRows.push({birthyear: '', inhouse: false, inschool: false})
+        }
+
 		//Post the Form
         $scope.submitForm=function(){
 			var data=$scope.fields;
-			var url="app/controllers/StudentController.js";
 
-			$http.post(url,data);
+            console.log(data);
+			var url="/api/createstudent";
+
+			//$http.post(url,data);
+
+            $http({
+                method: 'POST',
+                url: url,
+                data: data
+            })
+                .success(function(data, status) {
+                    alert("Success!");
+                })
+                .error(function(data, status) {
+                    alert("Error!");
+                });
         };
     });

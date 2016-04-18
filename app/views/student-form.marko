@@ -22,11 +22,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+
+	<script src="js/lib/angular-bootstrap-switch.js"></script>
     <script src="js/lvm.js"></script>
     <script src="js/student/student-form.js"></script>
 </head>
 
-<body ng-controller="FormController as form">
+<body ng-controller="FormController">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -44,7 +46,7 @@
                     <div class="sidebar">
                         <ul class="nav nav-stacked nav-pills">
                             <!-- Section Names -->
-                            <li ng-repeat="section in form.formDefinition">
+                            <li ng-repeat="section in formDefinition">
                                 <a ng-href="{{'#' + section.id}}">{{section.name}}</a>
                             </li>
                         </ul>
@@ -53,7 +55,7 @@
                 <div class="col-md-9">
                     <form role="form" name="student-intake" ng-submit="submitForm()">
 
-                        <div class="form-group" ng-repeat="section in form.formDefinition" id="{{section.id}}">
+                        <div class="form-group" ng-repeat="section in formDefinition" id="{{section.id}}">
                             <hr/>
                             <div class="row" ng-repeat="row in section.fields">
                                 <div class="{{field.class || 'col-md-12'}}" ng-repeat="field in row">
@@ -63,7 +65,7 @@
 
                                     <div ng-switch="field.type">
                                         <!-- Boolean (Yes/No) -->
-                                        <input ng-switch-when="boolean" type="checkbox" name="boolean-checkbox">
+                                        <input ng-switch-when="boolean" type="checkbox" id="{{field.name}}" name="boolean-checkbox" ng-model="field.value"/>
 
                                         <!-- Dropdown with customizable options -->
                                         <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle">
@@ -89,37 +91,37 @@
                                         	  <td> Morning <br/>(8AM-12PM) </td>
                                         	  <td>
 												<label>
-            									<input type="checkbox"   ng-model="time.monMorn">
+            									<input type="checkbox"   ng-model="availabilityTimes.monMorn">
             								   </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.tueMorn">
+											      <input type="checkbox"   ng-model="availabilityTimes.tueMorn">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.wedMorn">
+											      <input type="checkbox"   ng-model="availabilityTimes.wedMorn">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.thurMorn">
+											      <input type="checkbox"   ng-model="availabilityTimes.thurMorn">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.friMorn">
+											      <input type="checkbox"   ng-model="availabilityTimes.friMorn">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.satMorn">
+											      <input type="checkbox"   ng-model="availabilityTimes.satMorn">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.sunMorn">
+											      <input type="checkbox"   ng-model="availabilityTimes.sunMorn">
 											    </label>
             								  </td>
                                         	 </tr>
@@ -127,37 +129,37 @@
                                         	  <td> Afternoon <br/>(12PM-5PM) </td>
                                         	  <td>
 												<label>
-            									<input type="checkbox"   ng-model="time.monAfternoon">
+            									<input type="checkbox"   ng-model="availabilityTimes.monAfternoon">
             								   </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.tueAfternoon">
+											      <input type="checkbox"   ng-model="availabilityTimes.tueAfternoon">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.wedAfternoon">
+											      <input type="checkbox"   ng-model="availabilityTimes.wedAfternoon">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.thurAfternoon">
+											      <input type="checkbox"   ng-model="availabilityTimes.thurAfternoon">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.friAfternoon">
+											      <input type="checkbox"   ng-model="availabilityTimes.friAfternoon">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.satAfternoon">
+											      <input type="checkbox"   ng-model="availabilityTimes.satAfternoon">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.sunAfternoon">
+											      <input type="checkbox"   ng-model="availabilityTimes.sunAfternoon">
 											    </label>
             								  </td>
                                         	 </tr>
@@ -165,37 +167,37 @@
                                         	  <td> Evening <br/>(5PM-9PM) </td>
                                         	  <td>
 												<label>
-            									<input type="checkbox"   ng-model="time.monEve">
+            									<input type="checkbox"   ng-model="availabilityTimes.monEve">
             								   </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.tueEve">
+											      <input type="checkbox"   ng-model="availabilityTimes.tueEve">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.wedEve">
+											      <input type="checkbox"   ng-model="availabilityTimes.wedEve">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.thurEve">
+											      <input type="checkbox"   ng-model="availabilityTimes.thurEve">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.friEve">
+											      <input type="checkbox"   ng-model="availabilityTimes.friEve">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.satEve">
+											      <input type="checkbox"   ng-model="availabilityTimes.satEve">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="time.sunEve">
+											      <input type="checkbox"   ng-model="availabilityTimes.sunEve">
 											    </label>
             								  </td>
                                         	 </tr>
@@ -224,37 +226,37 @@
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="age.maleTeen">
+											      <input type="checkbox"   ng-model="tutorPreferences.maleTeen">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.male20">
+											      <input type="checkbox"   ng-model="tutorPreferences.male20">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.male26">
+											      <input type="checkbox"   ng-model="tutorPreferences.male26">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.male36">
+											      <input type="checkbox"   ng-model="tutorPreferences.male36">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.male46">
+											      <input type="checkbox"   ng-model="tutorPreferences.male46">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.male56">
+											      <input type="checkbox"   ng-model="tutorPreferences.male56">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.male66">
+											      <input type="checkbox"   ng-model="tutorPreferences.male66">
 											    </label>
             								  </td>
                                         	</tr>
@@ -264,37 +266,37 @@
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="age.femaleTeen">
+											      <input type="checkbox"   ng-model="tutorPreferences.femaleTeen">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.female20">
+											      <input type="checkbox"   ng-model="tutorPreferences.female20">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.female26">
+											      <input type="checkbox"   ng-model="tutorPreferences.female26">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.female36">
+											      <input type="checkbox"   ng-model="tutorPreferences.female36">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.female46">
+											      <input type="checkbox"   ng-model="tutorPreferences.female46">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.female56">
+											      <input type="checkbox"   ng-model="tutorPreferences.female56">
 											    </label>
             								  </td>
             								  <td>
 											  	<label>
-											      <input type="checkbox"   ng-model="preference.female66">
+											      <input type="checkbox"   ng-model="tutorPreferences.female66">
 											    </label>
             								  </td>
             								  </tr>
@@ -401,19 +403,56 @@
                                           </table>
                                         </div>
 
+										<!-- New Dependant Table -->
+										<div ng-switch-when="dependantTableNew" class="fixedtable">
+											<p>If Yes*</p>
+											<table class="table table-bordered">
+												<tbody>
+												<tr>
+													<th>Birth Year</th>
+													<th>Lives in same house?</th>
+													<th>In school (k-12)?</th>
+													<th>Remove </th>
+												</tr>
+												<tr ng-repeat="dependent in field.dependents">
+													<td>Dependent
+														<label>
+															<input type="text" ng-model="dependent.birthyear">
+														</label>
+													</td>
+													<td>
+														<label>
+															<input type="checkbox" ng-model="dependent.inhouse">
+														</label>
+													</td>
+													<td>
+														<label>
+															<input type="checkbox" ng-model="dependent.inschool">
+														</label>
+													</td>
+													<td>
+														<button type="button" class="btn btn-default" ng-click="removeDependent(dependent)">X</button>
+													</td>
+												</tr>
+
+												</tbody>
+											</table>
+											<button type="button" style="margin-bottom: 20px" class="btn btn-default" ng-click="addDependent()">Add Dependent</button>
+										</div>
+
                                         <!-- Other inputs -->
-                                        <input ng-switch-default type="{{field.type}}" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" maxlength="{{field.maxlength}}" />
+                                        <input ng-switch-default name="{{field.name}}" type="{{field.type}}" ng-model="field.value" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" maxlength="{{field.maxlength}}" />
                                     </div>
 
 
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-default" ng-click="submitForm()">
+                        <button type="submit" class="btn btn-default">
                             Submit
                         </button>
                     </form>
-                    <pre>form = {{user | json}}</pre>
+                    <!-- <pre>form = {{user | json}}</pre> -->
                 </div>
             </div>
         </div>

@@ -125,8 +125,8 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
         .get(TutorController.autocomplete)
         .all(methodNotAllowed);
 
-    router.route('/api/createstudent/:id')
-        .get(StudentController.createStudent)
+    router.route('/api/createstudent')
+        .post(StudentController.createStudent)
         .all(methodNotAllowed);
 
     // ADMIN

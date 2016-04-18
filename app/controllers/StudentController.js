@@ -88,7 +88,7 @@ module.exports = function(database, statusCodes) {
             // DATA for stored procedure
             var affiliate = req.body.affiliate;
             var doeID = 0; // ----------- PLACEHOLDER -----------
-            var newForFY = 0; // ----------- PLACEHOLDER -----------
+            var newForFY = 0; // REMOVED
             var firstName = req.body.firstName;
             var lastName = req.body.lastName;
             var intakeDate = today.toISOString().slice(0, 10);
@@ -108,7 +108,7 @@ module.exports = function(database, statusCodes) {
             var email = req.body.email;
             var nativeLanguage = req.body.nativeLanguage;
             var ethnicity = req.body.race;
-            var doeReferral = ""; // ----------- PLACEHOLDER -----------
+            var doeReferral = req.body.doereferal;
             var lvmReferral = ""; // ----------- PLACEHOLDER -----------
             var yearsUS = 0; // ----------- PLACEHOLDER -----------
             var yearsForeign = 0; // ----------- PLACEHOLDER -----------
@@ -182,6 +182,11 @@ module.exports = function(database, statusCodes) {
 
 
             database.connection.query(sql, params, function() {});
+
+        },
+
+        updateStudent: function(req, res, next) {
+
 
         }
 
