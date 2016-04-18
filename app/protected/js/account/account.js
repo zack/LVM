@@ -9,6 +9,9 @@ angular.module('lvmApp')
     .controller('AccountController', function($scope, $http) {
         var form = this;
         
+        $scope.oldPassword = '';
+        $scope.password = '';
+        
         $scope.resetState = function () {
             form.updateStatus = null;
             form.errorMessage = '';
@@ -21,10 +24,12 @@ angular.module('lvmApp')
                 url: '/api/account/password',
                 data: {
                     username: username,
+                    oldPassword: $scope.oldPassword,
                     newPassword: $scope.password,
                 }
             }).then(function successCallback(response) {
                     form.updateStatus = true;
+                    $scope.oldPassword = "";
                     $scope.password = "";
                     setTimeout($scope.resetState, 5 * 1000);
                 }, function errorCallback(response) {
