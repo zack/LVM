@@ -28,7 +28,6 @@ USE lvm;
 SELECT COUNT(*) FROM AssessmentTypes;
 SELECT COUNT(*) FROM EmploymentStatus;
 SELECT COUNT(*) FROM Ethnicity;
-SELECT COUNT(*) FROM PublicAssistance;
 SELECT COUNT(*) FROM Sites;
 
 SELECT COUNT(*) FROM LVMExitReasons;
