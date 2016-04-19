@@ -87,7 +87,7 @@ module.exports = function (database, logging, statusCodes) {
 
             // DATA for stored procedure
             var affiliate = req.body.affiliate;
-            var doeID = 0; // ----------- PLACEHOLDER -----------
+            var doeID = Math.floor((Math.random() * 1000) + 1); // ----------- PLACEHOLDER -----------
             var lastName = req.body.lastName;
             var firstName = req.body.firstName;
             var intakeDate = today.toISOString().slice(0, 10);
@@ -100,7 +100,7 @@ module.exports = function (database, logging, statusCodes) {
             var city = req.body.city;
             var state = req.body.state;
             var zip = req.body.zip;
-            var zip4 = null;
+            var zip4 = 1;
             var homePhone = req.body.homePhone;
             var workPhone = req.body.workPhone;
             var extension = null; // ----------- PLACEHOLDER -----------
@@ -111,8 +111,8 @@ module.exports = function (database, logging, statusCodes) {
             var hispanicOrLatino = req.body.ishispanic;
             var doeReferral = req.body.doereferal;
             var lvmReferral = req.body.LVM_Referal;
-            var doeEmployStatus = 0; // ----------- PLACEHOLDER -----------
-            var doeOccupation = 0; // ----------- PLACEHOLDER -----------
+            var doeEmployStatus = 1; // ----------- PLACEHOLDER -----------
+            var doeOccupation =1; // ----------- PLACEHOLDER -----------
             var dateAdded = today.toISOString().slice(0, 10);
             var dateModified = today.toISOString().slice(0, 10);
 
@@ -160,12 +160,12 @@ module.exports = function (database, logging, statusCodes) {
             var otherPA = req.body.otherpublicassistance;
 
             var testDate = req.body.tabedate;
-            var testType = "TABE 9";
+            var testType = 1;
             var testResult = req.body.tabescore;
-            var fedLevel = 0;
-            var fedType = 0;
+            var fedLevel = 1;
+            var fedType = 1;
 
-            var studentGoal = req.body.whylitval;
+            var studentGoal = 1;//req.body.whylitval;
             var dateGoalSet = today.toISOString().slice(0, 10);
             var dateGoalMet = null;
             var mainGoal = true;
