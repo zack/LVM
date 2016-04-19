@@ -11,8 +11,9 @@ Thanks to [BrowserStack](https://www.browserstack.com/) for allowing us to use t
 
 ![BrowserStack Browser Testing](http://i170.photobucket.com/albums/u254/mikesta711/BrowserStack_small_zpsw0jdprbv.png "BrowserStack Open-Source Browser Testing")
 
-* Configured Port: `8080`
-	* Note: Will probably want to change to 80, or something different depending on specific implementation (ie. Nginx to host static files & Node app for API only).
+* Configured Port Depends on the Environment
+	* Development: Port `8080`
+	* Production: Port `8000` (Note: This is proxied via Nginx to Port 80)
 * If running locally: http://127.0.0.1:8080/lvm/
 * If checking on our AWS Development Environment: http://cs4500.duncanbeard.com:8080/lvm/
 
