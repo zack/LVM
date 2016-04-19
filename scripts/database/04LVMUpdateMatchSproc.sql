@@ -20,7 +20,7 @@ CREATE PROCEDURE updateMatches(
 
 BEGIN
 
-UPDATE matches 
+UPDATE Matches 
 SET matches.status = 'Dissolved',
 	matches.matchEnd = matchEnd, 
 	matches.dateModified = dateModified

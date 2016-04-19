@@ -11,7 +11,7 @@ DROP PROCEDURE IF EXISTS updatePersonAvailabilityTable;
 
 DELIMITER //
 
-CREATE PROCEDURE updatePersonAvailabilityTable(
+CREATE PROCEDURE updatePersonAvailability(
   `person` int,
   `day` int,
   `startTime` int,
