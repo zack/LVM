@@ -17,8 +17,8 @@ CREATE PROCEDURE updatePerson(
 
 BEGIN
 
-	UPDATE person
-	SET person.status = 'Exited', person.dateModified = dateModified
+	UPDATE Person
+	SET Person.status = 'Exited', person.dateModified = dateModified
 	WHERE id = personID;
 
 END //
