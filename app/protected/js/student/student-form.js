@@ -336,6 +336,8 @@ angular.module('lvmApp')
 			var data = {};
             var url="/api/createstudent";
 
+            $("#submit-button").prop("disabled",true);
+
             $scope.formDefinition.forEach( function (element, index, array) {
 
                 element.fields.forEach(function (element, index, array) {
@@ -370,10 +372,12 @@ angular.module('lvmApp')
                 data: data
             })
                 .success(function(data, status) {
-                    alert("Success!");
+                    alert("Request Sent");
+                    $("#submit-button").prop("disabled",false);
                 })
                 .error(function(data, status) {
-                    alert("Error!");
+                    alert("Request Sent");
+                    $("#submit-button").prop("disabled",false);
                 });
         };
     });
