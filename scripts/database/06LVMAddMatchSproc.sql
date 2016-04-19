@@ -20,6 +20,7 @@ CREATE PROCEDURE addMatch(
 		doeMatchID int,
         tutor int,
 		student int,
+		onHold bit(1),
 		matchStart date,
 		matchEnd date, -- NULL
 		primaryServiceType enum('ABE','ESOL'), -- NULL
@@ -41,6 +42,7 @@ CALL updateMatchesTable(
 		student,
 		matchStart,
 		matchEnd,
+		onHold,
 		primaryServiceType,
 		dateAdded,
 		dateModified,
