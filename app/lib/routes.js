@@ -8,7 +8,7 @@
 var express = require('express'),
     path = require('path');
 
-module.exports = function(statusCodes, HomeController, AuthenticationController, TutorController, StudentController, MatchController) {
+module.exports = function(statusCodes, HomeController, AuthenticationController, DataExportController, TutorController, StudentController, MatchController) {
   var router = express.Router();
 
   /**
@@ -142,6 +142,18 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
       .post(MatchController.addOrUpdate)
       .delete(MatchController.dissolveMatch)
       .all(methodNotAllowed);
+      
+  router.route('/export/students')
+      .get(DataExportController.exportStudents)
+      .all(methodNotAllowed);
+      
+  router.route('/export/tutors')
+      .get(DataExportController.exportTutors)
+      .all(methodNotAllowed);
+      
+  router.route('/export/matches')
+      .get(DataExportController.exportMatches)
+      .all(methodNotAllowed);
 
   // ADMIN
 
@@ -172,6 +184,10 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
 
   router.route('/matching')
       .get(HomeController.matching)
+      .all(methodNotAllowed);
+      
+  router.route('/export')
+      .get(HomeController.export)
       .all(methodNotAllowed);
 
   // Static Content for Protected content - prevents non-authenticated users from accessing these files
