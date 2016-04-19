@@ -3,7 +3,7 @@
  *   explicit written consent of all authors of this project.
  */
 'use strict';
-angular.module('lvmApp', ['frapontillo.bootstrap-switch'])
+angular.module('lvmApp')
     .controller('FormController', function($scope, $http) {
         var form = this;
         $scope.formDefinition = [
