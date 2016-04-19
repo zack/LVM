@@ -61,7 +61,4 @@ This application uses an `express-train` framework on top of `express` for organ
 * **test/** - Tests
 	* **server/** - Server-side tests.
 	* **client/** - Client-side tests.
-=======
-# ui-prototype
-
-This repository is no longer in use.  Please work on the server repository.
+	
