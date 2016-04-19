@@ -19,11 +19,13 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angucomplete-alt/2.4.0/angucomplete-alt.min.js"></script>
+	<script src="js/lib/angular-bootstrap-switch.js"></script>
+
     <script src="js/lvm.js"></script>
     <script src="js/student/student-form.js"></script>
 </head>
@@ -65,10 +67,17 @@
 
                                     <div ng-switch="field.type">
                                         <!-- Boolean (Yes/No) -->
-                                        <input ng-switch-when="boolean" type="checkbox" id="{{field.name}}" name="boolean-checkbox" ng-model="field.value"/>
+                                        <input bs-switch
+											   ng-switch-when="boolean"
+											   switch-on-text="Yes"
+											   switch-off-text="No"
+											   type="checkbox"
+											   id="{{field.name}}"
+											   name="boolean-checkbox"
+											   ng-model="field.value"/>
 
                                         <!-- Dropdown with customizable options -->
-                                        <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle">
+                                        <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle" ng-model="field.value">
                                             <option value="" disabled>{{field.placeholder}}</option>
                                             <option ng-repeat="option in field.options" ng-value="{{option.value}}">{{option.name}}</option>
                                         </select>
@@ -304,107 +313,9 @@
                                         	</table>
                                         </div>
 
-                                        <!-- Dependant Table -->
-										<div ng-switch-when="dependantTable" class="fixedtable">
-										   <p>If Yes*</p>
-                                        	<table class="table table-bordered">
-                                        	<tbody>
-                                        	<tr>
-                                        	 <th>Birth Year</th>
-                                        	 <th>Lives in same house?</th>
-                                        	 <th>In school (k-12)?</th>
-                                        	</tr>
-                                        	<tr>
-                                        	 <td>Dependent 1
-                                        	   <label>
-                                        	    <input type="text" ng-model="dependent1.birthyear">
-                                        	   </label>
-                                        	 </td>
-                                        	 <td>
-                                        	  <label>
-                                        	   <input type="checkbox" ng-model="dependent1.livesWith">
-                                        	  </label>
-                                        	 </td>
-                                        	 <td>
-                                        	  <label>
-                                        	   <input type="checkbox" ng-model="dependent1.inSchool">
-                                        	  </label>
-                                        	 </td>
-                                        	</tr>
-                                        	<tr>
-                                        	 <td>Dependent 2
-                                        	   <label>
-                                        	    <input type="text" ng-model="dependent2.birthyear">
-                                        	   </label>
-                                        	 </td>
-                                        	 <td>
-                                        	  <label>
-                                        	   <input type="checkbox" ng-model="dependent2.livesWith">
-                                        	  </label>
-                                        	 </td>
-                                        	 <td>
-                                        	  <label>
-                                        	   <input type="checkbox" ng-model="dependent2.inSchool">
-                                        	  </label>
-                                        	 </td>
-                                        	</tr>
-                                        	<tr>
-                                        	 <td>Dependent 3
-                                        	   <label>
-                                        	    <input type="text" ng-model="dependent3.birthyear">
-                                        	   </label>
-                                        	 </td>
-                                        	 <td>
-                                        	  <label>
-                                        	   <input type="checkbox" ng-model="dependent3.livesWith">
-                                        	  </label>
-                                        	 </td>
-                                        	 <td>
-                                        	  <label>
-                                        	   <input type="checkbox" ng-model="dependent3.inSchool">
-                                        	  </label>
-                                        	 </td>
-                                        	</tr>
-                                        	<tr>
-                                        	 <td>Dependent 4
-                                        	   <label>
-                                        	    <input type="text" ng-model="dependent4.birthyear">
-                                        	   </label>
-                                        	 </td>
-                                        	 <td>
-                                        	  <label>
-                                        	   <input type="checkbox" ng-model="dependent4.livesWith">
-                                        	  </label>
-                                        	 </td>
-                                        	 <td>
-                                        	  <label>
-                                        	   <input type="checkbox" ng-model="dependent4.inSchool">
-                                        	  </label>
-                                        	 </td>
-                                        	</tr>
-                                        	<tr>
-                                        	 <td>Dependent 5
-                                        	   <label>
-                                        	    <input type="text" ng-model="dependent5.birthyear">
-                                        	   </label>
-                                        	 </td>
-                                        	 <td>
-                                        	  <label>
-                                        	   <input type="checkbox" ng-model="dependent5.livesWith">
-                                        	  </label>
-                                        	 </td>
-                                        	 <td>
-                                        	  <label>
-                                        	   <input type="checkbox" ng-model="dependent5.inSchool">
-                                        	  </label>
-                                        	 </td>
-                                        	</tr>
-                                           </tbody>
-                                          </table>
-                                        </div>
 
-										<!-- New Dependant Table -->
-										<div ng-switch-when="dependantTableNew" class="fixedtable">
+										<!-- New Dependent Table -->
+										<div ng-switch-when="dependentTableNew" class="fixedtable">
 											<p>If Yes*</p>
 											<table class="table table-bordered">
 												<tbody>
