@@ -235,7 +235,7 @@ angular.module('lvmApp')
                 {name: 'maptscore', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'MAPT Score:'},
                 {name: 'maptdate', class: 'col-md-6', value: '', type: 'date', trim: true, placeholder: 'MAPT Date:'},
                 {name: 'bestscore', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'BEST Score:'},
-                {name: 'bestdate', class: 'col-md-6', value: '', type: 'date', trim: true, palceholder: 'BEST Date:'}
+                {name: 'bestdate', class: 'col-md-6', value: '', type: 'date', trim: true, placeholder: 'BEST Date:'}
                 ],
                 ]
             },
