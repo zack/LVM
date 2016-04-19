@@ -74,12 +74,23 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
+                                    <label for="oldPassword">
+                                        Old Password
+                                    </label>
+                                    
+                                    <input type="password" required ng-model="oldPassword" class="form-control" id="oldPassword" ng-trim="true" maxlength="255" name="oldPassword"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <label for="password">
-                                        Password
+                                        New Password
                                     </label>
                                     
                                     <input type="password" required ng-model="password" class="form-control" id="password" ng-trim="true" maxlength="255" name="password"/>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-6">
                                     <br/>
                                     <button ng-click="form.updatePassword($root.user.username)" class="btn btn-default">Change Password</button>

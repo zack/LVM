@@ -78,6 +78,16 @@ module.exports = function(auth, statusCodes) {
     // Requires: req.body.username, req.body.password, req.body.newPassword
     updatePassword: function(req, res, next) {
       var validationFn = _.partial(validateField, res);
+      var authenticate = function () {
+        if (_.isUndefined(req.body.admin) && !_.isUndefined(req.body.oldPassword)) {
+          var valid = auth.authenticate(req.body.username, req.body.oldPassword);
+          if (!valid) {
+            res.status(statusCodes.BAD_REQUEST_STATUS).send('Authentication failed. Please enter your current password.');
+            return false;
+          }
+        }
+        return true;
+      };
       var update = function() {
         var resp = auth.updatePassword(req.body.username, req.body.newPassword);
         return resp ? res.send('Password was updated successfully!') :
@@ -90,6 +100,7 @@ module.exports = function(auth, statusCodes) {
         validationFn(req.body.newPassword,
           'The new password does not meet the requirements.',
           passwordMeetsRequirements) &&
+        authenticate() && 
         update();
     },
 
