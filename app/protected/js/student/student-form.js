@@ -231,7 +231,7 @@ angular.module('lvmApp')
                 {name: 'tabescore', class: 'col-md-4', value: '', type: 'text', trim: true, placeholder: 'TABE Score:'},
                 {name: 'tabedate', class: 'col-md-4', value: '', type: 'date', trim: true, placeholder: 'TABE Date:'},
                 {name: 'tabe9', class: 'col-md-2', value: '', type: 'boolean', trim: true, placeholder: 'TABE 9?'},
-                {name: 'tabe10', class: 'col-md-2', value: '', type: 'boolean', trim: true, palceholder: 'TABE 10?'},
+                {name: 'tabe10', class: 'col-md-2', value: '', type: 'boolean', trim: true, placeholder: 'TABE 10?'},
                 {name: 'maptscore', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'MAPT Score:'},
                 {name: 'maptdate', class: 'col-md-6', value: '', type: 'date', trim: true, placeholder: 'MAPT Date:'},
                 {name: 'bestscore', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'BEST Score:'},
