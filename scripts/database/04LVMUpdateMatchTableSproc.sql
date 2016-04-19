@@ -17,6 +17,7 @@ CREATE PROCEDURE updateMatchesTable(
   `status` enum('Current','Dissolved'),
   `tutor` int, -- FK
   `student` int, -- FK
+  `onHold` bit(1),
   `matchStart` date,
   `matchEnd` date,
   `primaryServiceType` enum('ABE','ESOL'),
