@@ -145,7 +145,7 @@ angular.module('lvmApp')
 					{name: 'parentsread', class: 'col-md-3', value: false, type: 'boolean', trim: true, placeholder: 'Do your parents read?'},
 					{name: 'readtoyou', class: 'col-md-3', value: false, type: 'boolean', trim: true, placeholder: 'Did they read to you?'},
 					{name: 'schoolattended', class: 'col-md-9', value: '', type: 'text', trim: true, placeholder: 'Where did you attend school?'},
-					{name: 'lastgradecompleted', class: 'col-md-3', value: '', type: 'dropdown', options: ['5 or below', '6', '7', '8', '9', '10', '11', '12'], placeholder: 'Grade Completed:'},
+					{name: 'lastgradecompleted', class: 'col-md-3', value: '', type: 'dropdown', options: [{name:'5 or below', value:5},{name:'6', value:6},{name:'7',value:7},{name:'8', value:8},{name:'9', value:9},{name:'10', value:10},{name:'11', value:11},{name:'12', value: 12}], placeholder: 'Grade Completed:'},
 					{name: 'completeddate', class: 'col-md-3', value: '', type: 'date', trim: true, placeholder: 'Completion Date:'},
 					{name: 'whatwasschoollike', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'What was school like? When did you realize reading was difficult?'},
 					{name: 'tutoredbefore', class: 'col-md-12', value: '', type: 'text', trim: true, placeholder: 'Are you now/were you ever in a reading/tutoring program? (If yes, where and when, and what did you like or dislike about your experience?)'},
@@ -232,8 +232,8 @@ angular.module('lvmApp')
                 [
                 {name: 'tabescore', class: 'col-md-4', value: '', type: 'text', trim: true, placeholder: 'TABE Score:'},
                 {name: 'tabedate', class: 'col-md-4', value: '', type: 'date', trim: true, placeholder: 'TABE Date:'},
-                {name: 'tabe9', class: 'col-md-2', value: false, type: 'boolean', trim: true, placeholder: 'TABE 9?'},
-                {name: 'tabe10', class: 'col-md-2', value: false, type: 'boolean', trim: true, palceholder: 'TABE 10?'},
+                {name: 'tabe9', class: 'col-md-2', value: '', type: 'boolean', trim: true, placeholder: 'TABE 9?'},
+                {name: 'tabe10', class: 'col-md-2', value: '', type: 'boolean', trim: true, placeholder: 'TABE 10?'},
                 {name: 'maptscore', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'MAPT Score:'},
                 {name: 'maptdate', class: 'col-md-6', value: '', type: 'date', trim: true, placeholder: 'MAPT Date:'},
                 {name: 'bestscore', class: 'col-md-6', value: '', type: 'text', trim: true, placeholder: 'BEST Score:'},
@@ -298,7 +298,7 @@ angular.module('lvmApp')
             friEve: false,
             satEve: false,
             sunEve: false
-            
+
 
         };
 
@@ -325,7 +325,7 @@ angular.module('lvmApp')
             var index = dependentsRows.indexOf(dependent);
             dependentsRows.splice(index, 1);
         }
-        
+
         $scope.addDependent = function () {
             var dependentsRows = $scope.formDefinition[5].fields[0][1].dependents;
             dependentsRows.push({birthyear: '', inhouse: false, inschool: false})
@@ -352,11 +352,11 @@ angular.module('lvmApp')
                         }
 
                         data[element.name] = element.value;
-                        
+
                     });
 
                 });
-                
+
                 }
 
             );
