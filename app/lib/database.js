@@ -19,7 +19,8 @@ module.exports = function(logging, config) {
             host     : config.database_url,
             user     : config.database_user,
             password : config.database_password,
-            database : config.database_name
+            database : config.database_name,
+            multipleStatements: true
         });
     };
     
