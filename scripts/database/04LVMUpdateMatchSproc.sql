@@ -21,11 +21,11 @@ CREATE PROCEDURE updateMatches(
 BEGIN
 
 UPDATE Matches 
-SET matches.status = 'Dissolved',
-	matches.matchEnd = matchEnd, 
-	matches.dateModified = dateModified
-WHERE matches.tutor = tutor AND
-		matches.student = student AND
-        matches.doeMatchID = doeMatchID;
+SET Matches.status = 'Dissolved',
+	Matches.matchEnd = matchEnd, 
+	Matches.dateModified = dateModified
+WHERE Matches.tutor = tutor AND
+		Matches.student = student AND
+        Matches.doeMatchID = doeMatchID;
     
 END //
