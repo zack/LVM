@@ -109,9 +109,9 @@ CALL updateStudentAnswersTable(s3,2,'Test Answer!',curdate(),curdate(),1);
 CALL updateStudentAnswersTable(s3,3,'Test Answer!',curdate(),curdate(),1);
 
 -- TEST MATCH
-CALL addMatch(5,1,1,2,curdate(),NULL,'ESOL',curdate(),curdate(),1);
-CALL addMatch(5,2,2,3,curdate(),NULL,'ESOL',curdate(),curdate(),1);
-CALL addMatch(5,3,3,1,curdate(),NULL,'ESOL',curdate(),curdate(),1);
+CALL addMatch(5,1,1,2,curdate(),NULL,'ESOL',0,curdate(),curdate(),1);
+CALL addMatch(5,2,2,3,curdate(),NULL,'ESOL',0,curdate(),curdate(),1);
+CALL addMatch(5,3,3,1,curdate(),NULL,'ESOL',0,curdate(),curdate(),1);
 
 -- TEST MEETING
 CALL addMeeting(1,curdate(),6,FALSE,FALSE,curdate(),curdate(),1);
@@ -126,9 +126,9 @@ END//
 
 CALL addTestPeople();
 
--- INSERT IGNORE INTO `Matches` (`id`, `site`, `doeMatchID`, `status`, `tutor`, `student`, `matchStart`, `matchEnd`, `onHold`, `dateAdded`, `dateModified`, `primaryServiceType`, `isTestData`) VALUES
---          (1, 5, 6032, 'Current', 1, 1, CURDATE(), null, 0, CURDATE(), CURDATE(), 'ESOL', 1),
---          (2, 5, 6033, 'Current', 2, 2, CURDATE(), null, 1, CURDATE(), CURDATE(), 'ESOL', 1),
---          (3, 10, 6034, 'Current', 1, 3, CURDATE(), null, 0, CURDATE(), CURDATE(), 'ESOL', 1),
---          (4, 10, 6035, 'Dissolved', 2, 3, CURDATE(), CURDATE(), 0, CURDATE(), CURDATE(), 'ESOL', 1),
---          (5, 5, 6036, 'Dissolved', 3, 2, CURDATE(), CURDATE(), 1, CURDATE(), CURDATE(), 'ESOL', 1) //
+INSERT IGNORE INTO `Matches` (`id`, `site`, `doeMatchID`, `status`, `tutor`, `student`, `matchStart`, `matchEnd`, `onHold`, `dateAdded`, `dateModified`, `primaryServiceType`, `isTestData`) VALUES
+         (1, 5, 6032, 'Current', 1, 1, CURDATE(), null, 0, CURDATE(), CURDATE(), 'ESOL', 1),
+         (2, 5, 6033, 'Current', 2, 2, CURDATE(), null, 1, CURDATE(), CURDATE(), 'ESOL', 1),
+         (3, 10, 6034, 'Current', 1, 3, CURDATE(), null, 0, CURDATE(), CURDATE(), 'ESOL', 1),
+         (4, 10, 6035, 'Dissolved', 2, 3, CURDATE(), CURDATE(), 0, CURDATE(), CURDATE(), 'ESOL', 1),
+         (5, 5, 6036, 'Dissolved', 3, 2, CURDATE(), CURDATE(), 1, CURDATE(), CURDATE(), 'ESOL', 1) //
