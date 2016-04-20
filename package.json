@@ -35,7 +35,6 @@
   },
   "dependencies": {
     "accm": "~0.0.x",
-    "bluebird": "~3.3.x",
     "body-parser": "~1.15.x",
     "connect-timeout": "~1.7.x",
     "console-stamp": "~0.2.x",
@@ -47,7 +46,6 @@
     "marko": "~3.1.x",
     "method-override": "~2.3.0",
     "mysql": "~2.10.x",
-    "request": "~2.70.x",
     "underscore": "~1.8.x",
     "winston": "~2.2.x"
   },

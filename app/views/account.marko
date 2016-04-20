@@ -1,6 +1,6 @@
 <html ng-app="lvmApp">
 <head>
-    <title>LVM App - Account Portal</title>
+    <title>TSMData - Account Portal</title>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 
@@ -23,6 +23,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angucomplete-alt/2.4.0/angucomplete-alt.min.js"></script>
     <script src="js/lvm.js"></script>
     <script src="js/account/account.js"></script>
 </head>
@@ -73,12 +74,23 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
+                                    <label for="oldPassword">
+                                        Old Password
+                                    </label>
+                                    
+                                    <input type="password" required ng-model="oldPassword" class="form-control" id="oldPassword" ng-trim="true" maxlength="255" name="oldPassword"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <label for="password">
-                                        Password
+                                        New Password
                                     </label>
                                     
                                     <input type="password" required ng-model="password" class="form-control" id="password" ng-trim="true" maxlength="255" name="password"/>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-6">
                                     <br/>
                                     <button ng-click="form.updatePassword($root.user.username)" class="btn btn-default">Change Password</button>

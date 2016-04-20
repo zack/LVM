@@ -125,6 +125,7 @@ BEGIN
    
 END IF ; 
 	INSERT IGNORE INTO `Sites` (`id`, `name`) VALUES
+		(0, 'Non-Affiliated'),
 		(5, 'Boston'),
 		(10, 'Project Lighthouse'),
 		(15, 'Fitchburg'),

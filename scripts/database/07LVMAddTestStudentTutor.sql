@@ -109,9 +109,12 @@ CALL updateStudentAnswersTable(s3,2,'Test Answer!',curdate(),curdate(),1);
 CALL updateStudentAnswersTable(s3,3,'Test Answer!',curdate(),curdate(),1);
 
 -- TEST MATCH
-CALL addMatch(5,1,1,2,curdate(),NULL,'ESOL',curdate(),curdate(),1);
-CALL addMatch(5,2,2,3,curdate(),NULL,'ESOL',curdate(),curdate(),1);
-CALL addMatch(5,3,3,1,curdate(),NULL,'ESOL',curdate(),curdate(),1);
+CALL addMatch(5,1,1,2,0,curdate(),NULL,'ESOL',curdate(),curdate(),1);
+CALL addMatch(5,2,2,2,1,curdate(),NULL,'ESOL',curdate(),curdate(),1);
+CALL addMatch(10,4,1,3,1,curdate(),NULL,'ABE',curdate(),curdate(),1);
+CALL addMatch(10,6,2,3,1,curdate(),NULL,'ABE',curdate(),curdate(),1);
+CALL addMatch(5,5,2,3,0,curdate(),NULL,'ESOL',curdate(),curdate(),1);
+CALL addMatch(5,3,3,1,0,curdate(),NULL,'ESOL',curdate(),curdate(),1);
 
 -- TEST MEETING
 CALL addMeeting(1,curdate(),6,FALSE,FALSE,curdate(),curdate(),1);

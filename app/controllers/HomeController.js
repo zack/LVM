@@ -65,6 +65,10 @@ module.exports = function(envConfig, constants, statusCodes) {
 
         matching: function(req, res, next) {
             res.render('matching', config);
+        },
+        
+        export: function(req, res, next) {
+            res.render('export', config);
         }
     };
 };

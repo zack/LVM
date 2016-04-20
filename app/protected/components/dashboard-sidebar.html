@@ -16,5 +16,8 @@
         <li>
             <a href="/matching">Create Student-Tutor Matching</a>
         </li>
+        <li ng-if="$root.user.role === 'Administrator' || $root.user.role === 'Data Entry Contractor'">
+            <a href="/export">Data Export</a>
+        </li>
     </ul>
 </div>

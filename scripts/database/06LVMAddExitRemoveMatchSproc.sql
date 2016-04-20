@@ -42,8 +42,8 @@ BEGIN
 DECLARE personT int;
 DECLARE personS int;
 
-SET personT = (select person from tutor where id = tutor);
-SET personS = (select person from student where id = student);
+SET personT = (select person from Tutor where id = tutor);
+SET personS = (select person from Student where id = student);
 
 
 -- ----------------------- Remove Match ---------------------------

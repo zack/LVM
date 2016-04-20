@@ -1,6 +1,6 @@
 <html ng-app="lvmApp">
 <head>
-    <title>TSMData - Dashboard</title>
+    <title>TSMData - Export</title>
     <base href="/">
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
@@ -25,36 +25,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angucomplete-alt/2.4.0/angucomplete-alt.min.js"></script>
     <script src="js/lvm.js"></script>
-    <script src="js/dashboard/dashboard.js"></script>
+    <script src="js/export/export.js"></script>
 </head>
-<body ng-controller="DashboardController as form">
+<body ng-controller="ExportController as form">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div id="header-include" ng-include="'components/header.html'"></div>
 
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-7">
-                    <h2>TSMData - Dashboard</h2>
+                        <div class="row">
+                <div class="col-md-12">
+                    <h2>Data Export</h2>
                 </div>
-                <div style="text-align:right" class="col-md-2">Welcome, {{$root.user.username}}!</div>
             </div>
 
             <div class="row">
-                <div class="col-md-3 sidebar-outer">
-                    <div id="sidebar-include" ng-include="'components/dashboard-sidebar.html'"></div>
-                </div>
-                <div class="col-md-9">
-                    <form role="form">
-
-                        <div class="form-group" id="main">
+                <div class="col-md-12">
+                    <form role="form" name="dataExport">
+            
+                        <div class="form-group" id="dataExport">
+                            <h4>Click on one of the links below to export the data.</h4>
                             <hr/>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <p>
-                                        Please click on one of the options in the left sidebar to begin.
-                                    </p>
+                                <div class="col-md-4">
+                                    <a href="/export/students">Export Students</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="/export/tutors">Export Tutors</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="/export/matches">Export Matches</a>
                                 </div>
                             </div>
                         </div>

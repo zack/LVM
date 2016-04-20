@@ -1,6 +1,6 @@
 <html ng-app="lvmApp">
 <head>
-    <title>LVM App - Matching</title>
+    <title>TSMData - Matching</title>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 
@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.css">
 
+    <link rel="stylesheet" href="css/angucomplete-alt.css">
     <link rel="stylesheet" href="css/form-style.css">
     
     <link rel="icon" type="image/png" href="images/favicon.png">
@@ -23,6 +24,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angucomplete-alt/2.4.0/angucomplete-alt.min.js"></script>
     <script src="js/lvm.js"></script>
     <script src="js/matching/matching.js"></script>
 </head>
@@ -33,27 +35,13 @@
             <div id="header-include" ng-include="'components/header.html'"></div>
 
             <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <h2>Student-Tutor Matches</h2>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-3 sidebar-outer">
-                    <div class="sidebar">
-                        <ul class="nav nav-stacked nav-pills">
-                            <!-- Section Names -->
-                            <li>
-                                <a href="#createMatching">Create a Matching</a>
-                            </li>
-                            <li>
-                                <a href="#manageAccounts">Manage Matches</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <form role="form" name="createMatching">
             
                         <div class="form-group" id="createMatching">
@@ -65,21 +53,78 @@
                                         DOE Match ID
                                     </label>
                                     
-                                    <input type="text" required ng-model="doeMatchId" class="form-control" id="doeMatchId" ng-trim="true" maxlength="255" name="doeMatchId"/>
+                                    <input type="number" required ng-model="doeMatchID" class="form-control" id="doeMatchId" ng-trim="true" maxlength="255" name="doeMatchId"/>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="studentName">
-                                        Student Name
+                                        Student
                                     </label>
                                     
-                                    <input type="text" required ng-model="studentName" class="form-control" id="studentName" ng-trim="true" maxlength="255" name="studentName"/>
+                                    <div angucomplete-alt
+                                      id="studentName"
+                                      input-name="student"
+                                      field-required="true"
+                                      placeholder="Search students.."
+                                      pause="300"
+                                      selected-object="student"
+                                      remote-url="/api/autocomplete/student/"
+                                      title-field="name"
+                                      minlength="3"
+                                      input-class="form-control"
+                                      match-class="highlight">
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="tutorName">
-                                        Tutor Name
+                                        Tutor
                                     </label>
                                     
-                                    <input type="text" required ng-model="tutorName" class="form-control" id="tutorName" ng-trim="true" maxlength="255" name="tutorName"/>
+                                    <div angucomplete-alt
+                                      id="tutorName"
+                                      input-name="tutor"
+                                      field-required="true"
+                                      placeholder="Search tutors.."
+                                      pause="300"
+                                      selected-object="tutor"
+                                      remote-url="/api/autocomplete/tutor/"
+                                      title-field="name"
+                                      minlength="3"
+                                      input-class="form-control"
+                                      match-class="highlight">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="status">
+                                        Match Status
+                                    </label>
+                                    
+                                    <select required ng-model="status" name="status" id="status" class="dropdown dropdown-full btn btn-default dropdown-toggle">
+                                        <option value="-1" disabled>Match Status</option>
+                                        <option ng-repeat="status in form.statuses" ng-value="status">{{status}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="onHold">
+                                        On Hold
+                                    </label>
+                                    
+                                    <input type="checkbox" ng-model="onHold" class="form-control" id="onHold" name="onHold"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="matchStart">
+                                        Match Start
+                                    </label>
+                                    
+                                    <input type="date" required ng-model="matchStart" class="form-control" id="matchStart" name="matchStart"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="matchEnd">
+                                        Match End
+                                    </label>
+                                    
+                                    <input type="date" ng-model="matchEnd" class="form-control" id="matchEnd" name="matchEnd"/>
                                 </div>
                             </div>
                             
@@ -105,7 +150,23 @@
                             <hr/>
                             <div class="row">
                                 <div class="col-md-12">
+                                    <label for="manageMatchStatus">
+                                        Display all matches with status:
+                                    </label>
+                                    
+                                    <select ng-model="fetchStatus" ng-change="form.fetchMatches()" name="fetchStatus" id="fetchStatus" class="dropdown dropdown-full btn btn-default dropdown-toggle" ng-options="status as status for status in form.statuses"></select>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <p class="alert alert-danger" ng-if="form.fetchError === true">An error occurred while retrieving the current matches.</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="alert alert-success" ng-if="form.manageMatchResponse === true">{{form.manageSuccessMessage}}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="alert alert-danger" ng-if="form.manageMatchResponse === false">{{form.manageErrorMessage}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -118,10 +179,13 @@
                                 <div class="col-md-1">
                                     On Hold
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
+                                    Site
+                                </div>
+                                <div class="col-md-1">
                                     Student
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                     Tutor
                                 </div>
                                 <div class="col-md-2">
@@ -130,45 +194,51 @@
                                 <div class="col-md-2">
                                     End Date
                                 </div>
+                                <div class="col-md-2">
+                                    Commands
+                                </div>
                             </div>
                             <hr/>
                             <div class="row account-row" ng-repeat="match in form.matches">
-                                <!--<div class="col-md-1">-->
-                                <!--    {{account.id}}-->
-                                <!--</div>-->
-                                <!--<div class="col-md-2">-->
-                                <!--    {{account.username}}-->
-                                <!--</div>-->
-                                <!--<div class="col-md-2">-->
-                                <!--    {{account.role}}-->
-                                <!--</div>-->
-                                <!--<div class="col-md-2">-->
-                                <!--    {{$root.mapNumToAffiliate(account.branch)}}-->
-                                <!--</div>-->
-                                <!--<div class="col-md-5">-->
-                                <!--    <div class="col-md-12 command-row">-->
-                                <!--        <select ng-model="manageRoles[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">-->
-                                <!--            <option selected value="-1" disabled>User Role</option>-->
-                                <!--            <option ng-repeat="role in $root.roles" ng-value="role">{{role}}</option>-->
-                                <!--        </select>-->
-                                <!--        <span class="col-md-2"></span>-->
-                                <!--        <button ng-click="form.updateRole(account.username, $index)" class="btn btn-default col-md-5">Update Role</button>-->
-                                <!--    </div>-->
-                                <!--    <div class="col-md-12 command-row">-->
-                                <!--        <select ng-model="manageAffiliates[$index]" class="col-md-5 btn btn-default dropdown dropdown-toggle">-->
-                                <!--            <option selected value="-1" disabled>Affiliate</option>-->
-                                <!--            <option ng-repeat="affiliate in $root.affiliates" ng-value="affiliate.value">{{affiliate.name}}</option>-->
-                                <!--        </select>-->
-                                <!--        <span class="col-md-2"></span>-->
-                                <!--        <button ng-click="form.updateAffiliate(account.username, $index)" class="btn btn-default col-md-5">Update Affiliate</button>-->
-                                <!--    </div>-->
-                                <!--    <div class="col-md-12 command-row">-->
-                                <!--        <button ng-click="form.updatePassword(account.username)" class="btn btn-default col-md-5">Update Password</button>-->
-                                <!--        <span class="col-md-2"></span>-->
-                                <!--        <button ng-click="form.deleteAccount(account.username)" class="btn btn-default col-md-5">Delete Account</button>-->
-                                <!--    </div>-->
-                                <!--</div>-->
-                                <!--<div class="col-md-12" ng-if="!$last"><hr/></div>-->
+                                <div class="col-md-1">
+                                    {{match.id}}
+                                </div>
+                                <div class="col-md-1">
+                                    <input class="form-control" ng-show="$index === editing" type="number" ng-model="form.matches[$index].doeMatchID"/>
+                                    <span ng-show="$index !== editing">{{match.doeMatchID}}</span>
+                                </div>
+                                <div class="col-md-1">
+                                    <input class="form-control" ng-show="$index === editing" type="checkbox" ng-model="form.matches[$index].onHoldValue"/>
+                                    <span ng-show="$index !== editing" ng-if="match.onHold === 1">Yes</span>
+                                    <span ng-show="$index !== editing" ng-if="match.onHold === 0">No</span>
+                                </div>
+                                <div class="col-md-1">
+                                    <select ng-show="$index===editing" ng-model="form.matches[$index].site" class="dropdown dropdown-full btn btn-default dropdown-toggle" ng-options="a.value.toString() as a.name for a in sites">
+                                    </select>
+                                    <span ng-show="$index !== editing">{{$root.mapNumToAffiliate(match.site)}}</span>
+                                </div>
+                                <div class="col-md-1">
+                                    <span>{{match.studentFirstName + ' ' + match.studentLastName}}</span>
+                                </div>
+                                <div class="col-md-1">
+                                    <span>{{match.tutorFirstName + ' ' + match.tutorLastName}}</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <input ng-show="$index === editing" type="date" ng-model="form.matches[$index].matchStart" class="form-control"/>
+                                    <span ng-show="$index !== editing">{{match.matchStart | date:'MM/dd/yyyy'}}</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <input ng-show="$index === editing && match.status === 'Dissolved'" type="date" ng-model="form.matches[$index].matchEnd" class="form-control"/>
+                                    <span ng-show="$index !== editing" ng-if="!_.isNull(match.matchEnd)">{{match.matchEnd | date:'MM/dd/yyyy'}}</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-default col-md-12" ng-show="$index !== editing" ng-click="form.enableEditing($index)">Edit</button>
+                                    <button class="btn btn-default col-md-6" ng-show="$index == editing" ng-click="form.cancelEdit()">Cancel</button>
+                                    <button class="btn btn-default col-md-6" ng-show="$index == editing" ng-click="form.updateMatch($index)">Update</button>
+                                    <button class="btn btn-default col-md-12" ng-show="match.status === 'Current'" ng-click="form.dissolveMatch($index)">Dissolve</button>
+                                    <button class="btn btn-default col-md-12" ng-show="match.status === 'Dissolved'" ng-click="form.reinstateMatch($index)">Reinstate</button>
+                                </div>
+                                <div class="col-md-12" ng-if="!$last"><hr/></div>
                             </div>
                         </div>
                     </form>

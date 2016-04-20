@@ -27,7 +27,8 @@ module.exports = function (app, config, logging, routes, envConfig, errorMiddlew
         secret: 'literacy is the key!', 
         store: sessionStore, 
         saveUninitialized: false, 
-        resave: true, 
+        resave: true,
+        rolling: true,
         cookie: { 
             maxAge: sessionMaxAge 
         }, 

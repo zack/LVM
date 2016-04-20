@@ -32,7 +32,7 @@ function Config($locationProvider, $httpProvider) {
 function Run($rootScope, $http) {
     
     $rootScope.affiliates = [
-        { name: 'Administrator (Non-Affiliated)', value: 0 },
+        { name: 'All (Non-Affiliated)', value: 0 },
         { name: 'Boston', value: 5 },
         { name: 'Project Lighthouse', value: 10 },
         { name: 'Fitchburg', value: 15 },
@@ -46,16 +46,19 @@ function Run($rootScope, $http) {
         { name: 'Tri.Community', value: 60 },
         { name: 'Stoughton', value: 65 },
         { name: 'Worcester', value: 70 },
+        { name: 'Methuen', value: 75 }
     ];
     
     $rootScope.roles = [
         'Administrator',
         'Affiliate Coordinator',
         'Affiliate Staff',
+        'Data Entry Contractor',
         'Tutor'
     ];
     
     $rootScope.mapNumToAffiliate = function (affiliateNum) {
+        affiliateNum = _.isString(affiliateNum) ? parseInt(affiliateNum, 10) : affiliateNum;
         var affiliate = _.findWhere($rootScope.affiliates, {value: affiliateNum});
         return affiliate && affiliate.name;
     };    
@@ -76,6 +79,6 @@ function Run($rootScope, $http) {
 }
 
 //declare app level module and hook in config and run blocks
-angular.module('lvmApp', [])
+angular.module('lvmApp', ["angucomplete-alt"])
     .config(Config)
     .run(Run);
