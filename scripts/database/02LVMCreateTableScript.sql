@@ -291,6 +291,7 @@ CREATE TABLE IF NOT EXISTS Matches (
   `student` int NOT NULL, -- FK
   `matchStart` date NOT NULL,
   `matchEnd` date DEFAULT NULL,
+  `onHold` bit default 0,
   `primaryServiceType` enum('ABE','ESOL') DEFAULT NULL,
   `dateAdded` datetime NOT NULL,
   `dateModified` datetime NOT NULL,
