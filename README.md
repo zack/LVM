@@ -1,7 +1,7 @@
 # Literacy Volunteers of Massachusetts Application
  
 ## Information
-[![Build Status](http://cs4500.duncanbeard.com:8090/buildStatus/icon?job=server-production)](http://cs4500.duncanbeard.com:8090/job/server-production)
+[![Build Status](https://jenkins-mrodrig.rhcloud.com/buildStatus/icon?job=lvm-production)](https://jenkins-mrodrig.rhcloud.com/job/lvm-production/)
 [![bitHound Overall Score](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/score.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server)
 [![bitHound Dependencies](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/dependencies.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/devDependencies.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/master/dependencies/npm)
