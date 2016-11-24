@@ -1,21 +1,20 @@
 describe('student-form', function () {
-  describe('FormController', function() {
-    beforeEach(module('lvmApp'));
+  beforeEach(angular.mock.module('lvmApp'));
 
-    var $controller;
+  var $controller;
 
-    beforeEach(inject(function(_$controller_){
-      // The injector unwraps the underscores (_) from around the parameter names when matching
-      $controller = _$controller_;
-    }));
+  beforeEach(inject(function(_$controller_){
+    // The injector unwraps the underscores (_) from around the parameter names when matching
+    $controller = _$controller_;
+  }));
 
-    describe('$scope.gatherValues', function() {
-      it('should validate that the function returns 5', function() {
-        var $scope = {};
-        var controller = $controller('FormController', { $scope: $scope });
-        // var retVal = $scope.gatherValues();
-        // expect(retVal).toEqual(5);
-      });
+  describe('Ensure that all Student Form Fields are filled', function() {
+
+    it('Should throw an error if all required fields are not filled', function() {
+      var $scope = {};
+      var controller = $controller('FormController', { $scope: $scope });
+      var value = $scope.submitform();
+      expect(value.allRequiredFieldsFilled).toBe(false);
     });
   });
 });

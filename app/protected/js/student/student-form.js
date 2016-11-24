@@ -12,10 +12,10 @@ angular.module('lvmApp')
                 name: 'Student Information',
                 fields: [
                     [
-                        {name: 'firstName', class: 'col-md-3', value: '', type: 'text', trim: true, placeholder: 'First Name'},
-                        {name: 'lastName', class: 'col-md-3', value: '', type: 'text', trim: true, placeholder: 'Last Name'},
-                        {name: 'dateOfBirth', class: 'col-md-3', value: '', type: 'date', trim: true, placeholder: 'Date of Birth'},
-                        {name: 'gender', class: 'col-md-3', value: '', type: 'dropdown', options: [{name:'Male', value:1},{name:'Female',value: 2}], placeholder: 'Gender'}
+                        {name: 'firstName', class: 'col-md-3 required', value: '', type: 'text', trim: true, placeholder: 'First Name'},
+                        {name: 'lastName', class: 'col-md-3 required', value: '', type: 'text', trim: true, placeholder: 'Last Name'},
+                        {name: 'dateOfBirth', class: 'col-md-3 required', value: '', type: 'date', trim: true, placeholder: 'Date of Birth'},
+                        {name: 'gender', class: 'col-md-3 required', value: '', type: 'dropdown', options: [{name:'Male', value:1},{name:'Female',value: 2}], placeholder: 'Gender'}
                     ],
 
                 ]
@@ -25,8 +25,8 @@ angular.module('lvmApp')
                 name: 'Contact Information',
                 fields: [
                     [
-                        {name: 'address1', value: '', type: 'text', trim: true, maxlength: 255, placeholder: 'Address Line 1'},
-                        {name: 'address2', value: '', type: 'text', trim: true, maxlength: 255, placeholder: 'Address Line 2'}
+                        {name: 'address1', class: 'required', value: '', type: 'text', trim: true, maxlength: 255, placeholder: 'Address Line 1'},
+                        {name: 'address2', class: 'required', value: '', type: 'text', trim: true, maxlength: 255, placeholder: 'Address Line 2'}
                     ],
                     [
                         {name: 'city', value: '', class: 'col-md-6', type: 'text', trim: true, maxlength: 255, placeholder: 'City'},
@@ -59,10 +59,10 @@ angular.module('lvmApp')
                         {name: 'emergencyContactNumber', value: '', class: 'col-md-4', type: 'phone', trim: true, placeholder: 'Emergency Contact (Phone)'},
                     ],
                     [
-                        {name: 'howDidYouHear', value: '', type: 'text', trim: true, maxlength: 255, placeholder: 'How did you hear about LVM?'},
+                        {name: 'howDidYouHear', class: 'required', value: '', type: 'text', trim: true, maxlength: 255, placeholder: 'How did you hear about LVM?'},
                     ],
                     [
-                        {name: 'whyDidYouChoose', value: '', type: 'text', trim: true, maxlength: 255, placeholder: 'Why did you choose LVM?'},
+                        {name: 'whyDidYouChoose', class: 'required', value: '', type: 'text', trim: true, maxlength: 255, placeholder: 'Why did you choose LVM?'},
                     ],
                 ]
             },
@@ -107,7 +107,7 @@ angular.module('lvmApp')
                 name: 'Times',
                 fields: [
                 [
-                	{name: 'available', type: 'timetable', value: ''}
+                	{name: 'available', class: 'required', type: 'timetable', value: ''}
                 ],
                 ]
             },
@@ -116,8 +116,8 @@ angular.module('lvmApp')
 				name: 'Tutor Preference',
 				fields: [
 				[
-					{name: 'preference', type: 'preferenceTable', value: ''},
-					{name: 'preferencecomments', type: 'text', placeholder:'Comments:', value: ''},
+					{name: 'preference', class: 'required', type: 'preferenceTable', value: ''},
+					{name: 'preferencecomments', class: 'required', type: 'text', placeholder:'Comments:', value: ''},
 					{name: 'meetatpl', class: 'col-md-3', type: 'boolean', trim: true, placeholder: 'Can you meet at the Public Library?', value: false},
 					{name: 'alt_meeting_location', class: 'col-md-9', value: '', type: 'text', trim:true, placeholder: 'If not, where?'}
 				],
@@ -129,11 +129,11 @@ angular.module('lvmApp')
 				fields: [
 				[
 					{name: 'haschildren', class: 'col-md-3', value: false, type: 'boolean', trim: true, placeholder: 'Do you have any Children?'},
-					{name: 'dependentTable', value: '', type: 'dependentTableNew', dependents: [
+					{name: 'dependentTable', class: 'required', value: '', type: 'dependentTableNew', dependents: [
                         //{birthyear: '', inhouse: false, inschool: false}
                     ]},
 					{name: 'singleparent', class: 'col-md-3', value: false, type: 'boolean', trim: true, placeholder: 'Are you a single parent?'},
-					{name: 'familycomments', value: '', type: 'text', placeholder:'Comments:'}
+					{name: 'familycomments', class: 'required', value: '', type: 'text', placeholder:'Comments:'}
 				],
 				]
 			},
@@ -333,7 +333,9 @@ angular.module('lvmApp')
 
 		//Post the Form
         $scope.submitForm=function(){
-			var data = {};
+            var allRequiredFieldsFilled = true;
+            var emptyFields = [];
+			      var data = {};
             var url="/api/createstudent";
 
             $("#submit-button").prop("disabled",true);
@@ -343,7 +345,12 @@ angular.module('lvmApp')
                 element.fields.forEach(function (element, index, array) {
 
                     element.forEach(function (element, index, array) {
-
+                        if ((element.class).includes('required')) {
+                          if (!element.value) {
+                            allRequiredFieldsFilled = false;
+                            emptyFields.push(element.placeholder);
+                          }
+                        }
                         if (element.name == "dependentTable"){
                             var arr = [];
                             element.dependents.forEach(function (element, index, array) {
@@ -365,19 +372,27 @@ angular.module('lvmApp')
 
             data.availabilityTimes = $scope.availabilityTimes;
             data.tutorPreferences = $scope.tutorPreferences;
-
-            $http({
-                method: 'POST',
-                url: url,
-                data: data
-            })
-                .success(function(data, status) {
-                    alert("Request Sent");
-                    $("#submit-button").prop("disabled",false);
-                })
-                .error(function(data, status) {
-                    alert("Request Sent");
-                    $("#submit-button").prop("disabled",false);
-                });
+            if (allRequiredFieldsFilled) {
+              $http({
+                  method: 'POST',
+                  url: url,
+                  data: data
+              })
+                  .success(function(data, status) {
+                      alert("Request Sent");
+                      $("#submit-button").prop("disabled",false);
+                  })
+                  .error(function(data, status) {
+                      alert("Request Failed");
+                      $("#submit-button").prop("disabled",false);
+                  });
+            } else {
+              var errormsg = '';
+              emptyFields.forEach(function(field) {
+                errormsg += '\n'+field;
+              });
+              alert("please fill out the following requred fields and try again: \n"+errormsg);
+              $("#submit-button").prop("disabled",false);
+            }
         };
     });

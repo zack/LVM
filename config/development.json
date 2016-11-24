@@ -3,9 +3,9 @@
     "port": 8080,
     "character_encoding": "utf-8",
     "user_database_path": "./users.json",
-    "database_url": "tsmdata.lvm.org",
-    "database_user": "test",
-    "database_password": "testing",
+    "database_url": "lvm.cjfg9goig8r4.us-east-1.rds.amazonaws.com",
+    "database_user": "root",
+    "database_password": "cs4500root",
     "database_name": "lvm",
-    "session_database_name": "lvm_sessions"
+    "session_database_name": "lvm"
 }
