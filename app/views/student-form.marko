@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html ng-app="lvmApp">
 <head>
     <title>TSMData - Student Form</title>
@@ -28,6 +29,9 @@
 
     <script src="js/lvm.js"></script>
     <script src="js/student/student-form.js"></script>
+    <script>
+      $('body').scrollspy({target:'#navbar'});
+    </script>
 </head>
 
 <body ng-controller="FormController">
@@ -45,7 +49,7 @@
 
             <div class="row">
                 <div class="col-md-3 sidebar-outer">
-                    <div class="sidebar">
+                    <div class="sidebar" id="navbar">
                         <ul class="nav nav-stacked nav-pills">
                             <!-- Section Names -->
                             <li ng-repeat="section in formDefinition">
@@ -369,6 +373,23 @@
         </div>
     </div>
 </div>
+<!--Modal for messages -->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Warning</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body>
 
 <script>

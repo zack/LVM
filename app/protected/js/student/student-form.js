@@ -389,9 +389,10 @@ angular.module('lvmApp')
             } else {
               var errormsg = '';
               emptyFields.forEach(function(field) {
-                errormsg += '\n'+field;
+                errormsg += '<li>'+field+'</li>';
               });
-              alert("please fill out the following requred fields and try again: \n"+errormsg);
+              errormsg = "<p><em><strong>Please fill out the following requred fields and try again:</strong></em><ul>"+errormsg+'</ul>';
+              popMessageModal('Error',errormsg,'#messageModal');
               $("#submit-button").prop("disabled",false);
             }
         };

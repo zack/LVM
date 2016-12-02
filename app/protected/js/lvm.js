@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2016. No part of this file may be replicated without the
  *   explicit written consent of all authors of this project.
- * 
+ *
  * Created by: Michael Rodrigues
  */
 
@@ -30,7 +30,7 @@ function Config($locationProvider, $httpProvider) {
 }
 
 function Run($rootScope, $http) {
-    
+
     $rootScope.affiliates = [
         { name: 'All (Non-Affiliated)', value: 0 },
         { name: 'Boston', value: 5 },
@@ -48,7 +48,7 @@ function Run($rootScope, $http) {
         { name: 'Worcester', value: 70 },
         { name: 'Methuen', value: 75 }
     ];
-    
+
     $rootScope.roles = [
         'Administrator',
         'Affiliate Coordinator',
@@ -56,13 +56,13 @@ function Run($rootScope, $http) {
         'Data Entry Contractor',
         'Tutor'
     ];
-    
+
     $rootScope.mapNumToAffiliate = function (affiliateNum) {
         affiliateNum = _.isString(affiliateNum) ? parseInt(affiliateNum, 10) : affiliateNum;
         var affiliate = _.findWhere($rootScope.affiliates, {value: affiliateNum});
         return affiliate && affiliate.name;
-    };    
-    
+    };
+
     var fetchUser = function () {
         $http({
         method: 'GET',
@@ -74,8 +74,15 @@ function Run($rootScope, $http) {
         $rootScope.user = {};
       });
     };
-    
+
     fetchUser();
+}
+
+//function to launch modal with the inputted text as the body
+function popMessageModal(title,content,element) {
+  $('.modal-title').text(title);
+  $('.modal-body').html(content);
+  $(element).modal('toggle');
 }
 
 //declare app level module and hook in config and run blocks
