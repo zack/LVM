@@ -158,7 +158,7 @@ module.exports = function(auth, statusCodes) {
       }
       req.session.loginAttempts = (req.session.loginAttempts || 0) + 1;
       // 3 login attempts
-      if (req.session.lastLoginAttemptTime && req.session.loginAttempts > 2 &&
+      if (req.session.lastLoginAttemptTime && req.session.loginAttempts > 3 &&
         ((new Date().getTime()) - req.session.lastLoginAttemptTime) <
         failedLoginAttemptsTimeout) {
         return redirectToLogin(
