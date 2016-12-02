@@ -30,7 +30,23 @@
     <script src="js/lvm.js"></script>
     <script src="js/student/student-form.js"></script>
     <script>
-      $('body').scrollspy({target:'#navbar'});
+    $(document).ready(function() {
+      jQuery(function() {
+				  jQuery('a[href*="#"]:not([href="#"])').click(function() {
+				    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+				      var target = jQuery(this.hash);
+				      target = target.length ? target : jQuery('[name=' + this.hash.slice(1) +']');
+				      if (target.length) {
+				        jQuery('html, body').animate({
+				          scrollTop: target.offset().top - 300
+				        }, 1000);
+				        return false;
+				      }
+				    }
+				  });
+				});
+      $('body').scrollspy({target:'#navbar',offset:300});
+    });
     </script>
 </head>
 
@@ -49,14 +65,14 @@
 
             <div class="row">
                 <div class="col-md-3 sidebar-outer">
-                    <div class="sidebar" id="navbar">
+                    <nav class="sidebar" id="navbar">
                         <ul class="nav nav-stacked nav-pills">
                             <!-- Section Names -->
                             <li ng-repeat="section in formDefinition">
                                 <a ng-href="{{'#' + section.id}}">{{section.name}}</a>
                             </li>
                         </ul>
-                    </div>
+                    </nav>
                 </div>
                 <div class="col-md-9">
                     <form role="form" name="student-intake" ng-submit="submitForm()">
