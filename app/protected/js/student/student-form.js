@@ -107,7 +107,7 @@ angular.module('lvmApp')
                 name: 'Times',
                 fields: [
                 [
-                	{name: 'available', class: 'required', type: 'timetable', value: ''}
+                	{name: 'available', type: 'timetable', value: '', placeholder:'Times Available'}
                 ],
                 ]
             },
@@ -116,8 +116,8 @@ angular.module('lvmApp')
 				name: 'Tutor Preference',
 				fields: [
 				[
-					{name: 'preference', class: 'required', type: 'preferenceTable', value: ''},
-					{name: 'preferencecomments', class: 'required', type: 'text', placeholder:'Comments:', value: ''},
+					{name: 'preference', type: 'preferenceTable', value: '', placeholder: 'Tutor Preference'},
+					{name: 'preferencecomments', type: 'text', placeholder:'Comments:', value: ''},
 					{name: 'meetatpl', class: 'col-md-3', type: 'boolean', trim: true, placeholder: 'Can you meet at the Public Library?', value: false},
 					{name: 'alt_meeting_location', class: 'col-md-9', value: '', type: 'text', trim:true, placeholder: 'If not, where?'}
 				],
@@ -129,11 +129,11 @@ angular.module('lvmApp')
 				fields: [
 				[
 					{name: 'haschildren', class: 'col-md-3', value: false, type: 'boolean', trim: true, placeholder: 'Do you have any Children?'},
-					{name: 'dependentTable', class: 'required', value: '', type: 'dependentTableNew', dependents: [
+					{name: 'dependentTable', value: '', type: 'dependentTableNew', dependents: [
                         //{birthyear: '', inhouse: false, inschool: false}
                     ]},
 					{name: 'singleparent', class: 'col-md-3', value: false, type: 'boolean', trim: true, placeholder: 'Are you a single parent?'},
-					{name: 'familycomments', class: 'required', value: '', type: 'text', placeholder:'Comments:'}
+					{name: 'familycomments', value: '', type: 'text', placeholder:'Comments:'}
 				],
 				]
 			},
@@ -345,23 +345,23 @@ angular.module('lvmApp')
                 element.fields.forEach(function (element, index, array) {
 
                     element.forEach(function (element, index, array) {
+                      if (element.class) {
                         if ((element.class).includes('required')) {
                           if (!element.value) {
                             allRequiredFieldsFilled = false;
                             emptyFields.push(element.placeholder);
                           }
                         }
-                        if (element.name == "dependentTable"){
-                            var arr = [];
-                            element.dependents.forEach(function (element, index, array) {
-                                arr.push(element)
-                            });
+                      }
+                      if (element.name == "dependentTable"){
+                          var arr = [];
+                          element.dependents.forEach(function (element, index, array) {
+                              arr.push(element)
+                          });
 
-                            data.dependents = arr;
-                        }
-
-                        data[element.name] = element.value;
-
+                          data.dependents = arr;
+                      }
+                      data[element.name] = element.value;
                     });
 
                 });
