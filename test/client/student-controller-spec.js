@@ -1,4 +1,4 @@
-describe('student-form', function () {
+/*describe('student-form', function () {
   beforeEach(angular.mock.module('lvmApp'));
 
   var $controller;
@@ -17,4 +17,4 @@ describe('student-form', function () {
       expect(value.allRequiredFieldsFilled).toBe(false);
     });
   });
-});
+*/});
