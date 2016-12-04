@@ -33,7 +33,7 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
       user: req.session.user
     });
   };
-  
+
   var redirectToLogin = function (res) {
     res.redirect('/login');
   };
@@ -133,24 +133,28 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
       .get(StudentController.autocomplete)
       .all(methodNotAllowed);
 
-    router.route('/api/createstudent')
-        .post(StudentController.createStudent)
-        .all(methodNotAllowed);
+  router.route('/api/createstudent')
+      .post(StudentController.createStudent)
+      .all(methodNotAllowed);
+
+  router.route('/api/createtutor')
+      .post(TutorController.createTutor)
+      .all(methodNotAllowed);
 
   router.route('/api/matches/:id?')
       .get(MatchController.getMatches)
       .post(MatchController.addOrUpdate)
       .delete(MatchController.dissolveMatch)
       .all(methodNotAllowed);
-      
+
   router.route('/export/students')
       .get(DataExportController.exportStudents)
       .all(methodNotAllowed);
-      
+
   router.route('/export/tutors')
       .get(DataExportController.exportTutors)
       .all(methodNotAllowed);
-      
+
   router.route('/export/matches')
       .get(DataExportController.exportMatches)
       .all(methodNotAllowed);
@@ -174,6 +178,10 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
       .get(HomeController.studentForm)
       .all(methodNotAllowed);
 
+  router.route('/tutor-form')
+      .get(HomeController.tutorForm)
+      .all(methodNotAllowed);
+
   router.route('/students/:id?')
       .get(HomeController.students)
       .all(methodNotAllowed);
@@ -185,13 +193,13 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
   router.route('/matching')
       .get(HomeController.matching)
       .all(methodNotAllowed);
-      
+
   router.route('/export')
       .get(HomeController.export)
       .all(methodNotAllowed);
 
   // Static Content for Protected content - prevents non-authenticated users from accessing these files
   router.all('*', express.static(path.resolve(__dirname + '/../protected'))); // static protected files in /protected
-  
+
   return router;
 };

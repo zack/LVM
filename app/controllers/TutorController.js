@@ -80,7 +80,7 @@ module.exports = function(logging, database, statusCodes) {
             });
         },
 
-        addTutor: function(req, res, next) {
+        createTutor: function(req, res, next) {
             // Pending UI fields
         },
 
@@ -160,7 +160,7 @@ module.exports = function(logging, database, statusCodes) {
                      'LIMIT 10;',
                 values: ['%' + queryValue + '%', req.session.user.branch]
             }, function (error, results, fields) {
-                if (error) { 
+                if (error) {
                     logging.error('tutor autocomplete failed', {
                         name: req.params.name,
                         user: req.session.user.username,

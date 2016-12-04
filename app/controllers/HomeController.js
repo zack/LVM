@@ -55,6 +55,10 @@ module.exports = function(envConfig, constants, statusCodes) {
           }
         },
 
+        tutorForm: function(req, res, next) {
+            res.render('tutor-form', config);
+        },
+
         tutors: function(req, res, next) {
             if (req.params.id) {
                 res.render('single-tutor-view', config);
@@ -66,7 +70,7 @@ module.exports = function(envConfig, constants, statusCodes) {
         matching: function(req, res, next) {
             res.render('matching', config);
         },
-        
+
         export: function(req, res, next) {
             res.render('export', config);
         }
