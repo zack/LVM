@@ -4,7 +4,7 @@
  */
 'use strict';
 angular.module('lvmApp')
-    .controller('FormController', function ($scope, $http) {
+    .controller('FormController', function ($scope, $window, $http) {
         var form = this;
         $scope.formDefinition = [
             {
@@ -55,7 +55,7 @@ angular.module('lvmApp')
                     [
                         {
                             name: 'address1',
-                            class: 'col-md-12',
+                            class: 'col-md-12 required',
                             value: '',
                             type: 'text',
                             trim: true,
@@ -76,7 +76,7 @@ angular.module('lvmApp')
                         {
                             name: 'city',
                             value: '',
-                            class: 'col-md-6',
+                            class: 'col-md-6 required',
                             type: 'text',
                             trim: true,
                             maxlength: 255,
@@ -85,7 +85,7 @@ angular.module('lvmApp')
                         {
                             name: 'state',
                             value: '',
-                            class: 'col-md-2',
+                            class: 'col-md-2 required',
                             type: 'text',
                             trim: true,
                             maxlength: 2,
@@ -94,7 +94,7 @@ angular.module('lvmApp')
                         {
                             name: 'zip',
                             value: '',
-                            class: 'col-md-2',
+                            class: 'col-md-2 required',
                             type: 'text',
                             trim: true,
                             maxlength: 10,
@@ -272,7 +272,7 @@ angular.module('lvmApp')
                     [
                         {
                             name: 'race',
-                            class: 'col-md-4',
+                            class: 'col-md-4 required',
                             value: '',
                             type: 'dropdown',
                             options: [{name: 'American Indian', value: 1}, {
@@ -293,7 +293,7 @@ angular.module('lvmApp')
                         },
                         {
                             name: 'countryoforigin',
-                            class: 'col-md-4',
+                            class: 'col-md-4 required',
                             value: '',
                             type: 'dropdown',
                             options: [{name: 'USA', value: 1}, {name: 'Afghanistan', value: 2}, {
@@ -588,7 +588,7 @@ angular.module('lvmApp')
                 name: 'Times',
                 fields: [
                     [
-                        {name: 'available', class: 'required', type: 'timetable', value: ''}
+                        {name: 'available', type: 'timetable', value: '', placeholder: 'Times Available'}
                     ],
                 ]
             },
@@ -597,14 +597,8 @@ angular.module('lvmApp')
                 name: 'Tutor Preference',
                 fields: [
                     [
-                        {name: 'preference', class: 'required', type: 'preferenceTable', value: ''},
-                        {
-                            name: 'preferencecomments',
-                            class: 'col-md-12',
-                            type: 'text',
-                            placeholder: 'Comments:',
-                            value: ''
-                        },
+                        {name: 'preference', type: 'preferenceTable', value: '', placeholder: 'Tutor Preference'},
+                        {name: 'preferencecomments', type: 'text', placeholder: 'Comments:', value: ''},
                         {
                             name: 'meetatpl',
                             class: 'col-md-3',
@@ -638,13 +632,9 @@ angular.module('lvmApp')
                             placeholder: 'Do you have any Children?'
                         },
                         {
-                            name: 'dependentTable',
-                            class: 'required',
-                            value: '',
-                            type: 'dependentTableNew',
-                            dependents: [
-                                //{birthyear: '', inhouse: false, inschool: false}
-                            ]
+                            name: 'dependentTable', value: '', type: 'dependentTableNew', dependents: [
+                            //{birthyear: '', inhouse: false, inschool: false}
+                        ]
                         },
                         {
                             name: 'singleparent',
@@ -654,7 +644,7 @@ angular.module('lvmApp')
                             trim: true,
                             placeholder: 'Are you a single parent?'
                         },
-                        {name: 'familycomments', class: 'col-md-12', value: '', type: 'text', placeholder: 'Comments:'}
+                        {name: 'familycomments', value: '', type: 'text', placeholder: 'Comments:'}
                     ],
                 ]
             },
@@ -703,7 +693,7 @@ angular.module('lvmApp')
                         },
                         {
                             name: 'completeddate',
-                            class: 'col-md-3',
+                            class: 'col-md-3 required',
                             value: '',
                             type: 'date',
                             trim: true,
@@ -1089,7 +1079,7 @@ angular.module('lvmApp')
                         },
                         {
                             name: 'tabedate',
-                            class: 'col-md-4',
+                            class: 'col-md-4 required',
                             value: '',
                             type: 'date',
                             trim: true,
@@ -1129,7 +1119,7 @@ angular.module('lvmApp')
                         },
                         {
                             name: 'bestscore',
-                            class: 'col-md-6 required',
+                            class: 'col-md-6',
                             value: '',
                             type: 'text',
                             trim: true,
@@ -1170,7 +1160,7 @@ angular.module('lvmApp')
                     [
                         {
                             name: 'affiliate',
-                            class: 'col-md-12',
+                            class: 'col-md-12 required',
                             value: '',
                             type: 'dropdown',
                             options: [{name: 'Boston', value: 5}, {
@@ -1341,13 +1331,10 @@ angular.module('lvmApp')
                     element.fields.forEach(function (element, index, array) {
 
                         element.forEach(function (element, index, array) {
-                            if ((element.class).includes('required')) {
-                                if (!element.value) {
-                                    allRequiredFieldsFilled = false;
-
-                                    if (!element.placeholder) {
-                                        emptyFields.push(element.name);
-                                    } else {
+                            if (element.class) {
+                                if ((element.class).includes('required')) {
+                                    if (!element.value) {
+                                        allRequiredFieldsFilled = false;
                                         emptyFields.push(element.placeholder);
                                     }
                                 }
@@ -1360,9 +1347,7 @@ angular.module('lvmApp')
 
                                 data.dependents = arr;
                             }
-
                             data[element.name] = element.value;
-
                         });
 
                     });
@@ -1379,8 +1364,7 @@ angular.module('lvmApp')
                     data: data
                 })
                     .success(function (data, status) {
-                        alert("Request Sent");
-                        $("#submit-button").prop("disabled", false);
+                        $window.location.href = '/dashboard';
                     })
                     .error(function (data, status) {
                         alert("Request Failed");
