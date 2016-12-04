@@ -87,7 +87,7 @@ module.exports = function (database, logging, statusCodes) {
 
             // DATA for stored procedure
             var affiliate = req.body.affiliate;
-            var doeID = Math.floor((Math.random() * 1000) + 1); // ----------- PLACEHOLDER -----------
+            var doeID = Math.floor((Math.random() * 100000) + 1); // ----------- PLACEHOLDER -----------
             var lastName = req.body.lastName;
             var firstName = req.body.firstName;
             var intakeDate = today.toISOString().slice(0, 10);
@@ -245,90 +245,93 @@ module.exports = function (database, logging, statusCodes) {
 
 
             var output;
+            var personID;
+            var studentID;
 
             database.query(sql, params, function(err, rows, fields) {
                 if (err) throw err;
-
+                console.log(rows);
                 output = rows;
-            });
+                personID = output[3][0].inout_p;
+                studentID = output[3][0].inout_s;
+                console.log("DONE");
+                console.log(output);
 
-            var personID = output[0].inout_p;
-            var studentID = output[0].inout_s;
+                var a_sql = "CALL updatePersonAvailability(?,?,?,?,?,?,?);";
 
-            var a_sql = "CALL updatePersonAvailability(?,?,?,?,?,?,?);";
+                var at_to_day = {monMorn: 1, tueMorn: 2, wedMorn: 3, thurMorn: 4, friMorn: 5, satMorn: 6, sunMorn: 0,
+                    monAfternoon: 1, tueAfternoon: 2, wedAfternoon: 3, thurAfternoon: 4, friAfternoon: 5, satAfternoon: 6, sunAfternoon: 0,
+                    monEve: 1, tueEve: 2, wedEve: 3, thurEve: 4, friEve: 5, satEve: 6, sunEve: 0 };
 
-            var at_to_day = {monMorn: 1, tueMorn: 2, wedMorn: 3, thurMorn: 4, friMorn: 5, satMorn: 6, sunMorn: 0,
-                             monAfternoon: 1, tueAfternoon: 2, wedAfternoon: 3, thurAfternoon: 4, friAfternoon: 5, satAfternoon: 6, sunAfternoon: 0,
-                             monEve: 1, tueEve: 2, wedEve: 3, thurEve: 4, friEve: 5, satEve: 6, sunEve: 0 };
+                var at_to_start = {monMorn: 8, tueMorn: 8, wedMorn: 8, thurMorn: 8, friMorn: 8, satMorn: 8, sunMorn: 8,
+                    monAfternoon: 12, tueAfternoon: 12, wedAfternoon: 12, thurAfternoon: 12, friAfternoon: 12, satAfternoon: 12, sunAfternoon: 12,
+                    monEve: 17, tueEve: 17, wedEve: 17, thurEve: 17, friEve: 17, satEve: 17, sunEve: 17 };
 
-            var at_to_start = {monMorn: 8, tueMorn: 8, wedMorn: 8, thurMorn: 8, friMorn: 8, satMorn: 8, sunMorn: 8,
-                               monAfternoon: 12, tueAfternoon: 12, wedAfternoon: 12, thurAfternoon: 12, friAfternoon: 12, satAfternoon: 12, sunAfternoon: 12,
-                               monEve: 17, tueEve: 17, wedEve: 17, thurEve: 17, friEve: 17, satEve: 17, sunEve: 17 };
+                var at_to_end = {monMorn: 12, tueMorn: 12, wedMorn: 12, thurMorn: 12, friMorn: 12, satMorn: 12, sunMorn: 12,
+                    monAfternoon: 17, tueAfternoon: 17, wedAfternoon: 17, thurAfternoon: 17, friAfternoon: 17, satAfternoon: 17, sunAfternoon: 17,
+                    monEve: 21, tueEve: 21, wedEve: 21, thurEve: 21, friEve: 21, satEve: 21, sunEve: 21 };
 
-            var at_to_end = {monMorn: 12, tueMorn: 12, wedMorn: 12, thurMorn: 12, friMorn: 12, satMorn: 12, sunMorn: 12,
-                               monAfternoon: 17, tueAfternoon: 17, wedAfternoon: 17, thurAfternoon: 17, friAfternoon: 17, satAfternoon: 17, sunAfternoon: 17,
-                               monEve: 21, tueEve: 21, wedEve: 21, thurEve: 21, friEve: 21, satEve: 21, sunEve: 21 };
+                var a_day, a_startTime, a_endTime, a_params;
 
-            var a_day, a_startTime, a_endTime, a_params;
+                var availability = req.body.availabilityTimes;
+                for (var key in availability) {
+                    if (availability.hasOwnProperty(key)) {
 
-            var availability = req.body.availabilityTimes;
-            for (var key in availability) {
-                if (availability.hasOwnProperty(key)) {
+                        if (availability[key] == true) {
+                            a_day = at_to_day[key];
+                            a_startTime = at_to_start[key];
+                            a_endTime = at_to_end[key];
 
-                    if (availability[key] == true) {
-                        a_day = at_to_day[key];
-                        a_startTime = at_to_start[key];
-                        a_endTime = at_to_end[key];
+                            a_params = [personID, a_day, a_startTime, a_endTime, dateAdded, dateModified, isTestData];
 
-                        a_params = [personID, a_day, a_startTime, a_endTime, dateAdded, dateModified, isTestData];
-
-                        database.query(a_sql, a_params, function(err, rows, fields) {
-                            if (err) throw err;
-                        });
+                            database.query(a_sql, a_params, function(err, rows, fields) {
+                                if (err) throw err;
+                            });
+                        }
                     }
                 }
-            }
 
-            var dependents = req.body.dependents;
-            var d_sql = "CALL updateStudentDependentsTable(?,?,?,?,?,?,?,?);";
+                var dependents = req.body.dependents;
+                var d_sql = "CALL updateStudentDependentsTable(?,?,?,?,?,?,?,?);";
 
-            var d_yob, d_inschool, d_samehouse, d_params;
+                var d_yob, d_inschool, d_samehouse, d_params;
 
-            dependents.forEach(function (element, index, array) {
+                dependents.forEach(function (element, index, array) {
 
-                d_yob = element.birthyear;
-                d_inschool = element.inschool;
-                d_samehouse = element.inhouse;
+                    d_yob = element.birthyear;
+                    d_inschool = element.inschool;
+                    d_samehouse = element.inhouse;
 
-                d_params = [studentID, d_yob, d_inschool, d_samehouse, "", dateAdded, dateModified, isTestData];
+                    d_params = [studentID, d_yob, d_inschool, d_samehouse, "", dateAdded, dateModified, isTestData];
 
-                database.query(d_sql, d_params, function(err, rows, fields) {
-                    if (err) throw err;
+                    database.query(d_sql, d_params, function(err, rows, fields) {
+                        if (err) throw err;
+                    });
                 });
+                return res.status(200);
             });
-
-
-
+            res.json()
+            console.log("DONE")
         },
 
         autocomplete: function (req, res, next) {
             if (req.params.name.length < 3) { return res.json([]); }
-            
+
             var queryValue = req.params.name + '%'; // add wildcard on end
-            
+
             database.query({
                 sql: 'SELECT p.id as pid, st.id as sid, CONCAT(p.firstName, \' \', p.lastName) as name, ' +
-                     '       p.primaryServiceType, s.name as site ' +
-                     'FROM Student st, Person p, Sites s ' +
-                     'WHERE st.person = p.id and ' +
-                     '      p.site = s.id and ' +
-                     '      CONCAT(firstName, \' \', lastName) like ? ' +
-                     // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results
-                     (req.session.user.branch ? ' and p.site = ? ' : ' ') +
-                     'LIMIT 10;',
+                '       p.primaryServiceType, s.name as site ' +
+                'FROM Student st, Person p, Sites s ' +
+                'WHERE st.person = p.id and ' +
+                '      p.site = s.id and ' +
+                '      CONCAT(firstName, \' \', lastName) like ? ' +
+                    // If not an admin (affiliate = 0), then specify the affiliate's site in the query to limit results
+                (req.session.user.branch ? ' and p.site = ? ' : ' ') +
+                'LIMIT 10;',
                 values: ['%' + queryValue + '%', req.session.user.branch]
             }, function (error, results, fields) {
-                if (error) { 
+                if (error) {
                     logging.error('student autocomplete failed', {
                         name: req.params.name,
                         user: req.session.user.username,
