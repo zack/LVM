@@ -20,7 +20,7 @@ angular.module('lvmApp')
                     $scope.selectedStudent = data;
                 })
                 .error(function(data, status) {
-                    alert("Error!");
+                    popMessageModal('Error',"An error ocurred. Please contact your system administrator.",'#messageModal');
                 });
         };
     });

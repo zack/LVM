@@ -379,11 +379,11 @@ angular.module('lvmApp')
                   data: data
               })
                   .success(function(data, status) {
-                      alert("Request Sent");
+                      popMessageModal('Success',"Request Sent Successfully",'#messageModal');
                       $("#submit-button").prop("disabled",false);
                   })
                   .error(function(data, status) {
-                      alert("Request Failed");
+                      popMessageModal('Error',"Request Failed. Please Contact your System Administrator.",'#messageModal');
                       $("#submit-button").prop("disabled",false);
                   });
             } else {
