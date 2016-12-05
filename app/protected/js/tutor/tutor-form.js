@@ -4,12 +4,12 @@
  */
 'use strict';
 angular.module('lvmApp')
-    .controller('TutorFormController', function ($scope, $window, $http) {
+    .controller('FormController', function ($scope, $window, $http) {
         var form = this;
         $scope.formDefinition = [
             {
                 id: 'studentinfo',
-                name: 'Student Information',
+                name: 'Tutor Information',
                 fields: [
                     [
                         {
@@ -44,10 +44,66 @@ angular.module('lvmApp')
                             options: [{name: 'Male', value: 1}, {name: 'Female', value: 2}],
                             placeholder: 'Gender'
                         }
-                      ]
                     ]
-                  }
-                ];
+                ]
+            },
+            {
+                id: 'contactinfo',
+                name: 'Contact Information',
+                fields: [
+                    [
+                        {
+                            name: 'address1',
+                            class: 'col-md-12 required',
+                            value: '',
+                            type: 'text',
+                            trim: true,
+                            maxlength: 255,
+                            placeholder: 'Address Line 1'
+                        },
+                        {
+                            name: 'address2',
+                            class: 'col-md-12',
+                            value: '',
+                            type: 'text',
+                            trim: true,
+                            maxlength: 255,
+                            placeholder: 'Address Line 2'
+                        }
+                    ],
+                    [
+                        {
+                            name: 'city',
+                            value: '',
+                            class: 'col-md-6 required',
+                            type: 'text',
+                            trim: true,
+                            maxlength: 255,
+                            placeholder: 'City'
+                        },
+                        {
+                            name: 'state',
+                            value: '',
+                            class: 'col-md-2 required',
+                            type: 'text',
+                            trim: true,
+                            maxlength: 2,
+                            placeholder: 'State'
+                        },
+                        {
+                            name: 'zip',
+                            value: '',
+                            class: 'col-md-2 required',
+                            type: 'text',
+                            trim: true,
+                            maxlength: 10,
+                            placeholder: 'ZIP Code'
+                        }
+                    ]
+                ]
+
+            }
+        ];
 
         $scope.availabilityTimes = {
             monMorn: false,
@@ -109,7 +165,7 @@ angular.module('lvmApp')
             var allRequiredFieldsFilled = true;
             var emptyFields = [];
             var data = {};
-            var url = "/api/createstudent";
+            var url = "/api/createtutor";
 
             $("#submit-button").prop("disabled", true);
 
@@ -145,18 +201,18 @@ angular.module('lvmApp')
             data.availabilityTimes = $scope.availabilityTimes;
             data.tutorPreferences = $scope.tutorPreferences;
             if (allRequiredFieldsFilled) {
-              $http({
-                  method: 'POST',
-                  url: url,
-                  data: data
-              })
-                  .success(function(data, status) {
-                      $window.location.href = '/dashboard';
-                  })
-                  .error(function(data, status) {
-                      popMessageModal('Error',"Request Failed. Please Contact your System Administrator.",'#messageModal');
-                      $("#submit-button").prop("disabled",false);
-                  });
+                $http({
+                    method: 'POST',
+                    url: url,
+                    data: data
+                })
+                    .success(function (data, status) {
+                        $window.location.href = '/dashboard';
+                    })
+                    .error(function (data, status) {
+                        popMessageModal('Error', "Request Failed. Please Contact your System Administrator.", '#messageModal');
+                        $("#submit-button").prop("disabled", false);
+                    });
             } else {
                 var errormsg = '';
                 emptyFields.forEach(function (field) {

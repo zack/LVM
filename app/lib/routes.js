@@ -121,6 +121,10 @@ module.exports = function(statusCodes, HomeController, AuthenticationController,
       .delete(TutorController.exitTutor)
       .all(methodNotAllowed);
 
+    router.route('/api/createstudent')
+        .get(TutorController.createTutor)
+        .all(methodNotAllowed);
+
   router.route('/api/student/:id?')
       .get(StudentController.getStudent)
       .all(methodNotAllowed);

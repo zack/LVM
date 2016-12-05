@@ -22,35 +22,35 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angucomplete-alt/2.4.0/angucomplete-alt.min.js"></script>
-	<script src="js/lib/angular-bootstrap-switch.js"></script>
+    <script src="js/lib/angular-bootstrap-switch.js"></script>
 
     <script src="js/lvm.js"></script>
     <script src="js/tutor/tutor-form.js"></script>
     <script>
-    $(document).ready(function() {
-      jQuery(function() {
-				  jQuery('a[href*="#"]:not([href="#"])').click(function() {
-				    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-				      var target = jQuery(this.hash);
-				      target = target.length ? target : jQuery('[name=' + this.hash.slice(1) +']');
-				      if (target.length) {
-				        jQuery('html, body').animate({
-				          scrollTop: target.offset().top - 300
-				        }, 1000);
-				        return false;
-				      }
-				    }
-				  });
-				});
-      $('body').scrollspy({target:'#navbar',offset:300});
-    });
+        $(document).ready(function() {
+            jQuery(function() {
+                jQuery('a[href*="#"]:not([href="#"])').click(function() {
+                    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                        var target = jQuery(this.hash);
+                        target = target.length ? target : jQuery('[name=' + this.hash.slice(1) +']');
+                        if (target.length) {
+                            jQuery('html, body').animate({
+                                scrollTop: target.offset().top - 300
+                            }, 1000);
+                            return false;
+                        }
+                    }
+                });
+            });
+            $('body').scrollspy({target:'#navbar',offset:300});
+        });
     </script>
 </head>
 
-<body ng-controller="TutorFormController">
+<body ng-controller="FormController">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -75,41 +75,307 @@
                     </nav>
                 </div>
                 <div class="col-md-9">
-                    <form role="form" name="student-intake" ng-submit="submitForm()">
+                    <form role="form" name="tutor-intake" ng-submit="submitForm()">
 
                         <div class="form-group" ng-repeat="section in formDefinition" id="{{section.id}}">
-                            <hr/>
-                            <div class="row" ng-repeat="row in section.fields">
-                                <div class="{{field.class || 'col-md-12'}}" ng-repeat="field in row">
-                                    <label for="{{field.name}}">
-                                        {{field.placeholder}}
-                                    </label>
+                            <section class="formSection">
+                                <hr/>
+                                <p class="sectionTitle">{{section.name}}</p>
+                                <div class="row" ng-repeat="row in section.fields">
+                                    <div class="{{field.class || 'col-md-12'}} field" ng-repeat="field in row">
+                                        <label for="{{field.name}}">
+                                            {{field.placeholder}}
+                                        </label>
 
-                                    <div ng-switch="field.type">
-                                        <!-- Boolean (Yes/No) -->
-                                        <input bs-switch
-											   ng-switch-when="boolean"
-											   switch-on-text="Yes"
-											   switch-off-text="No"
-											   type="checkbox"
-											   id="{{field.name}}"
-											   name="boolean-checkbox"
-											   ng-model="field.value"/>
+                                        <div ng-switch="field.type">
+                                            <!-- Boolean (Yes/No) -->
+                                            <select ng-switch-when="boolean" class="dropdown btn btn-default dropdown-toggle" ng-model="field.value">
+                                                <option value=false>No</option>
+                                                <option value=true>Yes</option>
+                                            </select>
 
-                                        <!-- Dropdown with customizable options -->
-                                        <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle" ng-model="field.value">
-                                            <option value="" disabled>{{field.placeholder}}</option>
-                                            <option ng-repeat="option in field.options" ng-value="{{option.value}}">{{option.name}}</option>
-                                        </select>
+                                            <!-- Dropdown with customizable options -->
+                                            <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle" ng-model="field.value">
+                                                <option value="" disabled>{{field.placeholder}}</option>
+                                                <option ng-repeat="option in field.options" ng-value="{{option.value}}">{{option.name}}</option>
+                                            </select>
+
+                                            <!-- time table -->
+                                            <div ng-switch-when="timetable" class="fixedtable">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th>Time Available</th>
+                                                        <th>Monday</th>
+                                                        <th>Tuesday</th>
+                                                        <th>Wednesday</th>
+                                                        <th>Thursday</th>
+                                                        <th>Friday</th>
+                                                        <th>Saturday</th>
+                                                        <th>Sunday</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Morning <br/>(8AM-12PM) </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.monMorn">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.tueMorn">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.wedMorn">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.thurMorn">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.friMorn">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.satMorn">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.sunMorn">
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Afternoon <br/>(12PM-5PM) </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.monAfternoon">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.tueAfternoon">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.wedAfternoon">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.thurAfternoon">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.friAfternoon">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.satAfternoon">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.sunAfternoon">
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Evening <br/>(5PM-9PM) </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.monEve">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.tueEve">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.wedEve">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.thurEve">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.friEve">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.satEve">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="availabilityTimes.sunEve">
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!--Tutor Preferences Table -->
+                                            <div ng-switch-when="preferenceTable" class="fixedtable">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th>Gender</th>
+                                                        <th>Teen</th>
+                                                        <th>20-25</th>
+                                                        <th>26-35</th>
+                                                        <th>36-45</th>
+                                                        <th>46-55</th>
+                                                        <th>56-65</th>
+                                                        <th>66+</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Male
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.maleTeen">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.male20">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.male26">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.male36">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.male46">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.male56">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.male66">
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Female
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.femaleTeen">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.female20">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.female26">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.female36">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.female46">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.female56">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox"   ng-model="tutorPreferences.female66">
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
 
 
-                                        <!-- Other inputs -->
-                                        <input ng-switch-default name="{{field.name}}" type="{{field.type}}" ng-model="field.value" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" maxlength="{{field.maxlength}}" />
+                                            <!-- New Dependent Table -->
+                                            <div ng-switch-when="dependentTableNew" class="fixedtable">
+                                                <p>If Yes*</p>
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th>Birth Year</th>
+                                                        <th>Lives in same house?</th>
+                                                        <th>In school (k-12)?</th>
+                                                        <th>Remove </th>
+                                                    </tr>
+                                                    <tr ng-repeat="dependent in field.dependents">
+                                                        <td>Dependent
+                                                            <label>
+                                                                <input type="text" ng-model="dependent.birthyear">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox" ng-model="dependent.inhouse">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox" ng-model="dependent.inschool">
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-default" ng-click="removeDependent(dependent)">X</button>
+                                                        </td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" style="margin-bottom: 20px" class="btn btn-default" ng-click="addDependent()">Add Dependent</button>
+                                            </div>
+
+                                            <!-- Other inputs -->
+                                            <input ng-switch-default name="{{field.name}}" type="{{field.type}}" ng-model="field.value" class="form-control" id="{{field.name}}" ng-trim="{{field.trim}}" ng-value="{{field.value}}" maxlength="{{field.maxlength}}" />
+                                        </div>
+
+
                                     </div>
-
-
                                 </div>
-                            </div>
+                            </section>
                         </div>
                         <button type="submit" class="btn btn-default" id="submit-button">
                             Submit
@@ -123,20 +389,20 @@
 </div>
 <!--Modal for messages -->
 <div class="modal fade" id="messageModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Warning</h4>
-      </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Warning</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 </body>
 

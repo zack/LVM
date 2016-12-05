@@ -81,7 +81,39 @@ module.exports = function(logging, database, statusCodes) {
         },
 
         createTutor: function(req, res, next) {
-            // Pending UI fields
+
+            var doeID = Math.floor((Math.random() * 100000) + 1); // ----------- PLACEHOLDER -----------
+            var lastName = req.body.lastName;
+            var firstName = req.body.firstName;
+            var dob = req.body.dateOfBirth;
+            var gender = req.body.gender;
+            var address1 = req.body.address1;
+            var city = req.body.city;
+            var state = req.body.state;
+            var zip = req.body.zip;
+
+
+            var params = [doeID, lastName, firstName, dob, gender, address1, city, state, zip];
+            var sql =
+                "SET @PersonID = 0;\n" +
+                "SET @TutorID = 0;\n" +
+                "CALL lightweightAddTutor(?, ?, ?, ?, ?, ?, ?, ?, ?, @PersonID, @TutorID);\n" +
+
+                "SELECT @PersonID as inout_p, @TutorID as inout_s;";
+
+
+            var output;
+            var personID;
+            var studentID;
+
+            database.query(sql, params, function(err, rows, fields) {
+                if (err) throw err;
+                console.log(rows);
+                output = rows;
+
+            });
+            res.json()
+            console.log("DONE")
         },
 
         updateTutor: function(req, res, next) {
