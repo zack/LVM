@@ -87,14 +87,10 @@
 
                                     <div ng-switch="field.type">
                                         <!-- Boolean (Yes/No) -->
-                                        <input bs-switch
-											   ng-switch-when="boolean"
-											   switch-on-text="Yes"
-											   switch-off-text="No"
-											   type="checkbox"
-											   id="{{field.name}}"
-											   name="boolean-checkbox"
-											   ng-model="field.value"/>
+                                         <select ng-switch-when="boolean" class="dropdown btn btn-default dropdown-toggle" ng-model="field.value">
+                                            <option value=false>No</option>
+                                            <option value=true>Yes</option>
+                                         </select>
 
                                         <!-- Dropdown with customizable options -->
                                         <select ng-switch-when="dropdown" class="dropdown btn btn-default dropdown-toggle" ng-model="field.value">
@@ -236,7 +232,6 @@
 
 									    <!--Tutor Preferences Table -->
 										<div ng-switch-when="preferenceTable" class="fixedtable">
-										   <strong>Tutor Preference</strong>
                                         	<table class="table table-bordered">
                                         	<tbody>
                                         	<tr>
