@@ -542,7 +542,7 @@ angular.module('lvmApp')
                         },
                         {
                             name: 'nativelanguage',
-                            class: 'col-md-3',
+                            class: 'col-md-3 required',
                             value: '',
                             type: 'dropdown',
                             options: [{name: 'English', value: 1}, {name: 'Albanian', value: 2}, {
@@ -1364,7 +1364,7 @@ angular.module('lvmApp')
                   data: data
               })
                   .success(function(data, status) {
-                      $window.location.href = '/dashboard';
+                      $window.location.href = '/students';
                   })
                   .error(function(data, status) {
                       popMessageModal('Error',"Request Failed. Please Contact your System Administrator.",'#messageModal');

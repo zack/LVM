@@ -207,7 +207,7 @@ angular.module('lvmApp')
                     data: data
                 })
                     .success(function (data, status) {
-                        $window.location.href = '/dashboard';
+                        $window.location.href = '/tutors';
                     })
                     .error(function (data, status) {
                         popMessageModal('Error', "Request Failed. Please Contact your System Administrator.", '#messageModal');
