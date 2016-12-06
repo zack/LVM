@@ -70,3 +70,11 @@
 .field {
   padding: 5px;
 }
+
+div.container-fluid {
+  margin-top: 60px;
+}
+
+nav.navbar-fixed-top {
+  padding-right: 15px;
+}
