@@ -46,7 +46,9 @@ module.exports = function (database, logging, statusCodes) {
                 '         AND p.doeReferral = r.id' +
                 '         AND p.lvmReferral = l.id' +
                 '         AND p.doeEmployStatus = es.id' +
-                '         AND p.doeOccupation = o.id';
+                '         AND p.doeOccupation = o.id'; +
+                ' ORDER BY ' +
+                '         st.dateModified ASC';
             var queryVals = [];
 
             if (req.params.id) {
