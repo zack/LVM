@@ -1,11 +1,7 @@
 # Literacy Volunteers of Massachusetts Application
- 
+
 ## Information
-[![Build Status](https://jenkins-mrodrig.rhcloud.com/buildStatus/icon?job=lvm-production)](https://jenkins-mrodrig.rhcloud.com/job/lvm-production/)
-[![bitHound Overall Score](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/score.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server)
-[![bitHound Dependencies](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/dependencies.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/master/dependencies/npm)
-[![bitHound Dev Dependencies](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/devDependencies.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/master/dependencies/npm)
-[![bitHound Code](https://www.bithound.io/bitbucket/literacyvolunteersofma/server/badges/code.svg)](https://www.bithound.io/bitbucket/literacyvolunteersofma/server)
+[![Build Status](https://travis-ci.org/LiteracyVolunteersOfMA/LVM.svg?branch=master)](https://travis-ci.org/LiteracyVolunteersOfMA/LVM)
 
 Thanks to [BrowserStack](https://www.browserstack.com/) for allowing us to use their Browser Testing suite for free under the Open Source plan.
 
@@ -62,4 +58,4 @@ This application uses an `express-train` framework on top of `express` for organ
 * **test/** - Tests
 	* **server/** - Server-side tests.
 	* **client/** - Client-side tests.
-	
+
